@@ -1,0 +1,60 @@
+﻿@using BookSource.Models.ViewModel
+@*
+This view show a list of books and redirect to them.
+*@
+@{
+    @model BookListViewModel
+}
+<style>
+    .anime-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .anime-card img {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+    .anime-card-body {
+        padding: 15px;
+    }
+    .rating {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #f39c12;
+    }
+    .btn-custom {
+        background-color: #3498db;
+        color: white;
+        border: none;
+    }
+</style>
+<div class="container mt-5">
+    <div class="row">
+        @if (Model.Books == null)
+        {
+            <div class="col">No se ha recibido ningun libro al componente</div>
+        }
+        else
+        {
+            @foreach (BookViewModel book in Model.Books)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="anime-card">
+                        <img src="(@book.ImageLink??https://i.pinimg.com/originals/c8/05/66/c805665abddddfcc04692ff3c92cadfe.jpg)" class="card-img-top" alt="Shingeki no Kyojin">
+                        <div class="anime-card-body">
+                            <h5 class="card-title">@book.Title</h5>
+                            <p class="card-text">@book.</p>
+                            <p><strong>Studio:</strong> Wit Studio</p>
+                            <p><strong>Source:</strong> Manga</p>
+                            <p><strong>Episodes:</strong> 25 | <strong>Duration:</strong> 24 min</p>
+                            <p class="rating">8.55</p>
+                            <button class="btn btn-custom">Add to My List</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+</div>
