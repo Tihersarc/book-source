@@ -8,16 +8,14 @@ namespace BookScraper.Scripts
 {
     internal class Book
     {
-        string Name {  get; set; }
-        string Author { get; set; }
-        string Genre { get; set; }
-        string Descritpion {  get; set; }
-
-        public Book(string name, string author, string genre, string descripton) {
-            Name = name;
-            Author = author;
-            Genre = genre;
-            Descritpion = descripton;
-        }
+        public string Title {  get; set; }
+        public string Subtitle {  get; set; }
+        public List<string> Genre { get; set; }
+        public List<string> Author { get; set; }
+        public string Publisher { get; set; }
+        public string ReleaseDate { get; set; }
+        public string Description {  get; set; }
+        public int PageCount {  get; set; }
+        public string ImageLink {  get; set; }
     }
 }
