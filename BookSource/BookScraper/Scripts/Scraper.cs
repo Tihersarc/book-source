@@ -18,7 +18,7 @@ namespace BookScraper.Scripts
             HttpClient = new HttpClient();
 
             HttpClient.BaseAddress = new Uri(endpointString);
-            HttpClient.DefaultRequestHeaders.Accept.
+            //HttpClient.DefaultRequestHeaders.Accept.
         }
 
         public void GetBooks()
