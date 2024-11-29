@@ -1,4 +1,4 @@
-using BookSource.Models;
+using BookSource.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -15,11 +15,7 @@ namespace BookSource.Controllers
 
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
+            throw new NotImplementedException();
             return View();
         }
 
