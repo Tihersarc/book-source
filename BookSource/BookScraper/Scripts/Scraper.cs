@@ -24,11 +24,11 @@ namespace BookScraper.Scripts
             HttpClient.BaseAddress = new Uri(uriString);
             HttpClient.DefaultRequestHeaders.Accept.Clear();
             HttpClient.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/jason"));
+                new MediaTypeWithQualityHeaderValue("application/json"));
             //HttpClient.DefaultRequestHeaders.Add("key", "placeholder");
         }
 
-        public Task<List<Book>> GetBooks(string query,int page = 0, int pageSize = 40)
+        public List<Book> GetBooks(string query,int page = 0, int pageSize = 40)
         {
             List<Book> bookList = new List<Book>();
 
@@ -52,6 +52,7 @@ namespace BookScraper.Scripts
 
             try
             {
+                //Build request and sending it to the API
                 string request = uriString + endpointString + "/" + id;
 
                 HttpResponseMessage response = await HttpClient.GetAsync(request);
@@ -79,7 +80,19 @@ namespace BookScraper.Scripts
 
         public Book JsonToBook(string json)
         {
-            Book book = JsonSerializer.Deserialize<Book>(json);
+            Book book;
+
+            try
+            {
+                book = JsonSerializer.Deserialize<Book>(json);
+                //------------------------------------------------Continue here
+
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show("ERROR" + ex.ToString());
+                throw;
+            }
 
             return book;
         }

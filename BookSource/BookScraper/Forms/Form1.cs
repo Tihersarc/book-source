@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookScraper.Scripts;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,18 @@ namespace BookScraper
 {
     public partial class Form1 : Form
     {
+        Scraper scraper;
         public Form1()
         {
             InitializeComponent();
+            scraper = new Scraper();
+        }
+
+        private async void btnBookById_Click(object sender, EventArgs e)
+        {
+            Book b = await scraper.GetBookById("Y3OypwAACAAJ");
+
+            MessageBox.Show("Book:\n" + b.ToString());
         }
     }
 }
