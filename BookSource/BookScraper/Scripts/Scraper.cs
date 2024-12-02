@@ -127,7 +127,8 @@ namespace BookScraper.Scripts
                     ReleaseDate = item.Volumeinfo?.ReleaseDate,
                     Description = item.Volumeinfo?.Description,
                     PageCount = item.Volumeinfo.PageCount.ToString(),
-                    ImageLink = item.Volumeinfo?.Imagelinks?.Thumbnail
+                    ImageLink = item.Volumeinfo?.Imagelinks?.Thumbnail,
+                    AverageRating = item.Volumeinfo?.AverageRating
                 };
             }
             catch (Exception ex)

@@ -41,6 +41,9 @@ namespace BookScraper.Scripts
 
         [JsonPropertyName("imageLinks")]
         public ImageLinks Imagelinks { get; set; }
+
+        [JsonPropertyName("averageRating")]
+        public float? AverageRating { get; set; }
     }
 
     public class ImageLinks

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace BookScraper.Scripts
@@ -19,6 +20,7 @@ namespace BookScraper.Scripts
         public string Description {  get; set; }
         public string PageCount {  get; set; }
         public string ImageLink {  get; set; }
+        public float? AverageRating { get; set; }
 
 
         public override string ToString()
@@ -31,7 +33,7 @@ namespace BookScraper.Scripts
             string publisher = !string.IsNullOrEmpty(Publisher) ? Publisher : "Unknown Publisher";
 
             return $"Title: {Title}{subtitle}\n" +
-                   $"Subtitle: {Subtitle}\n" +
+                   $"Subtitle: {subtitle}\n" +
                    $"Genre(s): {genres}\n" +
                    $"Author(s): {authors}\n" +
                    $"Publisher: {publisher}\n" +
