@@ -41,14 +41,14 @@ This view show a list of books and redirect to them.
             {
                 <div class="col-md-6 mb-4">
                     <div class="anime-card">
-                        <img src="(@book.ImageLink??https://i.pinimg.com/originals/c8/05/66/c805665abddddfcc04692ff3c92cadfe.jpg)" class="card-img-top" alt="Shingeki no Kyojin">
+                        <img src="@book.ImageLink??https://i.pinimg.com/originals/c8/05/66/c805665abddddfcc04692ff3c92cadfe.jpg" class="card-img-top" alt="Img not found">
                         <div class="anime-card-body">
                             <h5 class="card-title">@book.Title</h5>
-                            <p class="card-text">@book.</p>
-                            <p><strong>Studio:</strong> Wit Studio</p>
-                            <p><strong>Source:</strong> Manga</p>
-                            <p><strong>Episodes:</strong> 25 | <strong>Duration:</strong> 24 min</p>
-                            <p class="rating">8.55</p>
+                            <p class="card-text">@book.Description</p>
+                            <p><strong>Studio:</strong> @book.Equals</p>
+                            <p><strong>Categories:</strong> @book.Categories.ToString()</p>
+                            <p><strong>Pages:</strong> @book.PageCount</p>
+                            <p class="rating">@book.Score</p>
                             <button class="btn btn-custom">Add to My List</button>
                         </div>
                     </div>
