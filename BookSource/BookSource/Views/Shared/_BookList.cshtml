@@ -3,57 +3,154 @@
 This view show a list of books and redirect to them.
 *@
 @{
-    @model BookListViewModel
+    @model List<BookViewModel>
 }
 <style>
-    .anime-card {
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+        background-color: #f5f5f5;
+        padding: 20px;
+    }
+
+    .cards-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .book-card {
+        background-color: #fff;
         border: 1px solid #ddd;
         border-radius: 8px;
+        width: 300px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
     }
-    .anime-card img {
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
-    }
-    .anime-card-body {
-        padding: 15px;
-    }
-    .rating {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #f39c12;
-    }
-    .btn-custom {
-        background-color: #3498db;
-        color: white;
-        border: none;
-    }
+
+        .book-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .book-card .card-content {
+            padding: 15px;
+        }
+
+        .book-card .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .book-card .card-subtitle {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .book-card .card-description {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .book-card .card-details {
+            font-size: 0.85rem;
+            color: #444;
+            margin-bottom: 10px;
+        }
+
+         .book-card .card-details span {
+             display: block;
+         }
+
+        .book-card .card-footer {
+            margin-top: auto;
+            padding: 10px 15px;
+            border-top: 1px solid #ddd;
+            background-color: #f9f9f9;
+            text-align: right;
+        }
+        .book-card .card-footer .categories {
+            margin-bottom: 5px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .book-card .category {
+            background-color: #3498db;
+            color: #fff;
+            font-size: 0.75rem;
+            padding: 3px 7px;
+            border-radius: 3px;
+        }
+
+        .book-card .btn {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+            .book-card .btn:hover {
+                background-color: #218838;
+            }
 </style>
 <div class="container mt-5">
     <div class="row">
-        @if (Model.Books == null)
+        @if (Model==null)
         {
             <div class="col">No se ha recibido ningun libro al componente</div>
         }
         else
         {
-            @foreach (BookViewModel book in Model.Books)
+            <div class="cards-container">
+            @foreach (BookViewModel book in Model)
             {
-                <div class="col-md-6 mb-4">
-                    <div class="anime-card">
-                        <img src="@book.ImageLink??https://i.pinimg.com/originals/c8/05/66/c805665abddddfcc04692ff3c92cadfe.jpg" class="card-img-top" alt="Img not found">
-                        <div class="anime-card-body">
-                            <h5 class="card-title">@book.Title</h5>
-                            <p class="card-text">@book.Description</p>
-                            <p><strong>Studio:</strong> @book.Equals</p>
-                            <p><strong>Categories:</strong> @book.Categories.ToString()</p>
-                            <p><strong>Pages:</strong> @book.PageCount</p>
-                            <p class="rating">@book.Score</p>
-                            <button class="btn btn-custom">Add to My List</button>
+                <div class="book-card">
+                        <img src=@(book.ImageLink??"https://i.pinimg.com/originals/c8/05/66/c805665abddddfcc04692ff3c92cadfe.jpg") alt="Book Image">
+                    <div class="card-content">
+                        <h3 class="card-title">@book.Title</h3>
+                        @if (!string.IsNullOrEmpty(book.SubTitle))
+                            {
+                                <h4 class="card-subtitle">@book.SubTitle</h4>
+                            }
+                        <p class="card-description">@(book.Description??"This book don't have description")</p>
+                        <div class="card-details">
+                            <span><strong>Editorial:</strong> @book.Editorial</span>
+                            <span><strong>Pages:</strong> @book.PageCount</span>
+                            <span><strong>Score:</strong> @book.Score</span>
+                            <span><strong>Author:</strong> @book.Author</span>
                         </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="categories">
+                            @foreach (CategoryViewModel category in book.Categories)
+                                {
+                                    <span class="category">@category.Category</span>
+                                }
+                        </div>
+                        <a href="#" class="btn">Read More</a>
                     </div>
                 </div>
             }
+            </div>
         }
 
     </div>

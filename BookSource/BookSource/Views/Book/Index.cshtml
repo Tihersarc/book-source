@@ -9,6 +9,6 @@
 <div>
     <h1>Books</h1>
     @{
-        Html.RenderPartial("_BookList", Model);
+       await Html.RenderPartialAsync("_BookList", Model.Books);
     }
 </div>
