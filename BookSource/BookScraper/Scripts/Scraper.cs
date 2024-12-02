@@ -31,6 +31,7 @@ namespace BookScraper.Scripts
             //HttpClient.DefaultRequestHeaders.Add("key", "placeholder");
         }
 
+        // Get the books on the page X and with a size of Y
         public async Task<List<Book>> GetBooks(string query, int page = 0, int pageSize = 40)
         {
             List<GoogleBooksItem> itemList = new List<GoogleBooksItem>();
@@ -43,6 +44,8 @@ namespace BookScraper.Scripts
 
                 HttpResponseMessage response = await HttpClient.GetAsync(request);
 
+
+                // If the request is succesful, parses and adds all the items to the list the method returns.
                 if (response.IsSuccessStatusCode)
                 {
                     string responseString = await response.Content.ReadAsStringAsync();
@@ -68,7 +71,7 @@ namespace BookScraper.Scripts
             }
             catch (Exception ex)
             {
-                System.Windows.Forms.MessageBox.Show("Test" + ex.ToString());
+                System.Windows.Forms.MessageBox.Show("Error:" + ex.ToString());
             }
 
             return bookList;
@@ -80,11 +83,12 @@ namespace BookScraper.Scripts
 
             try
             {
-                //Build request and sending it to the API
+                // Builds the request and sends it to the API
                 string request = uriString + endpointString + "/" + id;
 
                 HttpResponseMessage response = await HttpClient.GetAsync(request);
 
+                // If succesful parses the book and returns it
                 if (response.IsSuccessStatusCode)
                 {
                     string responseString = await response.Content.ReadAsStringAsync();
@@ -105,6 +109,7 @@ namespace BookScraper.Scripts
             return book;
         }
 
+        // Parses a GoogleBooksItem properties into a book
         public Book ItemToBook(GoogleBooksItem item)
         {
             Book book = new Book();
@@ -138,6 +143,8 @@ namespace BookScraper.Scripts
 
             return book;
         }
+
+        // Parses a json string into a GoogleBooksItem
 
         public GoogleBooksItem JsonToItem(string json)
         {
