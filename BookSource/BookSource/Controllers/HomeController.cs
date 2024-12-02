@@ -15,7 +15,9 @@ namespace BookSource.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            List<BookViewModel> listBooks = Tools.Tools.BookListTemporal();
+            BookListViewModel model = new BookListViewModel() { Books = listBooks };
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

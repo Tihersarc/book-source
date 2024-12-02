@@ -6,23 +6,17 @@ This view show a list of books and redirect to them.
     @model List<BookViewModel>
 }
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Roboto', sans-serif;
-    }
-
-    body {
-        background-color: #f5f5f5;
-        padding: 20px;
-    }
-
     .cards-container {
         display: flex;
         flex-wrap: wrap;
         gap: 20px;
         justify-content: center;
+        background-color: #f5f5f5;
+        padding: 20px;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Roboto', sans-serif;
     }
 
     .book-card {
@@ -39,8 +33,8 @@ This view show a list of books and redirect to them.
         .book-card img {
             width: 100%;
             height: 200px;
-            object-fit: cover;
-        }
+/*             object-fit: cover;
+ */        }
 
         .book-card .card-content {
             padding: 15px;
@@ -112,8 +106,6 @@ This view show a list of books and redirect to them.
                 background-color: #218838;
             }
 </style>
-<div class="container mt-5">
-    <div class="row">
         @if (Model==null)
         {
             <div class="col">No se ha recibido ningun libro al componente</div>
@@ -152,6 +144,3 @@ This view show a list of books and redirect to them.
             }
             </div>
         }
-
-    </div>
-</div>
