@@ -11,18 +11,20 @@ namespace BookScraper.Scripts
         public string IdAPI {  get; set; }
         public string Title {  get; set; }
         public string Subtitle {  get; set; }
-        public List<string> Genre { get; set; }
-        public List<string> Author { get; set; }
+        public string Genre { get; set; }
+        public List<string> GenreList { get; set; } // Property to have each individual genre
+        public string Author { get; set; }
         public string Publisher { get; set; }
         public string ReleaseDate { get; set; }
         public string Description {  get; set; }
         public string PageCount {  get; set; }
         public string ImageLink {  get; set; }
 
+
         public override string ToString()
         {
-            string authors = Author != null && Author.Count > 0 ? string.Join(", ", Author) : "Unknown Author";
-            string genres = Genre != null && Genre.Count > 0 ? string.Join(", ", Genre) : "No Genres";
+            string authors = Author;
+            string genres = GenreList != null && GenreList.Count > 0 ? string.Join(", ", Genre) : "No Genres";
             string subtitle = !string.IsNullOrWhiteSpace(Subtitle) ? $" - {Subtitle}" : string.Empty;
             string pageCount = !string.IsNullOrWhiteSpace(PageCount) ? PageCount : "N/A";
             string releaseDate = !string.IsNullOrEmpty(ReleaseDate) ? ReleaseDate : "Unknown Release Date";

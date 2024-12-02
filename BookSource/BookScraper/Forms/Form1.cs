@@ -22,10 +22,18 @@ namespace BookScraper
 
         private async void btnBookById_Click(object sender, EventArgs e)
         {
-            //Book b = await scraper.GetBookById("Y3OypwAACAAJ");
-            Book b = await scraper.GetBookById("BcG2dVRXKukC");
+            //Book b = await scraper.GetBookById("BcG2dVRXKukC");
+            Book b = await scraper.GetBookById(txtId.Text);
 
-            MessageBox.Show("Book:\n" + b.ToString());
+            if (b != null)
+                MessageBox.Show("Book:\n" + b.ToString());
+        }
+
+        private async void btnQuery_Click(object sender, EventArgs e)
+        {
+            List<Book> books = await scraper.GetBooks(txtQuery.Text);
+
+            dgvBooks.DataSource = books;
         }
     }
 }

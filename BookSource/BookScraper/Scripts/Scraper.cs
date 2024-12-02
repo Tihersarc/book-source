@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Security.Policy;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -30,18 +31,43 @@ namespace BookScraper.Scripts
             //HttpClient.DefaultRequestHeaders.Add("key", "placeholder");
         }
 
-        public List<Book> GetBooks(string query,int page = 0, int pageSize = 40)
+        public async Task<List<Book>> GetBooks(string query, int page = 0, int pageSize = 40)
         {
+            List<GoogleBooksItem> itemList = new List<GoogleBooksItem>();
             List<Book> bookList = new List<Book>();
 
             try
             {
                 int startIndex = page * pageSize;
                 string request = $"{endpointString}?q={query}&startIndex={startIndex}&maxResults={pageSize}";
+
+                HttpResponseMessage response = await HttpClient.GetAsync(request);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseString = await response.Content.ReadAsStringAsync();
+
+                    JsonElement jsonObject = JsonSerializer.Deserialize<JsonElement>(responseString);
+
+
+                    if (jsonObject.TryGetProperty("items", out JsonElement element) && element.ValueKind == JsonValueKind.Array)
+                    {
+                        itemList = JsonSerializer.Deserialize<List<GoogleBooksItem>>(element.ToString());
+
+                        foreach (var item in itemList)
+                        {
+                            bookList.Add(ItemToBook(item));
+                        }
+                    }
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("Error: " + response.StatusCode);
+                }
+
             }
             catch (Exception ex)
             {
-
                 System.Windows.Forms.MessageBox.Show("Test" + ex.ToString());
             }
 
@@ -69,7 +95,6 @@ namespace BookScraper.Scripts
                 {
                     System.Windows.Forms.MessageBox.Show("Error: " + response.StatusCode);
                 }
-
             }
             catch (Exception ex)
             {
@@ -80,39 +105,63 @@ namespace BookScraper.Scripts
             return book;
         }
 
-        public Book JsonToBook(string json)
+        public Book ItemToBook(GoogleBooksItem item)
         {
-            Book book;
+            Book book = new Book();
+
             try
             {
-                GoogleBooksItem item;
-
-                item = JsonSerializer.Deserialize<GoogleBooksItem>(json);
-                
-                //------------------------------------------------Continue here
-
                 book = new Book
                 {
                     IdAPI = item.IdAPI,
                     Title = item.Volumeinfo?.Title,
                     Subtitle = item.Volumeinfo?.Subtitle,
-                    Author = item.Volumeinfo?.Authors,
-                    Genre = item.Volumeinfo?.Categories,
+
+                    Author = item.Volumeinfo?.Authors.Count > 0 ? 
+                        string.Join(", ", item.Volumeinfo?.Authors) : "Unknown Author",
+                    Genre = item.Volumeinfo?.Categories.Count > 0 ? 
+                        string.Join(", ", item.Volumeinfo?.Categories) : "No Genres",
+                    GenreList = item.Volumeinfo?.Categories,
+
                     Publisher = item.Volumeinfo?.Publisher,
                     ReleaseDate = item.Volumeinfo?.ReleaseDate,
                     Description = item.Volumeinfo?.Description,
                     PageCount = item.Volumeinfo.PageCount.ToString(),
                     ImageLink = item.Volumeinfo?.Imagelinks?.Thumbnail
                 };
-                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("ERROR in ItemToBook:\n" + ex);
+            }
 
+            return book;
+        }
 
+        public GoogleBooksItem JsonToItem(string json)
+        {
+            GoogleBooksItem item;
+
+            try
+            {
+                item = JsonSerializer.Deserialize<GoogleBooksItem>(json);
+
+                //book = ItemToBook(item);
             }
             catch (Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show("ERROR" + ex.ToString());
                 throw;
             }
+
+            return item;
+        }
+
+        public Book JsonToBook(string json)
+        {
+            // First gets the json and parses it to a GoogleBooksItem,
+            // then parses the GoogleBooksItem to a book
+            Book book = ItemToBook(JsonToItem(json));
 
             return book;
         }
