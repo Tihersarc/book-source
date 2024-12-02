@@ -33,7 +33,10 @@
             this.btnQuery = new System.Windows.Forms.Button();
             this.txtQuery = new System.Windows.Forms.TextBox();
             this.dgvBooks = new System.Windows.Forms.DataGridView();
+            this.numPages = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBooks)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPages)).BeginInit();
             this.SuspendLayout();
             // 
             // btnBookById
@@ -69,6 +72,7 @@
             this.txtQuery.Name = "txtQuery";
             this.txtQuery.Size = new System.Drawing.Size(160, 26);
             this.txtQuery.TabIndex = 3;
+            this.txtQuery.Text = "BcG2dVRXKukC";
             // 
             // dgvBooks
             // 
@@ -85,11 +89,44 @@
             this.dgvBooks.Size = new System.Drawing.Size(414, 426);
             this.dgvBooks.TabIndex = 4;
             // 
+            // numPages
+            // 
+            this.numPages.Location = new System.Drawing.Point(12, 153);
+            this.numPages.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numPages.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numPages.Name = "numPages";
+            this.numPages.Size = new System.Drawing.Size(120, 26);
+            this.numPages.TabIndex = 5;
+            this.numPages.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 130);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(131, 20);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Number of pages";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.numPages);
             this.Controls.Add(this.dgvBooks);
             this.Controls.Add(this.txtQuery);
             this.Controls.Add(this.btnQuery);
@@ -98,6 +135,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.dgvBooks)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPages)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -110,6 +148,8 @@
         private System.Windows.Forms.Button btnQuery;
         private System.Windows.Forms.TextBox txtQuery;
         private System.Windows.Forms.DataGridView dgvBooks;
+        private System.Windows.Forms.NumericUpDown numPages;
+        private System.Windows.Forms.Label label1;
     }
 }
 

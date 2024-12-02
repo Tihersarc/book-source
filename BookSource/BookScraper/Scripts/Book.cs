@@ -12,7 +12,7 @@ namespace BookScraper.Scripts
         public string Title {  get; set; }
         public string Subtitle {  get; set; }
         public string Genre { get; set; }
-        public List<string> GenreList { get; set; } // Property to have each individual genre
+        public List<string> GenreList { get; set; } // Property to have each individual genre stored
         public string Author { get; set; }
         public string Publisher { get; set; }
         public string ReleaseDate { get; set; }

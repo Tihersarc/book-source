@@ -22,7 +22,6 @@ namespace BookScraper
 
         private async void btnBookById_Click(object sender, EventArgs e)
         {
-            //Book b = await scraper.GetBookById("BcG2dVRXKukC");
             Book b = await scraper.GetBookById(txtId.Text);
 
             if (b != null)
@@ -31,7 +30,12 @@ namespace BookScraper
 
         private async void btnQuery_Click(object sender, EventArgs e)
         {
-            List<Book> books = await scraper.GetBooks(txtQuery.Text);
+            List<Book> books = new List<Book>();
+
+            for (int currentPage = 0; currentPage < numPages.Value; currentPage++)
+            {
+                books.AddRange(await scraper.GetBooks(txtQuery.Text, currentPage));
+            }
 
             dgvBooks.DataSource = books;
         }
