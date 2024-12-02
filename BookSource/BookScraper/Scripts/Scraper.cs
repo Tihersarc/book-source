@@ -4,9 +4,11 @@ using System.Drawing.Printing;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Policy;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace BookScraper.Scripts
 {
@@ -81,11 +83,29 @@ namespace BookScraper.Scripts
         public Book JsonToBook(string json)
         {
             Book book;
-
             try
             {
-                book = JsonSerializer.Deserialize<Book>(json);
+                GoogleBooksItem item;
+
+                item = JsonSerializer.Deserialize<GoogleBooksItem>(json);
+                
                 //------------------------------------------------Continue here
+
+                book = new Book
+                {
+                    IdAPI = item.IdAPI,
+                    Title = item.Volumeinfo?.Title,
+                    Subtitle = item.Volumeinfo?.Subtitle,
+                    Author = item.Volumeinfo?.Authors,
+                    Genre = item.Volumeinfo?.Categories,
+                    Publisher = item.Volumeinfo?.Publisher,
+                    ReleaseDate = item.Volumeinfo?.ReleaseDate,
+                    Description = item.Volumeinfo?.Description,
+                    PageCount = item.Volumeinfo.PageCount.ToString(),
+                    ImageLink = item.Volumeinfo?.Imagelinks?.Thumbnail
+                };
+                
+
 
             }
             catch (Exception ex)
