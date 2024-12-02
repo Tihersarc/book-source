@@ -1,0 +1,97 @@
+﻿/* Estilo para el fondo del navbar con efecto cristal */
+.navbar {
+    display: flex;
+    justify-content: space-between; 
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.1); 
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25); 
+    width: 100%;
+    border-radius: 12px;
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 5px; 
+    margin-left: auto; /* Mueve los elementos a la derecha */
+}
+
+/* Logo del navbar */
+.navbar-brand {
+    font-family: 'Georgia', serif;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+/* Links del menú */
+.nav-link {
+    font-size: 16px;
+    font-weight: bold;
+    color: #2c3e50;
+    font-family: 'Georgia', serif;
+    text-decoration: none;
+    padding: 5px 10px;
+    margin: 0 5px;
+    transition: color 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+    color: #34495e;
+    transform: scale(1.1);
+}
+
+/* Imagen de usuario o botón */
+.navbar img {
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin-right: 10px; /* Espacio entre el icono y los links */
+}
+
+/* Barra de búsqueda */
+.form-control {
+    border-radius: 50px;
+    border: 1px solid #ccc;
+    color: #495057;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+    padding: 10px 20px;
+}
+
+.btn-outline-success {
+    border-radius: 50px;
+    border-color: black;
+    color: cornflowerblue;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-outline-success:hover {
+    background-color: #28a745;
+    color: #fff;
+}
+
+/* Botón de inicio de sesión */
+.btn-outline-primary {
+    border-radius: 50px;
+    border-color: #007bff;
+    color: #007bff;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-outline-primary:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Barra de búsqueda */
+.search-container {
+    background-color: #fff;
+    color: #495057; 
+    border-radius: 50px;
+    padding: 10px 20px;
+    border: 1px solid #007bff;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+}
