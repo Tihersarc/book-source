@@ -48,10 +48,10 @@ CREATE TABLE Book (
 	Title varchar(255) NOT NULL,
 	Author varchar(255) NOT NULL,
 	[Description] varchar(1024),
-	ImageLink varchar(255),
+	ImageUrl varchar(255),
 	Subtitle varchar(255),
 	Editorial varchar(255),
-	[PageCount] varchar(255),
+	[PageCount] int,
 	Score double precision
 );
 
