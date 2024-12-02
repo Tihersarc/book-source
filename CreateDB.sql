@@ -1,23 +1,43 @@
+CREATE DATABASE BookSource;
+
+USE BookSource;
+
+
+-- DELETE IF EXISTS
+DROP TABLE PublicationLikes;
+DROP TABLE Publication;
+DROP TABLE Review;
+DROP TABLE Book_Category;
+DROP TABLE ListOfBooks_Book;
+DROP TABLE Follow;
+DROP TABLE Book;
+DROP TABLE ListOfBooks;
+DROP TABLE Category;
+DROP TABLE [User];
+
+
+
+-- CREATE
 CREATE TABLE [User] (
     IdUser int IDENTITY(1,1) PRIMARY KEY,
     UserName varchar(255) UNIQUE NOT NULL,
     Email varchar(255) UNIQUE NOT NULL,
-    PasswordHash varbinary(MAX),
-    PasswordSalt varbinary(MAX),
+    PasswordHash varbinary(MAX) NOT NULL,
+    PasswordSalt varbinary(MAX) NOT NULL,
     BirthDate date,
     ProfileImageUrl varchar(255)
 );
 
 CREATE TABLE Follow (
-    IdFollower int,
-    IdFollowed int,
-    PRIMARY KEY (IdFollower, IdFollowed),
-    FOREIGN KEY (IdFollower) REFERENCES [User](IdUser),
-    FOREIGN KEY (IdFollowed) REFERENCES [User](IdUser)
+    FkIdFollower int NOT NULL,
+    FkIdFollowed int NOT NULL,
+    PRIMARY KEY (FkIdFollower, FkIdFollowed),
+    FOREIGN KEY (FkIdFollower) REFERENCES [User](IdUser),
+    FOREIGN KEY (FkIdFollowed) REFERENCES [User](IdUser)
 );
 
-CREATE TABLE [Library] (
-	IdLibrary int IDENTITY(1,1) PRIMARY KEY,
+CREATE TABLE [ListOfBooks] (
+	IdListOfBooks int IDENTITY(1,1) PRIMARY KEY,
 	ListName varchar(255) NOT NULL,
 	FkIdUser int NOT NULL,
 	FOREIGN KEY (FkIdUser) REFERENCES [User](IdUser)
@@ -35,11 +55,11 @@ CREATE TABLE Book (
 	Score double precision
 );
 
-CREATE TABLE Library_Book (
-	FkIdLibrary int,
+CREATE TABLE ListOfBooks_Book (
+	FkIdListOfBooks int,
 	FkIdBook int,
-	PRIMARY KEY (FkIdLibrary, FkIdBook),
-	FOREIGN KEY (FkIdLibrary) REFERENCES [Library](IdLibrary),
+	PRIMARY KEY (FkIdListOfBooks, FkIdBook),
+	FOREIGN KEY (FkIdListOfBooks) REFERENCES [ListOfBooks](IdListOfBooks),
 	FOREIGN KEY (FkIdBook) REFERENCES Book(IdBook)
 );
 
