@@ -30,5 +30,11 @@ namespace BookSource.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        // Iniciar sesion botón
+        public IActionResult Login()
+        {
+            return Redirect("Authentication/Login");
+        }
     }
 }
