@@ -15,36 +15,32 @@ namespace BookScraper.DALs
             db = new BookDataClassesDataContext();
         }
 
-        public void Insert(Book b)
+        public void Insert(Scripts.Book b)
         {
             try
             {
+                Book book = new Book()
+                {
+                    //IdBook = b.IdBook, id auto
+                    Title = b.Title,
+                    Subtitle = b.Subtitle,
+                    //-----------------------------------Genre
+                    Author = b.Author,
+                    Editorial = b.Publisher,
+                    Description = b.Description,
+                    PageCount = string.IsNullOrWhiteSpace(b.PageCount) ? int.Parse(b.PageCount) : 0,
+                    ImageUrl = b.ImageLink,
+                    Score = b.AverageRating
+                };
 
+                db.Book.InsertOnSubmit(book);
+                db.SubmitChanges();
             }
             catch (Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show("ERROR on Insert:\n" + ex.ToString());
                 throw;
             }
-            Book book = new Book()
-            {
-                IdBook = b.IdBook,
-                Title = b.Title,
-                Subtitle = b.Subtitle,
-                //Genre
-                Author = b.Author,
-                Editorial = b.Editorial,
-                Description = b.Description,
-                PageCount = b.PageCount,
-                ImageUrl = b.ImageUrl,
-                Score = b.Score
-            };
-
-            db.Book.InsertOnSubmit(book);
-            db.SubmitChanges();
-            
         }
-
-
     }
 }

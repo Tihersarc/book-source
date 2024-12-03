@@ -1,4 +1,5 @@
-﻿using BookScraper.Scripts;
+﻿using BookScraper.DALs;
+using BookScraper.Scripts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Book = BookScraper.Scripts.Book;
 
 namespace BookScraper
 {
@@ -38,6 +40,13 @@ namespace BookScraper
             }
 
             dgvBooks.DataSource = books;
+
+            BookDAL dal = new BookDAL();
+
+            foreach (Book book in books)
+            {
+                dal.Insert(book);
+            }
         }
     }
 }
