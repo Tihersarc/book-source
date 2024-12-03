@@ -15,8 +15,6 @@ DROP TABLE ListOfBooks;
 DROP TABLE Category;
 DROP TABLE [User];
 
-
-
 -- CREATE
 CREATE TABLE [User] (
     IdUser int IDENTITY(1,1) PRIMARY KEY,
@@ -47,7 +45,7 @@ CREATE TABLE Book (
 	IdBook int IDENTITY(1,1) PRIMARY KEY,
 	Title varchar(255) NOT NULL,
 	Author varchar(255) NOT NULL,
-	[Description] varchar(1024),
+	[Description] varchar(5000),
 	ImageUrl varchar(255),
 	Subtitle varchar(255),
 	Editorial varchar(255),

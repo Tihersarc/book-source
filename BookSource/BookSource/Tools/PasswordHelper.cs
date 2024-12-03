@@ -19,6 +19,8 @@ namespace BookSource.Tools
             using (var hmac = new HMACSHA512(storedSalt))
             {
                 var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+                Console.WriteLine("Computed Hash: " + Convert.ToBase64String(computedHash));
+                Console.WriteLine("Stored Hash: " + Convert.ToBase64String(storedHash));
                 return computedHash.SequenceEqual(storedHash);
             }
         }

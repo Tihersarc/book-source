@@ -1,3 +1,5 @@
+using BookSource.DAL;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Simulando el método ConfigureServices
@@ -22,7 +24,9 @@ void ConfigureServices(IServiceCollection services, IConfiguration configuration
     //     options.UseSqlServer(configuration.GetConnectionString(connectionString)));
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddSession(options =>
+builder.Services.AddScoped<UserDAL>(); // Registra UserDAL en el sistema de DI // Asumiendo que UserDAL no depende de otros servicios
+
+    builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromDays(30);
     options.Cookie.HttpOnly = true;

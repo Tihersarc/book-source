@@ -29,6 +29,8 @@ namespace BookSource.DAL
                 SqlCommand cmd = new SqlCommand(query, connection);
                 cmd.Parameters.AddWithValue("@UserName", username);
 
+                connection.Open();
+
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (reader.Read())
@@ -37,6 +39,7 @@ namespace BookSource.DAL
                         var passwordHash = (byte[])reader["PasswordHash"];
                         var passwordSalt = (byte[])reader["PasswordSalt"];
 
+                        bool a = PasswordHelper.VerifyPasswordHash(password, passwordHash, passwordSalt);
                         if (PasswordHelper.VerifyPasswordHash(password, passwordHash, passwordSalt))
                         {
                             // If the password is OK, return the full user info
@@ -64,8 +67,8 @@ namespace BookSource.DAL
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = @"INSERT INTO User(UserName, Email, PasswordHash, PasswordSalt, BirthDate, ProfileImageUrl)
-                                VALUES (@UserName, @Email, @PasswordHash, @PasswordHash, @BirthDate, @ProfileImageUrl)";
+                string query = "INSERT INTO [User](UserName, Email, PasswordHash, PasswordSalt, BirthDate, ProfileImageUrl)"
+                             + "VALUES (@UserName, @Email, @PasswordHash, @PasswordSalt, @BirthDate, @ProfileImageUrl);";
 
                 SqlCommand cmd = new SqlCommand(query, connection);
                 cmd.Parameters.AddWithValue("@UserName", user.UserName);
@@ -84,13 +87,10 @@ namespace BookSource.DAL
                 }
                 catch (Exception ex)
                 {
-                    {
-                        Console.WriteLine("Error al Crear el usuario: " + ex.Message);
-                    }
-
-                    if (affectedRows > 0)
-                        return true;
+                     Console.WriteLine("Error al Crear el usuario: " + ex.Message);
                 }
+                if (affectedRows > 0)
+                    return true;
                 return false;
             }
         }
