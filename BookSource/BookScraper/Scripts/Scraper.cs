@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing.Printing;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Security.Policy;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BookScraper.Models;
+
 
 namespace BookScraper.Scripts
 {
@@ -132,26 +129,24 @@ namespace BookScraper.Scripts
         // Parses a GoogleBooksItem properties into a book
         public Book ItemToBook(GoogleBooksItem item)
         {
-            Book book = new Book();
+            Models.Book book = null;
 
             try
             {
-                book = new Book
+                book = new Models.Book
                 {
                     IdAPI = item.IdAPI,
                     Title = item.Volumeinfo?.Title,
                     Subtitle = item.Volumeinfo?.Subtitle,
-
                     Author = item.Volumeinfo?.Authors.Count > 0 ? 
                         string.Join(", ", item.Volumeinfo?.Authors) : "Unknown Author",
                     Genre = item.Volumeinfo?.Categories.Count > 0 ? 
                         string.Join(", ", item.Volumeinfo?.Categories) : "No Genres",
                     GenreList = item.Volumeinfo?.Categories,
-
                     Publisher = item.Volumeinfo?.Publisher,
                     ReleaseDate = item.Volumeinfo?.ReleaseDate,
                     Description = item.Volumeinfo?.Description,
-                    PageCount = item.Volumeinfo.PageCount.ToString(),
+                    PageCount = (int)item.Volumeinfo.PageCount,
                     ImageLink = item.Volumeinfo?.Imagelinks?.Thumbnail,
                     AverageRating = item.Volumeinfo?.AverageRating
                 };

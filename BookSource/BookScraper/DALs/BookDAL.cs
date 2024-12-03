@@ -15,23 +15,36 @@ namespace BookScraper.DALs
             db = new BookDataClassesDataContext();
         }
 
-        public void Insert(Scripts.Book b)
+        public void Insert(Models.BookModel b)
         {
             try
             {
                 Book book = new Book()
                 {
-                    //IdBook = b.IdBook, id auto
                     Title = b.Title,
                     Subtitle = b.Subtitle,
                     //-----------------------------------Genre
                     Author = b.Author,
                     Editorial = b.Publisher,
                     Description = b.Description,
-                    PageCount = string.IsNullOrWhiteSpace(b.PageCount) ? int.Parse(b.PageCount) : 0,
+                    PageCount = b.PageCount,
                     ImageUrl = b.ImageLink,
                     Score = b.AverageRating
                 };
+
+                foreach (string item in b.GenreList)
+                {
+                    if (!db.Category.Any(genre => genre.CategoryName == item))
+                    {
+                        //Add genre && create relation
+                    }
+                    else
+                    {
+                        //Create relation in mid table
+
+                        //db.Book_Category()
+                    }
+                }
 
                 db.Book.InsertOnSubmit(book);
                 db.SubmitChanges();
@@ -39,7 +52,6 @@ namespace BookScraper.DALs
             catch (Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show("ERROR on Insert:\n" + ex.ToString());
-                throw;
             }
         }
     }

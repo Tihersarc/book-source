@@ -2,14 +2,7 @@
 using BookScraper.Scripts;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Book = BookScraper.Scripts.Book;
 
 namespace BookScraper
 {
@@ -27,7 +20,7 @@ namespace BookScraper
             Book b = await scraper.GetBookById(txtId.Text);
 
             if (b != null)
-                MessageBox.Show("Book:\n" + b.ToString());
+                MessageBox.Show("BookModel:\n" + b.ToString());
         }
 
         private async void btnQuery_Click(object sender, EventArgs e)

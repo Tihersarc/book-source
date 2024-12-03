@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace BookScraper.Scripts
+namespace BookScraper.Models
 {
     public class GoogleBooksItem
     {

@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Linq.Mapping;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
-namespace BookScraper.Scripts
+namespace BookScraper.Models
 {
-    [Table(Name = "Book")]
+    [Table(Name = "BookModel")]
     internal class Book
     {
         public string IdAPI {  get; set; }
@@ -22,7 +17,7 @@ namespace BookScraper.Scripts
         public string Publisher { get; set; }
         public string ReleaseDate { get; set; }
         public string Description {  get; set; }
-        public string PageCount {  get; set; }
+        public int PageCount {  get; set; }
 
         [Column(Name = "ImageUrl")]
         public string ImageLink {  get; set; }
@@ -36,7 +31,7 @@ namespace BookScraper.Scripts
             string authors = Author;
             string genres = GenreList != null && GenreList.Count > 0 ? string.Join(", ", Genre) : "No Genres";
             string subtitle = !string.IsNullOrWhiteSpace(Subtitle) ? $" - {Subtitle}" : string.Empty;
-            string pageCount = !string.IsNullOrWhiteSpace(PageCount) ? PageCount : "N/A";
+            string pageCount = PageCount.ToString();
             string releaseDate = !string.IsNullOrEmpty(ReleaseDate) ? ReleaseDate : "Unknown Release Date";
             string publisher = !string.IsNullOrEmpty(Publisher) ? Publisher : "Unknown Publisher";
 
