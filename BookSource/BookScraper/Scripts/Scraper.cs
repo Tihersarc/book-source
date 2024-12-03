@@ -109,6 +109,26 @@ namespace BookScraper.Scripts
             return book;
         }
 
+        // Parses a json string into a GoogleBooksItem
+        public GoogleBooksItem JsonToItem(string json)
+        {
+            GoogleBooksItem item;
+
+            try
+            {
+                item = JsonSerializer.Deserialize<GoogleBooksItem>(json);
+
+                //book = ItemToBook(item);
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show("ERROR" + ex.ToString());
+                throw;
+            }
+
+            return item;
+        }
+
         // Parses a GoogleBooksItem properties into a book
         public Book ItemToBook(GoogleBooksItem item)
         {
@@ -143,28 +163,7 @@ namespace BookScraper.Scripts
 
             return book;
         }
-
-        // Parses a json string into a GoogleBooksItem
-
-        public GoogleBooksItem JsonToItem(string json)
-        {
-            GoogleBooksItem item;
-
-            try
-            {
-                item = JsonSerializer.Deserialize<GoogleBooksItem>(json);
-
-                //book = ItemToBook(item);
-            }
-            catch (Exception ex)
-            {
-                System.Windows.Forms.MessageBox.Show("ERROR" + ex.ToString());
-                throw;
-            }
-
-            return item;
-        }
-
+        
         public Book JsonToBook(string json)
         {
             // First gets the json and parses it to a GoogleBooksItem,

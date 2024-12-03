@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="BookSource" Class="BookDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=85.208.21.117,54321;Initial Catalog=BookSource;Persist Security Info=True;User ID=sa;Trust Server Certificate=True" SettingsObjectName="BookScraper.Properties.Settings" SettingsPropertyName="BookSourceConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Book" Member="Book">
+    <Type Name="Book">
+      <Column Name="IdBook" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Author" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="ImageUrl" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Subtitle" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="Editorial" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="PageCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Score" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="Book_Book_Category" Member="Book_Category" ThisKey="IdBook" OtherKey="FkIdBook" Type="Book_Category" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Book_Category" Member="Book_Category">
+    <Type Name="Book_Category">
+      <Column Name="FkIdCategory" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FkIdBook" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Book_Book_Category" Member="Book" ThisKey="FkIdBook" OtherKey="IdBook" Type="Book" IsForeignKey="true" />
+      <Association Name="Category_Book_Category" Member="Category" ThisKey="FkIdCategory" OtherKey="IdCategory" Type="Category" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Category" Member="Category">
+    <Type Name="Category">
+      <Column Name="IdCategory" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CategoryName" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="Category_Book_Category" Member="Book_Category" ThisKey="IdCategory" OtherKey="FkIdCategory" Type="Book_Category" />
+    </Type>
+  </Table>
+</Database>

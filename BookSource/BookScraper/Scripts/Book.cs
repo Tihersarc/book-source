@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Linq.Mapping;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace BookScraper.Scripts
 {
+    [Table(Name = "Book")]
     internal class Book
     {
         public string IdAPI {  get; set; }
@@ -15,11 +17,17 @@ namespace BookScraper.Scripts
         public string Genre { get; set; }
         public List<string> GenreList { get; set; } // Property to have each individual genre stored
         public string Author { get; set; }
+
+        [Column(Name = "Editorial")]
         public string Publisher { get; set; }
         public string ReleaseDate { get; set; }
         public string Description {  get; set; }
         public string PageCount {  get; set; }
+
+        [Column(Name = "ImageUrl")]
         public string ImageLink {  get; set; }
+
+        [Column(Name = "Score")]
         public float? AverageRating { get; set; }
 
 
