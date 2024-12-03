@@ -1,7 +1,6 @@
 using BookSource.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-
 namespace BookSource.Controllers
 {
     public class HomeController : Controller
@@ -16,7 +15,7 @@ namespace BookSource.Controllers
         public IActionResult Index()
         {
             ViewBag.UserName = "Shiro";
-            ViewBag.UserImg = "https://i.pinimg.com/originals/c8/05/66/c805665abddddfcc04692ff3c92cadfe.jpg";
+            ViewBag.UserImg = Tools.Tools.DefaultBookImg;
             List<BookViewModel> listBooks = Tools.Tools.BookListTemporal();
             BookListViewModel model = new BookListViewModel() { Books = listBooks };
             return View(model);

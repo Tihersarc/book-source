@@ -4,6 +4,9 @@ namespace BookSource.Tools
 {
     public static class Tools
     {
+        public static string DefaultBookImg = "https://i.pinimg.com/originals/c8/05/66/c805665abddddfcc04692ff3c92cadfe.jpg";
+        public static string DefaultUserImg = "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg";
+
         public static List<BookViewModel> BookListTemporal()
         {
             List<BookViewModel> bookList = new List<BookViewModel>();
@@ -13,6 +16,19 @@ namespace BookSource.Tools
             bookList.Add(new BookViewModel { Author = "Empty", Categories = CategoryListTemporal(),  Editorial = "Empty", IdBook = 4, PageCount = 12, Score = 5, Title = "Empty" });
 
             return bookList;
+        }
+        public static UserViewModel UserTemporal()
+        {
+            UserViewModel userModel = new UserViewModel()
+            {
+                IdUser = 1,
+                UserName = "Test",
+                ProfileImageUrl = DefaultBookImg,
+                Birthdate = DateTime.Now,
+                Email = "usertest@shiro.com",
+
+            };
+            return userModel;
         }
         public static List<CategoryViewModel> CategoryListTemporal()
         {

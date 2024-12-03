@@ -1,6 +1,47 @@
 ﻿@using BookSource.Models.ViewModel
+@using BookSource.Tools
 
 @model UserViewModel
 @{
     ViewData["Title"] = "User";
 }
+<style>
+    .userLayout {
+        width: 100%;
+        display: grid;
+        grid: "sidebar body" 1fr / 30% auto;
+        gap: 8px;
+    }
+
+    .userSidebar {
+        grid-area: sidebar;
+    }
+
+    .userBody {
+        grid-area: body;
+    }
+    .userImg
+    {
+        width: 100%;
+        height: 200px;
+        object-fit: contain;
+    }
+</style>
+<section class="userLayout">
+    <div class="userSidebar">
+        @if (Model==null)
+        {
+            <div>No se ha recibido ningun usuario</div>
+        }
+        else
+        {
+            <img class="userImg" src=@(Model.ProfileImageUrl??Tools.DefaultUserImg) alt="ImageNotFound" />
+            <div>Usuario: @Model.UserName</div>
+            <div>Correo: @Model.Email</div>
+            <div>Nacimiento: @(Model.Birthdate.HasValue ? Model.Birthdate:"Sin establecer")</div>
+            <div>Seguidos</div>
+            <div>Seguidores</div>
+        }
+    </div>
+    <div class="userBody">Body</div>
+</section>
