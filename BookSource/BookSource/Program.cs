@@ -20,6 +20,14 @@ void ConfigureServices(IServiceCollection services, IConfiguration configuration
 
     //services.AddDbContext<MyDbContext>(options =>
     //     options.UseSqlServer(configuration.GetConnectionString(connectionString)));
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromDays(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
     // Agregar servicios de autenticación, etc.
     // services.AddAuthentication();
@@ -34,8 +42,9 @@ void Configure(WebApplication app, IWebHostEnvironment env)
         app.UseHsts();
     }
 
-    app.UseHttpsRedirection();
-    app.UseStaticFiles();
+app.UseSession();
+app.UseHttpsRedirection();
+app.UseStaticFiles();
 
     app.UseRouting();
     app.UseAuthorization();
