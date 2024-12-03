@@ -17,7 +17,7 @@ namespace BookScraper
 
         private async void btnBookById_Click(object sender, EventArgs e)
         {
-            Book b = await scraper.GetBookById(txtId.Text);
+            Models.Book b = await scraper.GetBookById(txtId.Text);
 
             if (b != null)
                 MessageBox.Show("BookModel:\n" + b.ToString());
@@ -25,7 +25,7 @@ namespace BookScraper
 
         private async void btnQuery_Click(object sender, EventArgs e)
         {
-            List<Book> books = new List<Book>();
+            List<Models.Book> books = new List<Models.Book>();
 
             for (int currentPage = 0; currentPage < numPages.Value; currentPage++)
             {
@@ -36,7 +36,7 @@ namespace BookScraper
 
             BookDAL dal = new BookDAL();
 
-            foreach (Book book in books)
+            foreach (Models.Book book in books)
             {
                 dal.Insert(book);
             }

@@ -3,9 +3,10 @@ using System.Data.Linq.Mapping;
 
 namespace BookScraper.Models
 {
-    [Table(Name = "BookModel")]
+    [Table(Name = "Book")]
     internal class Book
     {
+        public string IdBook {  get; set; }
         public string IdAPI {  get; set; }
         public string Title {  get; set; }
         public string Subtitle {  get; set; }

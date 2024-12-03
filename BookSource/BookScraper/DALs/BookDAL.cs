@@ -15,15 +15,14 @@ namespace BookScraper.DALs
             db = new BookDataClassesDataContext();
         }
 
-        public void Insert(Models.BookModel b)
+        public void Insert(Models.Book b)
         {
             try
             {
-                Book book = new Book()
+                Book newBook = new Book()
                 {
                     Title = b.Title,
                     Subtitle = b.Subtitle,
-                    //-----------------------------------Genre
                     Author = b.Author,
                     Editorial = b.Publisher,
                     Description = b.Description,
@@ -32,22 +31,39 @@ namespace BookScraper.DALs
                     Score = b.AverageRating
                 };
 
+                db.Book.InsertOnSubmit(newBook);
+                db.SubmitChanges();
+
                 foreach (string item in b.GenreList)
                 {
                     if (!db.Category.Any(genre => genre.CategoryName == item))
                     {
-                        //Add genre && create relation
-                    }
-                    else
-                    {
-                        //Create relation in mid table
+                        //Add genre if it doesn't exist
+                        Category newCategory = new Category
+                        {
+                            CategoryName = item,
+                        };
 
-                        //db.Book_Category()
+                        db.Category.InsertOnSubmit(newCategory);
                     }
+
+                    //Create relation in mid table
+
+                    int categoryId = db.Category
+                        .Where(genre=> genre.CategoryName == item)
+                        .Select(genre => genre.IdCategory)
+                        .FirstOrDefault();
+
+                        Book_Category book_Category = new Book_Category
+                        {
+                            FkIdBook = newBook.IdBook,
+                            FkIdCategory = categoryId
+                        };
+
+                        db.Book_Category.InsertOnSubmit(book_Category);
+                        db.SubmitChanges();                    
                 }
 
-                db.Book.InsertOnSubmit(book);
-                db.SubmitChanges();
             }
             catch (Exception ex)
             {
