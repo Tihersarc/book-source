@@ -2,7 +2,7 @@
 {
     public class User
     {
-        public required int Id { get; set; }
+        public required int IdUser { get; set; }
         public required string UserName { get; set; }
         public required string Email { get; set; }
         public required byte[] PasswordHash { get; set; }
