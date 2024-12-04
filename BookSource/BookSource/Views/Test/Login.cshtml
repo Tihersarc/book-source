@@ -1,14 +1,15 @@
 ﻿@using BookSource.Models.ViewModel
-@model UserTestViewModel
+@model TestViewModel
 
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
     var user = ViewBag.us as string;
+    var book = ViewBag.book as string;
 }
 
-@if (string.IsNullOrEmpty(user))
+@if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(book))
 {
     <h1>LOGIN TEST</h1>
     <div class="form-control">
@@ -56,11 +57,21 @@
 
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
+
+        <form asp-controller="Test" asp-action="GetBook" method="post" asp-antiforgery="true">
+            <div class="form-group">
+                <label asp-for="Book">Libro:</label>
+                <input asp-for="Book" value="El mundo de The Witcher. Compendio del videojuego" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
     </div>
 }
 else
 {
     <h1>Hola @user</h1>
+    <h1> El libro es @book</h1>
 }
 <div>
 
