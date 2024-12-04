@@ -1,4 +1,4 @@
-using BookSource.Models;
+using BookSource.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -15,14 +15,16 @@ namespace BookSource.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            ViewBag.UserName = "Shiro";
+            ViewBag.UserImg = "https://i.pinimg.com/originals/c8/05/66/c805665abddddfcc04692ff3c92cadfe.jpg";
+            List<BookViewModel> listBooks = Tools.Tools.BookListTemporal();
+            BookListViewModel model = new BookListViewModel() { Books = listBooks };
+            return View(model);
         }
-
-        public IActionResult Privacy()
+        public IActionResult About()
         {
             return View();
         }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

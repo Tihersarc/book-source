@@ -1,29 +1,68 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Session;
+@{
+
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BookSource</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BookSource.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/layout.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BookSource</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <!-- Logo -->
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">BookSource</a>
+                <!-- Botón para colapsar el menú en pantallas pequeñas -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+                <!-- Contenedor de la barra de búsqueda -->
+                <div class="search-container">
+                    <form class="d-flex ms-auto" role="search">
+                        <div class="input-group">
+                            <input class="form-control" type="search" placeholder="Buscar" aria-label="Buscar">
+                            <button class="input-group-text" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Links y botón de inicio de sesión -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <!-- Links -->
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Publicaciones" asp-action="Index">Publicaciones</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">Sobre Nosotros</a>
+                        </li>
+                        <!-- Inicio de sesión de Usuario -->
+                        <li class="nav-item">
+                            @if (ViewBag.Username != null)
+                            {
+                                <a asp-controller="User" asp-action="Index">
+                                    <img src=@(ViewBag.UserImg??"https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg") alt="Usuario" class="user-icon">
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="nav-link" href="#">
+                                    <button type="button" class="btn btn-outline-primary">Iniciar Sesión</button>
+                                </a>
+                            }
                         </li>
                     </ul>
                 </div>
