@@ -77,5 +77,35 @@ namespace BookSource.DAL
                 }
             }
         }
+
+        public bool CreateBook(Book book)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+
+                string query = "INSERT INTO Book(Title, Author, Description, ImageUrl, Subtitle, Editorial, PageCount, Score) "
+                              + "VALUES (@Title, @Author, @Description, @ImageUrl, @Subtitle, @Editorial, @PageCount, @Score)";
+
+                SqlCommand cmd = new SqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@Title", book.Title);
+                cmd.Parameters.AddWithValue("@Author", book.Author);
+                cmd.Parameters.AddWithValue("@Description", book.Description);
+                cmd.Parameters.AddWithValue("@ImageUrl", book.ImageUrl);
+                cmd.Parameters.AddWithValue("@Subtitle", book.Subtitle);
+                cmd.Parameters.AddWithValue("@Editorial", book.Editorial);
+                cmd.Parameters.AddWithValue("@PageCount", book.PageCount);
+                cmd.Parameters.AddWithValue("@Score", book.Score);
+
+                int affectedRows;
+                connection.Open();
+                affectedRows = cmd.ExecuteNonQuery();
+
+                if (affectedRows > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
     }
 }
