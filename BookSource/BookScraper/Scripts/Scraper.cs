@@ -41,7 +41,6 @@ namespace BookScraper.Scripts
 
                 HttpResponseMessage response = await HttpClient.GetAsync(request);
 
-
                 // If the request is succesful, parses and adds all the items to the list the method returns.
                 if (response.IsSuccessStatusCode)
                 {
@@ -50,7 +49,7 @@ namespace BookScraper.Scripts
                     JsonElement jsonObject = JsonSerializer.Deserialize<JsonElement>(responseString);
 
 
-                    if (jsonObject.TryGetProperty("items", out JsonElement element) && element.ValueKind == JsonValueKind.Array)
+                    if (jsonObject.TryGetProperty("items", out JsonElement element))
                     {
                         itemList = JsonSerializer.Deserialize<List<GoogleBooksItem>>(element.ToString());
 
@@ -114,8 +113,6 @@ namespace BookScraper.Scripts
             try
             {
                 item = JsonSerializer.Deserialize<GoogleBooksItem>(json);
-
-                //book = ItemToBook(item);
             }
             catch (Exception ex)
             {

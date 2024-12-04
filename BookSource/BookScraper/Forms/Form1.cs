@@ -9,6 +9,8 @@ namespace BookScraper
     public partial class Form1 : Form
     {
         Scraper scraper;
+        List<Models.Book> books;
+
         public Form1()
         {
             InitializeComponent();
@@ -25,7 +27,7 @@ namespace BookScraper
 
         private async void btnQuery_Click(object sender, EventArgs e)
         {
-            List<Models.Book> books = new List<Models.Book>();
+            books = new List<Models.Book>();
 
             for (int currentPage = 0; currentPage < numPages.Value; currentPage++)
             {
@@ -33,7 +35,10 @@ namespace BookScraper
             }
 
             dgvBooks.DataSource = books;
+        }
 
+        private void btnAddToDB_Click(object sender, EventArgs e)
+        {
             BookDAL dal = new BookDAL();
 
             foreach (Models.Book book in books)

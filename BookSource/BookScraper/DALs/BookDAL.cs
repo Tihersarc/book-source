@@ -19,7 +19,7 @@ namespace BookScraper.DALs
         {
             try
             {
-                Book newBook = new Book()
+                Book newBook = new Book
                 {
                     Title = b.Title,
                     Subtitle = b.Subtitle,
@@ -34,23 +34,24 @@ namespace BookScraper.DALs
                 db.Book.InsertOnSubmit(newBook);
                 db.SubmitChanges();
 
-                foreach (string item in b.GenreList)
+                foreach (string genreItemName in b.GenreList)
                 {
-                    if (!db.Category.Any(genre => genre.CategoryName == item))
+                    if (!db.Category.Any(genre => genre.CategoryName == genreItemName))
                     {
                         //Add genre if it doesn't exist
                         Category newCategory = new Category
                         {
-                            CategoryName = item,
+                            CategoryName = genreItemName,
                         };
 
                         db.Category.InsertOnSubmit(newCategory);
+                        db.SubmitChanges();
                     }
 
                     //Create relation in mid table
 
                     int categoryId = db.Category
-                        .Where(genre=> genre.CategoryName == item)
+                        .Where(genre=> genre.CategoryName == genreItemName)
                         .Select(genre => genre.IdCategory)
                         .FirstOrDefault();
 

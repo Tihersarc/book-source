@@ -35,6 +35,7 @@
             this.dgvBooks = new System.Windows.Forms.DataGridView();
             this.numPages = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnAddToDB = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBooks)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPages)).BeginInit();
             this.SuspendLayout();
@@ -120,11 +121,22 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "Number of pages";
             // 
+            // btnAddToDB
+            // 
+            this.btnAddToDB.Location = new System.Drawing.Point(12, 404);
+            this.btnAddToDB.Name = "btnAddToDB";
+            this.btnAddToDB.Size = new System.Drawing.Size(335, 34);
+            this.btnAddToDB.TabIndex = 7;
+            this.btnAddToDB.Text = "Add Query to DB";
+            this.btnAddToDB.UseVisualStyleBackColor = true;
+            this.btnAddToDB.Click += new System.EventHandler(this.btnAddToDB_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnAddToDB);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.numPages);
             this.Controls.Add(this.dgvBooks);
@@ -150,6 +162,7 @@
         private System.Windows.Forms.DataGridView dgvBooks;
         private System.Windows.Forms.NumericUpDown numPages;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnAddToDB;
     }
 }
 

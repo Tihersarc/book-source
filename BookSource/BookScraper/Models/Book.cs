@@ -26,7 +26,6 @@ namespace BookScraper.Models
         [Column(Name = "Score")]
         public float? AverageRating { get; set; }
 
-
         public override string ToString()
         {
             string authors = Author;
