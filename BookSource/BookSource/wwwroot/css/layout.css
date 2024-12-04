@@ -1,4 +1,9 @@
-﻿/* Estilo para el fondo del navbar con efecto cristal */
+﻿/*Fondo */
+body {
+    background: linear-gradient(45deg, #00ff90 0%, #00ffff 70%);
+}
+
+/* Estilo para el fondo del navbar con efecto cristal */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -11,6 +16,53 @@
     border-radius: 12px;
     padding: 10px 20px;
     flex-wrap: wrap;
+}
+
+/* Contenedor de los enlaces del menú y el botón de inicio de sesión */
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: auto;
+    flex-wrap: wrap;
+}
+
+/* Logo del navbar */
+.navbar-brand {
+    color: beige;
+    font-family: 'Georgia', serif;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-right: auto;
+}
+
+/* Links del menú */
+.nav-link {
+    display: flex;
+    font-size: 16px;
+    font-weight: bold;
+    color: beige;
+    font-family: 'Georgia', serif;
+    text-decoration: none;
+    padding: 5px 10px;
+    margin: 0 5px;
+    transition: color 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+    color: #34495e;
+    transform: scale(1.1);
+}
+
+/* Imagen de usuario o botón */
+.navbar img {
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin-right: 10px;
 }
 
 /* Contenedor de la barra de búsqueda */
@@ -60,52 +112,6 @@
 .btn-outline-success:hover {
     background-color: #28a745;
     color: #fff;
-}
-
-/* Contenedor de los enlaces del menú y el botón de inicio de sesión */
-.navbar-nav {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-left: auto;
-    flex-wrap: wrap;
-}
-
-/* Logo del navbar */
-.navbar-brand {
-    font-family: 'Georgia', serif;
-    font-weight: bold;
-    font-size: 1.5em;
-    margin-right: auto;
-}
-
-/* Links del menú */
-.nav-link {
-    display: flex;
-    font-size: 16px;
-    font-weight: bold;
-    color: #2c3e50;
-    font-family: 'Georgia', serif;
-    text-decoration: none;
-    padding: 5px 10px;
-    margin: 0 5px;
-    transition: color 0.3s ease-in-out;
-}
-
-.nav-link:hover {
-    color: #34495e;
-    transform: scale(1.1);
-}
-
-/* Imagen de usuario o botón */
-.navbar img {
-    border-radius: 50%;
-    height: 45px;
-    width: 45px;
-    object-fit: cover;
-    border: 2px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    margin-right: 10px;
 }
 
 /* Botón de inicio de sesión */
