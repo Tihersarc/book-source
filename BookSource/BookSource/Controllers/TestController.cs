@@ -54,5 +54,20 @@ namespace BookSource.Controllers
             }
             return View();
         }
+
+        [Obsolete]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public IActionResult GetUser(UserTestViewModel model)
+        {
+            model.Password = "hardcoded";
+            if (ModelState.IsValid)
+            {
+                User newUser = _userDAL.GetUserByUserName(model.UserName);
+
+                ViewBag.us = newUser.UserName;
+            }
+            return RedirectToAction("Login");
+        }
     }
 }
