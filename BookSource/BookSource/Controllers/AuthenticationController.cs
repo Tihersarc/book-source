@@ -66,7 +66,7 @@ namespace BookSource.Controllers
         /// 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult Register(UserTestViewModel model)
+        public IActionResult Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -74,8 +74,8 @@ namespace BookSource.Controllers
                 // Harcodeamos un poco el user
                 User user = new User()
                 {
-                    UserName = model.UserName,
-                    Email = model.UserName + "@gmail.com",
+                    UserName = model.Username,
+                    Email = model.Email,
                 };
 
                 // Si la creación es correcta, devolveremos la vista de nuevo
