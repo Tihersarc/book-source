@@ -4,32 +4,37 @@ namespace BookSource.DAL
 {
     public class FollowDAL
     {
+        private IConfiguration _configuration;
         string connectionString;
-        public FollowDAL() {
-            //ToDo
+        public FollowDAL(IConfiguration configuration) {
+            _configuration = configuration;
+            connectionString = _configuration.GetConnectionString("DefaultConnection");
         }
 
         public void AddFollower(int followerId, int followedId)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                string query = 
-                    "INSERT INTO Follow (FkIdFollower, FkIdFollowed)" +
-                    "VALUES (@FkIdFollower, @FkIdFollowed)";
-
-                SqlCommand cmd = new SqlCommand(query);
-                cmd.Parameters.AddWithValue("@FkIdFollower", followerId);
-                cmd.Parameters.AddWithValue("@FkIdFollowed", followedId);
-
-                try
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    connection.Open();
-                    cmd.ExecuteNonQuery();
+                    string query = 
+                        "INSERT INTO Follow (FkIdFollower, FkIdFollowed) " +
+                        "VALUES (@FkIdFollower, @FkIdFollowed);";
+
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@FkIdFollower", followerId);
+                        cmd.Parameters.AddWithValue("@FkIdFollowed", followedId);
+
+                        connection.Open();
+
+                        cmd.ExecuteNonQuery();
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error Inserting Follower: " + ex.ToString());
-                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Inserting Follower: " + ex.ToString());
             }
         }
 
@@ -37,36 +42,74 @@ namespace BookSource.DAL
         {
             List<int> followerList = new List<int>();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                string query = 
-                    "SELECT FkIdFollower" +
-                    "FROM Follow" +
-                    "WHERE FkIdFollowed = @FkIdFollowed";
-
-                SqlCommand cmd = new SqlCommand(query);
-                cmd.Parameters.AddWithValue("@FkIdFollowed", userId);
-
-                try
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    connection.Open();
-                    cmd.ExecuteNonQuery();
+                    string query =
+                        "SELECT FkIdFollower " +
+                        "FROM Follow " +
+                        "WHERE FkIdFollowed = @FkIdFollowed;";
 
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
-                        while (reader.Read())
+                        cmd.Parameters.AddWithValue("@FkIdFollowed", userId);
+
+                        connection.Open();
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            followerList.Add(reader.GetInt32(reader.GetOrdinal("FkIdFollower")));
+                            while (reader.Read())
+                            {
+                                followerList.Add(reader.GetInt32(reader.GetOrdinal("FkIdFollower")));
+                            }
                         }
                     }
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error Inserting Follower: " + ex.ToString());
-                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Inserting Follower: " + ex.ToString());
             }
 
             return followerList;
+        }
+
+        public List<int> GetFollowedList(int userId)
+        {
+            List<int> followedList = new List<int>();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    string query =
+                        "SELECT FkIdFollowed " +
+                        "FROM Follow " +
+                        "WHERE FkIdFollower = @FkIdFollower;";
+
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@FkIdFollower", userId);
+
+                        connection.Open();
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                followedList.Add(reader.GetInt32(reader.GetOrdinal("FkIdFollowed")));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Inserting Followed: " + ex.ToString());
+            }
+
+            return followedList;
         }
     }
 }
