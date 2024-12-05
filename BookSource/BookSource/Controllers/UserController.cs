@@ -1,10 +1,16 @@
-﻿using BookSource.Models.ViewModel;
+﻿using BookSource.DAL;
+using BookSource.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookSource.Controllers
 {
     public class UserController : Controller
     {
+        UserDAL _userDAL;
+        public UserController(UserDAL userDAL)
+        {
+            _userDAL = userDAL;
+        }
         public IActionResult Index(string? username,int? selectedListId)
         {
             string? sessionUsername = HttpContext.Session.GetString("Username");
@@ -12,8 +18,7 @@ namespace BookSource.Controllers
 
             if (!string.IsNullOrEmpty(username))
             {
-                UserViewModel user= Tools.Tools.UserTemporal();
-                //TODO Get user
+                UserViewModel user= new UserViewModel(_userDAL.GetUserByUserName(username));
                 user.IdSelectedListOfBooks = selectedListId;
                 return View(user);//Enviar el viewModel del usuario obtenido
             }

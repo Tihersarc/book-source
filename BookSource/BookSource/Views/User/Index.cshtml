@@ -75,7 +75,7 @@
     {
         <div class="userSidebar">
             <div class="square-container border">
-                <img class="img-fluid" src=@(Model.ProfileImageUrl??Tools.DefaultUserImg) alt="ImageNotFound" />
+                <img class="img-fluid" src=@(Model.ProfileImageUrl??Tools.DefaultUserImg) alt=@Tools.DefaultUserImg />
             </div>
 
             <div>Usuario: @Model.UserName</div>
