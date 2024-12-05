@@ -8,10 +8,12 @@ namespace BookSource.Controllers
     public class TestController : Controller
     {
         private UserDAL _userDAL;
+        private BookDAL _bookDAL;
 
-        public TestController(UserDAL userDAL)
+        public TestController(UserDAL userDAL, BookDAL bookDAL)
         {
             _userDAL = userDAL;
+            _bookDAL = bookDAL;
         }
         public IActionResult Login()
         {
@@ -21,7 +23,7 @@ namespace BookSource.Controllers
         [Obsolete]
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult Login(UserTestViewModel model)
+        public IActionResult Login(TestViewModel model)
         {
             if (ModelState.IsValid) 
             {
@@ -33,7 +35,7 @@ namespace BookSource.Controllers
         [Obsolete]
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult Register(UserTestViewModel model)
+        public IActionResult Register(TestViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -53,6 +55,32 @@ namespace BookSource.Controllers
 
             }
             return View();
+        }
+
+        [Obsolete]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public IActionResult GetUser(TestViewModel model)
+        {
+            model.Password = "hardcoded";
+            if (ModelState.IsValid)
+            {
+                User newUser = _userDAL.GetUserByUserName(model.UserName);
+
+                ViewBag.us = newUser.UserName;  //No se guarda porque al cambiar de action no guarda viewBags
+            }
+            return RedirectToAction("Login");
+        }
+
+        public IActionResult GetBook(TestViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                ViewBag.book = _bookDAL.GetBookByTitle(model.Book);
+            }
+                return RedirectToAction("Login");
+
         }
     }
 }
