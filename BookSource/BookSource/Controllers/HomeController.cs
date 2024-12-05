@@ -14,6 +14,8 @@ namespace BookSource.Controllers
 
         public IActionResult Index()
         {
+            string? sessionUsername = HttpContext.Session.GetString("Username");
+
             //ViewBag.UserName = "Shiro";
             //ViewBag.UserImg = "https://i.pinimg.com/originals/c8/05/66/c805665abddddfcc04692ff3c92cadfe.jpg";
             List<BookViewModel> listBooks = Tools.Tools.BookListTemporal();
