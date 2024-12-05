@@ -2,7 +2,7 @@
 
 @{
     var userName = Context.Session.GetString("UserName");
-    var userId = Context.Session.GetInt32("UserId");
+    var userImg = Context.Session.GetString("UserImg");
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -52,10 +52,10 @@
                         </li>
                         <!-- Inicio de sesión de Usuario -->
                         <li class="nav-item">
-                            @if (ViewBag.UserName != null)
+                            @if (userName != null)
                             {
-                                <a asp-controller="User" asp-action="Index" asp-route-username=@ViewBag.Username>
-                                    <img src=@(ViewBag.UserImg??Tools.DefaultUserImg) alt="Usuario" class="user-icon">
+                                <a asp-controller="User" asp-action="Index" asp-route-username=@userName>
+                                    <img src=@(userImg??Tools.DefaultUserImg) alt="Usuario" class="user-icon">
                                 </a>
                             }
                             else
