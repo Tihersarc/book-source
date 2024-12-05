@@ -54,7 +54,7 @@
                         <li class="nav-item">
                             @if (ViewBag.Username != null)
                             {
-                                <a asp-controller="User" asp-action="Index">
+                                <a asp-controller="User" asp-action="Index" asp-route-username=@ViewBag.Username>
                                     <img src=@(ViewBag.UserImg??Tools.DefaultUserImg) alt="Usuario" class="user-icon">
                                 </a>
                             }
