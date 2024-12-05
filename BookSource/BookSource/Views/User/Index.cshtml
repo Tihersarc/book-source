@@ -4,6 +4,11 @@
 @model UserViewModel
 @{
     ViewData["Title"] = "User";
+    ListOfBooksViewModel? showList=null;
+    if (Model!=null&&Model.ListOfBooks!=null&&Model.IdSelectedListOfBooks!=null)
+    {
+        showList = Model.ListOfBooks.Where(x => x.IdListOfBooks == Model.IdSelectedListOfBooks).FirstOrDefault();
+    }
 }
 <style>
     .userLayout {
@@ -82,8 +87,8 @@
         <div class="userBody">
             <div class="row">
                 <div class="col">
-                    <form method="get" asp-action="ChangeList" asp-controller="">
-                        <select name="categoryId" class="form-select" onchange="this.form.submit()">
+                    <form method="post" asp-action="ChangeList" asp-controller="User" asp-route-username=@Model.UserName asp-route-selectedListId=@Model.IdSelectedListOfBooks>
+                        <select asp-for="IdSelectedListOfBooks" name="IdSelectedListOfBooks" class="form-select" onchange="this.form.submit()">
                             @if (Model.ListOfBooks != null)
                             {
                                 @foreach (ListOfBooksViewModel listBooks in Model.ListOfBooks)
@@ -106,9 +111,12 @@
                             }
                         </select>
                     </form>
-
                 </div>
             </div>
+            @if (showList != null)
+            {
+                await Html.RenderPartialAsync("_BookList", showList.Books);
+            }
         </div>
     }
     else

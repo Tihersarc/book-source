@@ -1,4 +1,5 @@
 ﻿using BookSource.Models.ViewModel;
+using System.Runtime.CompilerServices;
 
 namespace BookSource.Tools
 {
@@ -27,7 +28,7 @@ namespace BookSource.Tools
                 ProfileImageUrl = DefaultBookImg,
                 Birthdate = DateTime.Now,
                 Email = "usertest@shiro.com",
-
+                ListOfBooks= ListOfBooksViewModels()
             };
             return userModel;
         }
@@ -40,6 +41,16 @@ namespace BookSource.Tools
                 new CategoryViewModel { IdCategory = 3, Category = "Ecchi" },
             ];
 
+            return list;
+        }
+        public static List<ListOfBooksViewModel> ListOfBooksViewModels()
+        {
+            List<ListOfBooksViewModel>list=
+                [
+                    new ListOfBooksViewModel() { IdListOfBooks = 1 ,Books=BookListTemporal(),ListName="Lista0"},
+                    new ListOfBooksViewModel() { IdListOfBooks = 2, Books = BookListTemporal(), ListName = "Lista1" },
+                    new ListOfBooksViewModel() { IdListOfBooks = 3, Books = BookListTemporal(), ListName = "Lista2" }
+                ];
             return list;
         }
     }
