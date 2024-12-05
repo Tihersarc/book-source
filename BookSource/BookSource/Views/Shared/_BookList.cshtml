@@ -1,4 +1,5 @@
 ﻿@using BookSource.Models.ViewModel
+@using BookSource.Tools
 @*
 This view show a list of books and redirect to them.
 *@
@@ -116,7 +117,7 @@ This view show a list of books and redirect to them.
             @foreach (BookViewModel book in Model)
             {
                 <div class="book-card">
-                        <img src=@(book.ImageLink??"https://i.pinimg.com/originals/c8/05/66/c805665abddddfcc04692ff3c92cadfe.jpg") alt="Book Image">
+                        <img src=@(book.ImageLink??Tools.DefaultBookImg) alt="Book Image">
                     <div class="card-content">
                         <h3 class="card-title">@book.Title</h3>
                         @if (!string.IsNullOrEmpty(book.SubTitle))

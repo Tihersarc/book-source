@@ -1,9 +1,14 @@
 ﻿using BookSource.Models.ViewModel;
+using System.Runtime.CompilerServices;
 
 namespace BookSource.Tools
 {
     public static class Tools
     {
+        public static string DefaultBookImg = "https://i.pinimg.com/originals/c8/05/66/c805665abddddfcc04692ff3c92cadfe.jpg";
+        public static string DefaultUserImg = "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg";
+        public static string ConfigImg = "https://cdn-icons-png.flaticon.com/512/3524/3524659.png";
+
         public static List<BookViewModel> BookListTemporal()
         {
             List<BookViewModel> bookList = new List<BookViewModel>();
@@ -14,6 +19,19 @@ namespace BookSource.Tools
 
             return bookList;
         }
+        public static UserViewModel UserTemporal()
+        {
+            UserViewModel userModel = new UserViewModel()
+            {
+                IdUser = 1,
+                UserName = "Test",
+                ProfileImageUrl = DefaultBookImg,
+                Birthdate = DateTime.Now,
+                Email = "usertest@shiro.com",
+                ListOfBooks= ListOfBooksViewModels()
+            };
+            return userModel;
+        }
         public static List<CategoryViewModel> CategoryListTemporal()
         {
             List<CategoryViewModel> list =
@@ -23,6 +41,16 @@ namespace BookSource.Tools
                 new CategoryViewModel { IdCategory = 3, Category = "Ecchi" },
             ];
 
+            return list;
+        }
+        public static List<ListOfBooksViewModel> ListOfBooksViewModels()
+        {
+            List<ListOfBooksViewModel>list=
+                [
+                    new ListOfBooksViewModel() { IdListOfBooks = 1 ,Books=BookListTemporal(),ListName="Lista0"},
+                    new ListOfBooksViewModel() { IdListOfBooks = 2, Books = BookListTemporal(), ListName = "Lista1" },
+                    new ListOfBooksViewModel() { IdListOfBooks = 3, Books = BookListTemporal(), ListName = "Lista2" }
+                ];
             return list;
         }
     }

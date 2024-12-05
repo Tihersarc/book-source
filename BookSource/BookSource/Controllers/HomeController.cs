@@ -1,7 +1,6 @@
 using BookSource.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-
 namespace BookSource.Controllers
 {
     public class HomeController : Controller
