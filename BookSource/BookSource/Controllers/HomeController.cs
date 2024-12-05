@@ -14,10 +14,16 @@ namespace BookSource.Controllers
 
         public IActionResult Index()
         {
-            string? sessionUsername = HttpContext.Session.GetString("Username");
-
             //ViewBag.UserName = "Shiro";
+
             //ViewBag.UserImg = "https://i.pinimg.com/originals/c8/05/66/c805665abddddfcc04692ff3c92cadfe.jpg";
+
+            // Recuperar los datos del usuario desde la sesión
+            ViewBag.UserName = HttpContext.Session.GetString("UserName");
+            ViewBag.UserImg = HttpContext.Session.GetString("UserImg");
+
+
+
             List<BookViewModel> listBooks = Tools.Tools.BookListTemporal();
             BookListViewModel model = new BookListViewModel() { Books = listBooks };
             return View(model);
@@ -31,7 +37,5 @@ namespace BookSource.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-        // Iniciar sesion botón
     }
 }
