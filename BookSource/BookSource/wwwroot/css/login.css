@@ -1,5 +1,5 @@
 ﻿body {
-    background: linear-gradient(45deg, #8e44ad 0%, #3498db 100%);
+    background: linear-gradient(45deg, beige 0%, cornflowerblue 70%);
     font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
     margin: 0;
     padding: 0;
@@ -8,74 +8,91 @@
     flex-direction: column;
 }
 
-.gradient-custom {
-    background: linear-gradient(45deg, rgba(142, 68, 173, 0.8), rgba(52, 152, 219, 0.8));
-}
-
 .card {
-    border-radius: 1rem;
+    border-radius: 3rem;
     background: rgba(0, 0, 0, 0.5);
-    margin-bottom: auto;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.card .card-body {
-    padding: 2rem;
-}
+    .card .card-body {
+        padding: 2rem;
+    }
 
-.form-outline .form-control {
-    background-color: rgba(255, 255, 255, 0.1);
-    border: none;
+.form-control {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: 0.5rem;
-    color: #fff;
-    margin-top: 0.5rem;
+    color: #000;
+    font-size: 1rem;
 }
 
-.form-outline .form-control:focus {
-    background-color: rgba(255, 255, 255, 0.2);
-    box-shadow: none;
-    color: #fff;
-}
+    .form-control:focus {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-color: cornflowerblue;
+        box-shadow: 0 0 5px rgba(100, 149, 237, 0.5);
+        color: #000;
+    }
 
-.form-outline .form-label {
+.form-label {
     color: #fff;
-    margin-bottom: 0.5rem; 
+    font-weight: bold;
 }
 
 .btn-outline-light {
     border-color: #fff;
     color: #fff;
-    margin-top: 1rem; 
+    background: none;
+    margin-top: 1rem;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
 }
 
-.btn-outline-light:hover {
-    background-color: #fff;
-    color: #000;
-}
+    .btn-outline-light:hover {
+        background-color: #fff;
+        color: #000;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
 
 .text-white-50 {
     color: rgba(255, 255, 255, 0.5);
 }
 
-.text-white-50:hover {
-    color: #fff;
-}
+    .text-white-50:hover {
+        color: #fff;
+        text-decoration: underline;
+    }
 
 .glass-effect {
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
+
+/* Estilos para el footer */
+footer {
+    background: linear-gradient(45deg, rgba(100, 149, 237, 0.5) 0%, cornflowerblue 70%);
+    color: #fff;
+    padding: 1rem 0;
+    position: relative;
+    width: 100%;
+}
+
+    footer a:hover {
+        text-decoration: underline;
+    }
 
 /* Responsive */
 @media (max-width: 768px) {
     .card {
-        border-radius: 0.5rem;
+        border-radius: 0.8rem;
     }
 
-    .card .card-body {
-        padding: 1rem;
-    }
+        .card .card-body {
+            padding: 1rem;
+        }
 
-    .form-outline .form-control {
+    .form-control {
         font-size: 0.9rem;
     }
 
@@ -83,4 +100,14 @@
         font-size: 0.9rem;
         padding: 0.5rem 1rem;
     }
+}
+
+/* Nuevos estilos para imagen del usuario */
+.user-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    object-fit: cover;
+    margin-right: 0.5rem;
 }

@@ -51,7 +51,7 @@
                         </li>
                         <!-- Inicio de sesión de Usuario -->
                         <li class="nav-item">
-                            @if (ViewBag.Username != null)
+                            @if (ViewBag.UserName != null)
                             {
                                 <a asp-controller="User" asp-action="Index">
                                     <img src=@(ViewBag.UserImg??"https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg") alt="Usuario" class="user-icon">
@@ -60,7 +60,9 @@
                             else
                             {
                                 <a class="nav-link" asp-area="" asp-controller="Authentication" asp-action="Login">
-                                    <button type="button" class="btn btn-outline-primary">Iniciar Sesion</button>
+                                    <span>
+                                        <button type="button" class="btn btn-outline-primary">Iniciar Sesion</button>
+                                    </span>
                                 </a>
                             }
                         </li>

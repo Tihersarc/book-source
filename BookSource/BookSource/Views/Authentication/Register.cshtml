@@ -1,0 +1,55 @@
+﻿@model BookSource.Models.User
+
+@{
+    ViewData["Title"] = "Registro";
+}
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/register.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/layout.css" asp-append-version="true" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" />
+<section class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center">Registro de Usuario</h2>
+            <hr />
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["Success"]
+                </div>
+            }
+            <form asp-action="Register" method="post">
+                <div class="form-group">
+                    <label asp-for="UserName">Nombre de Usuario* </label>
+                    <input asp-for="UserName" class="form-control" placeholder="Escribe tu usuario" required />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email">Correo Electrónico* </label>
+                    <input asp-for="Email" type="email" class="form-control" placeholder="Escribe tu email" required />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Password">Contraseña* </label>
+                    <input type="password" name="password" class="form-control" placeholder="Escribe tu contraseña" required />
+                </div>
+                <div class="form-group">
+                    <label asp-for="BirthDate">Fecha de Nacimiento</label>
+                    <input asp-for="BirthDate" type="date" class="form-control" />
+                    <span asp-validation-for="BirthDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ProfileImageUrl">URL de la Imagen de Perfil (Opcional)</label>
+                    <input asp-for="ProfileImageUrl" class="form-control" />
+                    <span asp-validation-for="ProfileImageUrl" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Registrarse</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
