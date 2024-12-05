@@ -1,8 +1,12 @@
-﻿@{
+﻿@using BookSource.Models.ViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
-
+@model BookListViewModel
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to BookSource</h1>
+    <h3>Top 10 scored books</h3>
+    @{
+        await Html.RenderPartialAsync("_BookList", Model.Books);
+    }
 </div>

@@ -1,0 +1,72 @@
+﻿@{
+    Layout = null;
+
+    ViewData["Title"] = "SignIn";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BookSource</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" />
+</head>
+<body>
+    <section class="vh-100 gradient-custom">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card glass-effect text-white">
+                        <div class="card-body p-5 text-center">
+
+                            <div class="mb-md-5 mt-md-4 pb-5">
+                                <h2 class="fw-bold mb-2 text-uppercase">Iniciar Sesión</h2>
+
+                                <hr class="bg-white mb-5">
+                                <!-- Input para Usuario -->
+                                <div class="form-outline form-white mb-4">
+                                    <input type="email" id="typeEmailX" class="form-control form-control-lg" placeholder="Introduce tu usuario" required />
+                                    <label class="form-label" for="typeEmailX">Usuario</label>
+                                </div>
+
+                                <!-- Input para Contraseña -->
+                                <div class="form-outline form-white mb-4">
+                                    <input type="password" id="typePasswordX" class="form-control form-control-lg" placeholder="Introduce tu contraseña" required />
+                                    <label class="form-label" for="typePasswordX">Contraseña</label>
+                                </div>
+
+                                <!-- Enlace de Olvidar Contraseña -->
+                                <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">¿Has olvidado la contraseña?</a></p>
+
+                                <!-- Botón de inicio de sesión -->
+                                <button class="btn btn-outline-light btn-lg px-5" type="submit" onclick="login()">Iniciar Sesión</button>
+                            </div>
+
+                            <!-- Enlace para registro -->
+                            <div>
+                                <p class="mb-0">
+                                    ¿No tienes cuenta? <a href="#!" class="text-white-50 fw-bold">Regístrate</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function login() {
+            // Simulación de autenticación
+            var user = "usuario"; // Simulamos un usuario devuelto
+            var password = "1234"; // Simulamos una contraseña devuelta
+            if (user && password) {
+                window.location.href = "/home";
+            }
+        }
+    </script>
+</body>
+</html>
