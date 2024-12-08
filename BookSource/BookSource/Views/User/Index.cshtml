@@ -50,9 +50,6 @@
         justify-content: center;
         width: 50px;
         height: 50px;
-        background-color: #007bff; /* Azul */
-        border: none;
-        border-radius: 50%; /* Forma circular */
         cursor: pointer;
         transition: background-color 0.3s ease;
     }
@@ -63,16 +60,25 @@
         }
 
 </style>
-<div class="row">
+@if (Model!=null)
+{
+<div class="row pt-2">
     <div class="col-11">Perfil de @Model.UserName</div>
-    <button class="config-button col">
-        <img src=@Tools.ConfigImg alt="Configuración">
-    </button>
+        @if (Model.UserName == ViewBag.UserName)
+        {
+            <a class="config-button col" asp-area="" asp-controller="User" asp-action="Configuration" asp-route-username=@Model.UserName>
+                <img src=@Tools.ConfigImg alt="Configuración">
+            </a>
+        }
+        else
+        {
+            <a class="config-button col" asp-controller="User" asp-action="Follow" asp-route-username=@Model.UserName>
+                Follow
+            </a>
+        }
 
 </div>
 <section class="userLayout">
-    @if (Model!=null)
-    {
         <div class="userSidebar">
             <div class="square-container border">
                 <img class="img-fluid" src=@(Model.ProfileImageUrl??Tools.DefaultUserImg) alt=@Tools.DefaultUserImg />
@@ -83,6 +89,7 @@
             <div>Nacimiento: @(Model.Birthdate.HasValue ? Model.Birthdate : "Sin establecer")</div>
             <div>Seguidos</div>
             <div>Seguidores</div>
+            <div>Listas de libros</div>
         </div>
         <div class="userBody">
             <div class="row">
@@ -104,10 +111,8 @@
                                         <option value="@listBooks.IdListOfBooks">
                                             @listBooks.ListName
                                         </option>
-
                                     }
                                 }
-
                             }
                         </select>
                     </form>
@@ -118,9 +123,9 @@
                 await Html.RenderPartialAsync("_BookList", showList.Books);
             }
         </div>
-    }
-    else
-    {
-        <div>Usuario no encontrado</div>
-    }
 </section>
+}
+else
+{
+    <div>Usuario no encontrado</div>
+}

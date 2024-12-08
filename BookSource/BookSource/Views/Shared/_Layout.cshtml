@@ -1,8 +1,8 @@
 ﻿@using BookSource.Tools
 
 @{
-    var userName = Context.Session.GetString("UserName");
-    var userImg = Context.Session.GetString("UserImg");
+    var userName = Context.Session.GetString(Tools.UserNameSession);
+    var userImg = Context.Session.GetString(Tools.UserImgSession);
 }
 <!DOCTYPE html>
 <html lang="en">
