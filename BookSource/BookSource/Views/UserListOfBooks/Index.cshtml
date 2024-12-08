@@ -1,0 +1,48 @@
+﻿@using BookSource.Models.ViewModel;
+@model UserListOfBooksViewModel
+@{
+    ViewData["Title"] = "UserListOfBooks";
+    ListOfBooksViewModel? showList = null;
+    if (Model != null && Model.UserListOfBooks != null && Model.IdSelectedList != null)
+    {
+        showList = Model.UserListOfBooks.Where(x => x.IdListOfBooks == Model.IdSelectedList).FirstOrDefault();
+    }
+}
+<div class="container">
+    @if(Model!=null)
+    {
+    <div class="row">
+        <div class="col">Coleccion de libros de usuario @Model.UserName</div>
+        <div class="col">
+                <form method="post" asp-action="ChangeList" asp-controller="ListOfBooks" asp-route-username=@Model.UserName asp-route-selectedListId=@Model.IdSelectedList>
+                    <select asp-for="IdSelectedList" name="IdSelectedListOfBooks" class="form-select" onchange="this.form.submit()">
+                        @if (Model.UserListOfBooks != null)
+                        {
+                            @foreach (ListOfBooksViewModel listBooks in Model.UserListOfBooks)
+                            {
+                                if (Model.IdSelectedList != null && listBooks.IdListOfBooks == Model.IdSelectedList)
+                                {
+                                    <option value="@listBooks.IdListOfBooks" selected>
+                                        @listBooks.ListName
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@listBooks.IdListOfBooks">
+                                        @listBooks.ListName
+                                    </option>
+                                }
+                            }
+                        }
+                    </select>
+                </form>
+        </div>
+    </div> 
+    <div class="row">
+            @if (showList != null)
+            {
+                await Html.RenderPartialAsync("_BookList", showList.Books);
+            }
+    </div>
+    }
+</div>
