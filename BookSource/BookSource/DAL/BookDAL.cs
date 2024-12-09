@@ -22,6 +22,7 @@ namespace BookSource.DAL
                 string query = "SELECT * FROM Book;";
 
                 SqlCommand cmd = new SqlCommand(query, connection);
+                connection.Open();
 
                 using(SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -30,14 +31,15 @@ namespace BookSource.DAL
                         // Por cada linea de la query se crea el objeto Libro y se añade a la lista
                         Book book = new Book
                         {
+                            IdBook = (int)reader["IdBook"],
                             Title = (string)reader["Title"],
                             Author = (string)reader["Author"],
-                            Description = (string)reader["Description"],
+                            Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : (string)reader["Description"],
                             ImageUrl = reader.IsDBNull(reader.GetOrdinal("ImageUrl")) ? null : (string)reader["ImageUrl"],
                             Subtitle = reader.IsDBNull(reader.GetOrdinal("Subtitle")) ? null : (string)reader["Subtitle"],
                             Editorial = reader.IsDBNull(reader.GetOrdinal("Editorial")) ? null : (string)reader["Editorial"],
                             PageCount = reader.IsDBNull(reader.GetOrdinal("PageCount")) ? null : (int)reader["PageCount"],
-                            Score = reader.IsDBNull(reader.GetOrdinal("Score")) ? null : (float)reader["Score"]
+                            Score = reader.IsDBNull(reader.GetOrdinal("Score")) ? null : (double)reader["Score"]
                         };
                         books.Add(book);
                     }
