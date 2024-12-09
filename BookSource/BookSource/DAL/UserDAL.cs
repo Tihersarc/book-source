@@ -154,7 +154,11 @@ namespace BookSource.DAL
                         cmd.ExecuteNonQuery();
                         connection.Close();
 
+                        // If all above works, assign the old UNIQUE values to the new object,
+                        // so when it's returned it has correct values
                         newUser.IdUser = oldUser.IdUser;
+                        newUser.UserName = oldUser.UserName;
+                        newUser.Email = oldUser.Email;
                     }
                 }
             }
