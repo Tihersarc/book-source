@@ -43,10 +43,6 @@ namespace BookSource.DAL
         }
 
 
-        //public List<Book> GetBooksFromListById(int ListBookId)
-        //{
-
-        //}
 
     }
 }
