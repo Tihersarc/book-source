@@ -127,6 +127,37 @@ namespace BookSource.DAL
             }
             return null;
         }
+        public User GetUserById(int Id)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM [User] WHERE IdUser = @IdUser;";
+
+                SqlCommand cmd = new SqlCommand(query, connection);
+
+                cmd.Parameters.AddWithValue("@IsUser", Id);
+
+                connection.Open();
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new User()
+                        {
+                            IdUser = (int)reader["IdUser"],
+                            UserName = (string)reader["UserName"],
+                            Email = (string)reader["Email"],
+                            PasswordHash = (byte[])reader["PasswordHash"],  // No estoy seguro si se deberia dar esta info ya que se podria obtener de cualquier usuario....
+                            PasswordSalt = (byte[])reader["PasswordSalt"],
+                            BirthDate = reader.IsDBNull(reader.GetOrdinal("BirthDate")) ? null : (DateTime?)reader["BirthDate"],
+                            ProfileImageUrl = reader.IsDBNull(reader.GetOrdinal("ProfileImageUrl")) ? null : (string?)reader["ProfileImageUrl"]
+                        };
+                    }
+                }
+            }
+            return null;
+        }
 
         [Obsolete]
         public User UpdateUser(User newUser)

@@ -103,6 +103,38 @@ namespace BookSource.DAL
                     {
                         return new Book
                         {
+                            IdBook = (int)reader["IdBook"],
+                            Title = (string)reader["Title"],
+                            Author = (string)reader["Author"],
+                            Description = (string)reader["Description"],
+                            ImageUrl = reader.IsDBNull(reader.GetOrdinal("ImageUrl")) ? null : (string)reader["ImageUrl"],
+                            Subtitle = reader.IsDBNull(reader.GetOrdinal("Subtitle")) ? null : (string)reader["Subtitle"],
+                            Editorial = reader.IsDBNull(reader.GetOrdinal("Editorial")) ? null : (string)reader["Editorial"],
+                            PageCount = reader.IsDBNull(reader.GetOrdinal("PageCount")) ? null : (int)reader["PageCount"],
+                            Score = reader.IsDBNull(reader.GetOrdinal("Score")) ? null : (float)reader["Score"]
+                        };
+                    }
+                }
+            }
+        }
+
+        public Book GetBookById(int bookId)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+
+                string query = "SELECT * FROM Book WHERE IdBook = @IdBook; ";
+
+                SqlCommand cmd = new SqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@IdBook", bookId);
+
+                connection.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    {
+                        return new Book
+                        {
+                            IdBook = (int)reader["IdBook"],
                             Title = (string)reader["Title"],
                             Author = (string)reader["Author"],
                             Description = (string)reader["Description"],
