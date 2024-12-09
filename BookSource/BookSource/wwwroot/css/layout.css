@@ -1,0 +1,150 @@
+﻿/*Fondo */
+body {
+    background: linear-gradient(45deg, #00ff90 0%, #00ffff 70%);
+}
+
+/* Estilo para el fondo del navbar con efecto cristal */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    width: 100%;
+    border-radius: 12px;
+    padding: 10px 20px;
+    flex-wrap: wrap;
+}
+
+/* Contenedor de los enlaces del menú y el botón de inicio de sesión */
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: auto;
+    flex-wrap: wrap;
+}
+
+/* Logo del navbar */
+.navbar-brand {
+    color: beige;
+    font-family: 'Georgia', serif;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-right: auto;
+}
+
+/* Links del menú */
+.nav-link {
+    display: flex;
+    font-size: 16px;
+    font-weight: bold;
+    color: beige;
+    font-family: 'Georgia', serif;
+    text-decoration: none;
+    padding: 5px 10px;
+    margin: 0 5px;
+    transition: color 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+    color: #34495e;
+    transform: scale(1.1);
+}
+
+/* Imagen de usuario o botón */
+.navbar img {
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin-right: 10px;
+}
+
+/* Contenedor de la barra de búsqueda */
+.search-container {
+    flex-grow: 10;
+    display: flex;
+    justify-content: center;
+}
+
+/* Barra de búsqueda */
+.form-control {
+    border-radius: 25px;
+    border: 1px solid #bbb;
+    color: #333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    padding: 8px 16px;
+    width: 100%;
+}
+
+.input-group-text {
+    border-radius: 0 25px 25px 0;
+    border: 1px solid #bbb;
+    background-color: #fff;
+    color: #333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    padding: 8px 16px;
+}
+
+.input-group .form-control:focus {
+    box-shadow: none;
+    border-color: #bbb;
+}
+
+.input-group .input-group-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-outline-success {
+    border-radius: 50px;
+    border-color: black;
+    color: cornflowerblue;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-outline-success:hover {
+    background-color: #28a745;
+    color: #fff;
+}
+
+/* Botón de inicio de sesión */
+.btn-outline-primary {
+    border-radius: 50px;
+    border-color: #007bff;
+    color: #007bff;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-outline-primary:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/*MEDIAS QUERIS PARA UN DISEÑO RESPONSIVE */
+@media (max-width: 800px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar-nav {
+        justify-content: center;
+        margin-left: 0px;
+    }
+
+    .search-container {
+        order: 1;
+        margin-top: 10px;
+    }
+
+    .btn-outline-primary {
+        width: 100%; /* Botón de inicio de sesión ocupa todo el ancho */
+    }
+}
