@@ -70,11 +70,20 @@
                 <img src=@Tools.ConfigImg alt="Configuración">
             </a>
         }
-        else
+        else if(ViewBag.UserName != null)
         {
-            <a class="config-button col" asp-controller="User" asp-action="Follow" asp-route-username=@Model.UserName>
-                Follow
-            </a>
+            if (Model.FollowerList != null && Model.FollowerList.Contains(ViewBag.IdSessionUser))
+            {
+                <a class="config-button col" asp-controller="User" asp-action="UnFollow" asp-route-username=@Model.UserName>
+                    UnFollow
+                </a>
+            }
+            else
+            {
+                <a class="config-button col" asp-controller="User" asp-action="Follow" asp-route-username=@Model.UserName>
+                    Follow
+                </a>
+            }
         }
 
 </div>
