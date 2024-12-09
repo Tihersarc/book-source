@@ -47,8 +47,6 @@ namespace BookSource.Controllers
                     return View(user);
                 }
                 //TODO Update user
-                if (HttpContext.Session.GetString(Tools.Tools.UserNameSession)!= user.UserName)
-                    HttpContext.Session.SetString("UserName", user.UserName);
                 if (HttpContext.Session.GetString(Tools.Tools.UserImgSession) != user.ProfileImageUrl)
                     HttpContext.Session.SetString("UserImg", user.ProfileImageUrl ?? string.Empty);
                 return RedirectToAction("Index", "User", new { username = user.UserName });
