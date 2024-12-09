@@ -147,5 +147,25 @@ namespace BookSource.Controllers
             return View(model);
 
         }
+
+        // TODO Hacer test para Create Remove y Update ListOfBooks
+        // TODO Ver si funcionan el categories
+
+        public IActionResult CreateListOfBook(TestViewModel model)
+        {
+            ListOfBooks listOfBooks = new ListOfBooks
+            {
+                ListName = model.ListOfBooks.ListName,
+                RIdUser = _userDAL.GetUserByUserName(model.UserName).IdUser
+            };
+            if (listOfBooks.RIdUser != null)
+                _listOfBooksDAL.CreateListOfBooks(listOfBooks);
+
+            return RedirectToAction("Login");
+        }
+
+        // TODO Change Name to List of Book (Update)
+
+        // TODO Add book to ListBook
     }
 }

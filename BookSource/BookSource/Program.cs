@@ -28,6 +28,8 @@ builder.Services.AddScoped<UserDAL>(); // Registra UserDAL en el sistema de DI /
 builder.Services.AddScoped<BookDAL>();
 builder.Services.AddScoped<FollowDAL>();
 builder.Services.AddScoped<ListOfBooksDAL>();
+builder.Services.AddScoped<CategoriesDAL>();
+
 
     builder.Services.AddSession(options =>
 {

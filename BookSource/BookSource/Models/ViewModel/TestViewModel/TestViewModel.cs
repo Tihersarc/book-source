@@ -8,7 +8,8 @@
 
         public string? Book { get; set; }
 
-        public List<ListOfBooks>? ListOfBooks { get; set; }
+        //public List<ListOfBooks>? ListsOfBooks { get; set; }
         public List<Book>? Books { get; set; }
+        public ListOfBooks? ListOfBooks { get; set; }
     }
 }
