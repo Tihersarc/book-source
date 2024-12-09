@@ -62,8 +62,7 @@ namespace BookSource.Controllers
         {
             UserViewModel profileUser = UserViewModel.UserMapper(_userDAL.GetUserByUserName(username));
             UserViewModel sessionUser = UserViewModel.UserMapper(_userDAL.GetUserByUserName(HttpContext.Session.GetString(Tools.Tools.UserNameSession)));
-            //_followDAL.fo(sessionUser.IdUser, profileUser.IdUser);
-            //TODO DAL UnFollowUser
+            _followDAL.DeleteFollow(sessionUser.IdUser, profileUser.IdUser);
             return RedirectToAction("Index", "User", new { username = username }); ;
         }
 

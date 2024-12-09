@@ -74,13 +74,13 @@
         {
             if (Model.FollowerList != null && Model.FollowerList.Contains(ViewBag.IdSessionUser))
             {
-                <a class="btn col" asp-controller="User" asp-action="UnFollow" asp-route-username=@Model.UserName>
+                <a class="btn btn-primary col" asp-controller="User" asp-action="UnFollow" asp-route-username=@Model.UserName>
                     UnFollow
                 </a>
             }
             else
             {
-                <a class="btn col" asp-controller="User" asp-action="Follow" asp-route-username=@Model.UserName>
+                <a class="btn btn-primary col" asp-controller="User" asp-action="Follow" asp-route-username=@Model.UserName>
                     Follow
                 </a>
             }
