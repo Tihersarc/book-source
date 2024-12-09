@@ -12,7 +12,7 @@
 @if (string.IsNullOrEmpty(user) && string.IsNullOrEmpty(book))
 {
     <div style="display:flex;">
-        <div class="form-control">
+        <div class="">
             <h1>LOGIN TEST</h1>
             <form asp-controller="Test" asp-action="Login" method="post" asp-antiforgery="true">
                 <div class="form-group">
@@ -60,14 +60,19 @@
             </form>
     </div>
 
-        <div class="form-control">
+        <div class="">
+            <h1>Get Book by Name</h1>
             <form asp-controller="Test" asp-action="GetBook" method="post" asp-antiforgery="true">
                 <div class="form-group">
                     <label asp-for="Book">Libro:</label>
                     <input asp-for="Book" value="El mundo de The Witcher. Compendio del videojuego" />
                 </div>
-
                 <button type="submit" class="btn btn-primary">GetBook</button>
+            </form>
+
+            <h1>Get All Books</h1>
+            <form asp-controller="Test" asp-action="GetAllBooks" method="post" asp-antiforgery="true">
+                <button type="submit">Ver todos los libros</button>
             </form>
         </div>
     </div>

@@ -106,5 +106,15 @@ namespace BookSource.Controllers
             ViewBag.book = "";
             return RedirectToAction("Login");
         }
+
+        public IActionResult GetAllBooks()
+        {
+            List<Book> libros = _bookDAL.GetAllBooks();
+
+            TestViewModel model = new TestViewModel();
+            model.Books = libros;
+            return View(model);
+
+        }
     }
 }
