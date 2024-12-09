@@ -31,9 +31,12 @@ namespace BookSource.Controllers
         public void InitializateBags()
         {
             string? sessionUsername = HttpContext.Session.GetString(Tools.Tools.UserNameSession);
-            User user = _userDAL.GetUserByUserName(sessionUsername);
-            ViewBag.UserName = sessionUsername;
-            ViewBag.IdSessionUser = user.IdUser;
+            if (sessionUsername!=null)
+            {
+                User user = _userDAL.GetUserByUserName(sessionUsername);
+                ViewBag.UserName = sessionUsername;
+                ViewBag.IdSessionUser = user.IdUser;
+            }
         }
         private UserViewModel? InitializeUserViewModel(string username)
         {

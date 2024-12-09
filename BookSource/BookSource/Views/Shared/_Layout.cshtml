@@ -1,8 +1,8 @@
 ﻿@using BookSource.Tools
 
 @{
-    var userName = Context.Session.GetString(Tools.UserNameSession);
-    var userImg = Context.Session.GetString(Tools.UserImgSession);
+    string? userName = Context.Session.GetString(Tools.UserNameSession);
+    string? userImg = Context.Session.GetString(Tools.UserImgSession);
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -55,7 +55,7 @@
                             @if (userName != null)
                             {
                                 <a asp-controller="User" asp-action="Index" asp-route-username=@userName>
-                                    <img src=@(userImg??Tools.DefaultUserImg) alt="Usuario" class="user-icon">
+                                    <img src=@(string.IsNullOrEmpty(userImg) ? Tools.DefaultUserImg : userImg) alt="Usuario" class="user-icon">
                                 </a>
                             }
                             else
