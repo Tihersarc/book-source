@@ -111,5 +111,39 @@ namespace BookSource.DAL
 
             return followedList;
         }
+
+        public bool DeleteFollow(int followerId, int followedId)
+        {
+            int affectedRows = 0;
+
+            string query =
+                "DELETE FROM Follow " +
+                "WHERE " +
+                "   FkIdFollowed = @followedId AND " +
+                "   FkIdFollower = @followerId;";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@followerId", followerId);
+                        cmd.Parameters.AddWithValue("@followedId", followedId);
+
+                        connection.Open();
+                        affectedRows = cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error on DELETE Follow" + ex.ToString());
+                throw;
+            }
+
+            //Returns true if there's any row affected
+            return affectedRows > 0;
+        }
     }
 }
