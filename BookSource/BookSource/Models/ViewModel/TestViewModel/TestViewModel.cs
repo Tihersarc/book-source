@@ -1,4 +1,4 @@
-﻿namespace BookSource.Models.ViewModel
+﻿namespace BookSource.Models.ViewModel.TestViewModel
 {
     public class TestViewModel
     {
@@ -6,8 +6,9 @@
 
         public string? Password { get; set; }
 
-        public string? Book {  get; set; }
+        public string? Book { get; set; }
 
+        public List<ListOfBooks>? ListOfBooks { get; set; }
         public List<Book>? Books { get; set; }
     }
 }

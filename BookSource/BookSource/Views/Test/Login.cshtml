@@ -1,4 +1,4 @@
-﻿@using BookSource.Models.ViewModel
+﻿@using BookSource.Models.ViewModel.TestViewModel
 @model TestViewModel
 
 @*
@@ -73,6 +73,13 @@
             <h1>Get All Books</h1>
             <form asp-controller="Test" asp-action="GetAllBooks" method="post" asp-antiforgery="true">
                 <button type="submit">Ver todos los libros</button>
+            </form>
+
+            <h1>Get ListBooks and Books by User</h1>
+            <form asp-controller="Test" asp-action="GetListBooksByUser" method="post" asp-antiforgery="true">
+                <label asp-for="UserName">Usuario:</label>
+                <input asp-for="UserName" value="" />
+                <button type="submit">Ver listas</button>
             </form>
         </div>
     </div>

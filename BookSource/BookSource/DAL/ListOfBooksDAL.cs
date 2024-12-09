@@ -14,7 +14,7 @@ namespace BookSource.DAL
             connectionString = _configuration.GetConnectionString("DefaultConnection");
         }
 
-        public List<ListOfBooks> GetListsOfByUserId(string UserId)
+        public List<ListOfBooks> GetListsOfByUserId(int UserId)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -33,7 +33,7 @@ namespace BookSource.DAL
                         {
                             IdListOfBooks = (int)reader["IdListOfBooks"],
                             ListName = (string)reader["ListName"],
-                            RIdUser = (int)reader["RIdUser"]
+                            RIdUser = (int)reader["FkIdUser"]
                         };
                         list.Add(listOfBooks);
                     }

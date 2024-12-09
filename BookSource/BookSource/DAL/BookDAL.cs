@@ -179,7 +179,7 @@ namespace BookSource.DAL
             }
         }
 
-        public List<Book> GetIdBooksByIdList(int ListBookId)
+        public List<Book> GetBooksByIdList(int ListBookId)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {

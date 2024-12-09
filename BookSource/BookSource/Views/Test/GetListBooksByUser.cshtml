@@ -1,0 +1,22 @@
+﻿@using BookSource.Models.ViewModel.TestViewModel
+@model TestAllListsViewModel
+
+
+
+@if(Model.Lists.Count != 0)
+{
+    foreach (var list in Model.Lists)
+    {
+        <h1>Lista: @list.listName</h1>
+        foreach(var book in list.books)
+        {
+            <p>Id: @book.IdBook Titulo: @book.Title</p>
+        }
+    }
+}
+else
+{
+    <h1>Este usuario no tiene Listas de libros</h1>
+}
+
+
