@@ -101,8 +101,6 @@ namespace BookSource.Controllers
         }
 
 
-        // Hacer carpeta en ModelView y meter los tests, 
-        // Crear la vista. 
         public IActionResult GetListBooksByUser(TestViewModel model)
         {
             // Sacamos el Id del usuario que recibimos a trabes del nombre colocado en el input de la vista
@@ -128,9 +126,7 @@ namespace BookSource.Controllers
 
                 viewModel.Lists.Add(testBookListViewModel);
             }
-
             return View(viewModel);
-
         }
         public IActionResult DeleteCache()
         {

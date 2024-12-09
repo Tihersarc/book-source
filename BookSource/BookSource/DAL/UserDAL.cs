@@ -159,6 +159,8 @@ namespace BookSource.DAL
             return null;
         }
 
+
+        // No modificar el IdUser, sino no funcionará
         [Obsolete]
         public User UpdateUser(User newUser)
         {
