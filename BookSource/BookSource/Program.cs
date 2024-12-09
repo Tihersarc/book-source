@@ -28,6 +28,7 @@ builder.Services.AddScoped<UserDAL>(); // Registra UserDAL en el sistema de DI /
 builder.Services.AddScoped<BookDAL>();
 builder.Services.AddScoped<FollowDAL>();
 
+    
     builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromDays(30);

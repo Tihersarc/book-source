@@ -9,27 +9,63 @@ namespace BookSource.Controllers
     public class UserController : Controller
     {
         UserDAL _userDAL;
-        public UserController(UserDAL userDAL)
+        FollowDAL _followDAL;
+        public UserController(UserDAL userDAL,FollowDAL followDAL)
         {
             _userDAL = userDAL;
+            _followDAL = followDAL;
         }
-        public IActionResult Index(string? username,int? selectedListId)
+        public IActionResult Index(string username,int? selectedListId)
         {
-            string? sessionUsername = HttpContext.Session.GetString(Tools.Tools.UserNameSession);
-            ViewBag.UserName = sessionUsername;
+            InitializateBags();
+            UserViewModel? user = InitializeUserViewModel(username);
 
-            if (!string.IsNullOrEmpty(username))
-            {
-                User? profileUser = _userDAL.GetUserByUserName(username);
-                if (profileUser!=null)
+                if (user != null)
                 {
-                    UserViewModel user = UserViewModel.UserMapper(profileUser);
                     user.IdSelectedListOfBooks = selectedListId;
                     return View(user);
                 }
-            }
+
             return View();
         }
+        public void InitializateBags()
+        {
+            string? sessionUsername = HttpContext.Session.GetString(Tools.Tools.UserNameSession);
+            if (sessionUsername!=null)
+            {
+                User user = _userDAL.GetUserByUserName(sessionUsername);
+                ViewBag.UserName = sessionUsername;
+                ViewBag.IdSessionUser = user.IdUser;
+            }
+        }
+        private UserViewModel? InitializeUserViewModel(string username)
+        {
+            User? user = _userDAL.GetUserByUserName(username);
+            if (user==null)
+            {
+                return null;
+            }
+            UserViewModel profileUser = UserViewModel.UserMapper(_userDAL.GetUserByUserName(username));
+            profileUser.FollowerList = _followDAL.GetFollowerList(profileUser.IdUser);
+            profileUser.FollowedList = _followDAL.GetFollowedList(profileUser.IdUser);
+
+            return profileUser;
+        }
+        public IActionResult Follow(string username)
+        {
+            UserViewModel profileUser = UserViewModel.UserMapper(_userDAL.GetUserByUserName(username));
+            UserViewModel sessionUser = UserViewModel.UserMapper(_userDAL.GetUserByUserName(HttpContext.Session.GetString(Tools.Tools.UserNameSession)));
+            _followDAL.AddFollower(sessionUser.IdUser,profileUser.IdUser);
+            return RedirectToAction("Index", "User", new { username = username }); ;
+        }
+        public IActionResult UnFollow(string username)
+        {
+            UserViewModel profileUser = UserViewModel.UserMapper(_userDAL.GetUserByUserName(username));
+            UserViewModel sessionUser = UserViewModel.UserMapper(_userDAL.GetUserByUserName(HttpContext.Session.GetString(Tools.Tools.UserNameSession)));
+            _followDAL.DeleteFollow(sessionUser.IdUser, profileUser.IdUser);
+            return RedirectToAction("Index", "User", new { username = username }); ;
+        }
+
         public IActionResult Configuration(string username)
         {
             User? profileUser = _userDAL.GetUserByUserName(username);
