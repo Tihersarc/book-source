@@ -130,9 +130,9 @@ This view show a list of books and redirect to them.
                         <p class="card-description">@(book.Description??"This book don't have description")</p>
                         <div class="card-details">
                             <span><strong>Editorial:</strong> @book.Editorial</span>
-                            <span><strong>Pages:</strong> @book.PageCount</span>
+                            <span><strong>Páginas:</strong> @book.PageCount</span>
                             <span><strong>Score:</strong> @book.Score</span>
-                            <span><strong>Author:</strong> @book.Author</span>
+                            <span><strong>Autor:</strong> @book.Author</span>
                         </div>
                     </div>
                     <div class="card-footer">
@@ -142,7 +142,9 @@ This view show a list of books and redirect to them.
                                     <span class="category">@category.Category</span>
                                 }
                         </div>
-                        <a href="#" class="btn">Read More</a>
+
+                        <a asp-controller="Book" asp-action="BookInfo" class="btn">Leer más</a>
+                       
                     </div>
                 </div>
             }
