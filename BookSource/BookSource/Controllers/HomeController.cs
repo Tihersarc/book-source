@@ -1,3 +1,5 @@
+using BookSource.DAL;
+using BookSource.Models;
 using BookSource.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -6,16 +8,18 @@ namespace BookSource.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly BookDAL _bookDAL;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, BookDAL bookDAL)
         {
             _logger = logger;
+            _bookDAL = bookDAL;
         }
 
         public IActionResult Index()
         {
-            List<BookViewModel> listBooks = Tools.Tools.BookListTemporal();
-            BookListViewModel model = new BookListViewModel() { Books = listBooks };
+            List<Book>topTenBooks = _bookDAL.GetTopTenBooks();
+            BookListViewModel model = new BookListViewModel() { Books =  BookViewModel.ListBookMapper(topTenBooks)};
             return View(model);
         }
         public IActionResult About()
