@@ -2,6 +2,7 @@
 using BookSource.Models;
 using BookSource.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
 
 namespace BookSource.Controllers
 {
@@ -17,6 +18,18 @@ namespace BookSource.Controllers
         }
         public IActionResult Login()
         {
+            string? BookValue = HttpContext.Session.GetString("TestBook");
+            string? UserValue = HttpContext.Session.GetString("TestUser");
+
+
+            if (BookValue != null)
+            {
+                ViewBag.book = BookValue;
+            }
+            if (UserValue != null)
+            {
+                ViewBag.us = UserValue;
+            }
             return View();
         }
 
@@ -66,8 +79,9 @@ namespace BookSource.Controllers
             if (ModelState.IsValid)
             {
                 User newUser = _userDAL.GetUserByUserName(model.UserName);
+                HttpContext.Session.SetString("TestUser", newUser.UserName);
 
-                ViewBag.us = newUser.UserName;  //No se guarda porque al cambiar de action no guarda viewBags
+                //ViewBag.us = newUser.UserName;  //No se guarda porque al cambiar de action no guarda viewBags
             }
             return RedirectToAction("Login");
         }
@@ -77,9 +91,29 @@ namespace BookSource.Controllers
 
             if (ModelState.IsValid)
             {
-                ViewBag.book = _bookDAL.GetBookByTitle(model.Book);
+                HttpContext.Session.SetString("TestBook", model.Book);
+                //ViewBag.book = _bookDAL.GetBookByTitle(model.Book);
             }
                 return RedirectToAction("Login");
+
+        }
+        public IActionResult DeleteCache()
+        {
+            HttpContext.Session.Remove("TestUser");
+            HttpContext.Session.Remove("TestBook");
+
+            ViewBag.us = "";
+            ViewBag.book = "";
+            return RedirectToAction("Login");
+        }
+
+        public IActionResult GetAllBooks()
+        {
+            List<Book> libros = _bookDAL.GetTopTenBooks(); // Get All Books funciona
+
+            TestViewModel model = new TestViewModel();
+            model.Books = libros;
+            return View(model);
 
         }
     }
