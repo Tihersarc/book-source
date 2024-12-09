@@ -14,14 +14,14 @@ namespace BookScraper.Scripts
     {
         public HttpClient HttpClient { get; private set; }
 
-        private readonly string uriString = "https://www.googleapis.com/";
+        private readonly string urlString = "https://www.googleapis.com/";
         private readonly string endpointString = "books/v1/volumes";
 
         public Scraper() 
         {
             HttpClient = new HttpClient();
 
-            HttpClient.BaseAddress = new Uri(uriString);
+            HttpClient.BaseAddress = new Uri(urlString);
             HttpClient.DefaultRequestHeaders.Accept.Clear();
             HttpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
@@ -80,7 +80,7 @@ namespace BookScraper.Scripts
             try
             {
                 // Builds the request and sends it to the API
-                string request = uriString + endpointString + "/" + id;
+                string request = urlString + endpointString + "/" + id;
 
                 HttpResponseMessage response = await HttpClient.GetAsync(request);
 
