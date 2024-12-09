@@ -1,4 +1,4 @@
-﻿/*Fondo */
+﻿/* Fondo */
 body {
     background: linear-gradient(45deg, beige 0%, cornflowerblue 70%);
 }
@@ -41,18 +41,33 @@ body {
     display: flex;
     font-size: 16px;
     font-weight: bold;
-    color: beige;
+    color: #5d4037; /* Tono madera */
     font-family: 'Georgia', serif;
     text-decoration: none;
     padding: 5px 10px;
     margin: 0 5px;
+    position: relative; /* Necesario para la línea animada */
     transition: color 0.3s ease-in-out;
 }
 
-.nav-link:hover {
-    color: #34495e;
-    transform: scale(1.1);
-}
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 3px;
+        background-color: #6d4c41; /* Color de la línea */
+        transition: width 0.3s ease-in-out;
+    }
+
+    .nav-link:hover {
+        color: #795548; /* Color más suave para el texto */
+    }
+
+        .nav-link:hover::after {
+            width: 100%; /* La línea se expande cuando el enlace es hover */
+        }
 
 /* Imagen de usuario o botón */
 .navbar img {
@@ -109,25 +124,41 @@ body {
     transition: background-color 0.3s, color 0.3s;
 }
 
-.btn-outline-success:hover {
-    background-color: #28a745;
-    color: #fff;
-}
+    .btn-outline-success:hover {
+        background-color: #28a745;
+        color: #fff;
+    }
 
 /* Botón de inicio de sesión */
 .btn-outline-primary {
     border-radius: 50px;
-    border-color: #007bff;
-    color: #007bff;
+    border-color: #795548; /* Tono madera más suave */
+    color: #795548;
     transition: background-color 0.3s, color 0.3s;
+    position: relative;
 }
 
-.btn-outline-primary:hover {
-    background-color: #007bff;
-    color: #fff;
-}
+    .btn-outline-primary::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 3px;
+        background-color: #795548; /* Línea debajo del botón */
+        transition: width 0.3s ease-in-out;
+    }
 
-/*MEDIAS QUERIS PARA UN DISEÑO RESPONSIVE */
+    .btn-outline-primary:hover {
+        background-color: #795548; /* Tono madera más suave */
+        color: #fff;
+    }
+
+        .btn-outline-primary:hover::after {
+            width: 100%; /* La línea se expande debajo del botón */
+        }
+
+/* MEDIAS QUERIES PARA UN DISEÑO RESPONSIVE */
 @media (max-width: 800px) {
     .navbar {
         flex-direction: column;
