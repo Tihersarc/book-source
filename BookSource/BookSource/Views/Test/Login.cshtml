@@ -9,69 +9,79 @@
     var book = ViewBag.book as string;
 }
 
-@if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(book))
+@if (string.IsNullOrEmpty(user) && string.IsNullOrEmpty(book))
 {
-    <h1>LOGIN TEST</h1>
-    <div class="form-control">
-        <form asp-controller="Test" asp-action="Login" method="post" asp-antiforgery="true">
-            <div class="form-group">
-                <label asp-for="UserName">Username</label>
-                <input asp-for="UserName" value="" />
-            </div>
+    <div style="display:flex;">
+        <div class="form-control">
+            <h1>LOGIN TEST</h1>
+            <form asp-controller="Test" asp-action="Login" method="post" asp-antiforgery="true">
+                <div class="form-group">
+                    <label asp-for="UserName">Username</label>
+                    <input asp-for="UserName" value="" />
+                </div>
 
-            <div class="form-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" />
-            </div>
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" />
+                </div>
 
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
-
-
-        <h1>Register test</h1>
-        <form asp-controller="Test" asp-action="Register" method="post" asp-antiforgery="true">
-            <div class="form-group">
-                <label asp-for="UserName">Username</label>
-                <input asp-for="UserName" value="" />
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" />
-            </div>
-
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
 
 
-        <h1>GetUserTest</h1>
-        <form asp-controller="Test" asp-action="GetUser" method="post" asp-antiforgery="true">
-            <div class="form-group">
-                <label asp-for="UserName">Username</label>
-                <input asp-for="UserName" value="" />
-            </div>
-            <div class="form-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" value="hardcoded"/>
-            </div>
+            <h1>Register test</h1>
+            <form asp-controller="Test" asp-action="Register" method="post" asp-antiforgery="true">
+                <div class="form-group">
+                    <label asp-for="UserName">Username</label>
+                    <input asp-for="UserName" value="" />
+                </div>
 
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" />
+                </div>
 
-        <form asp-controller="Test" asp-action="GetBook" method="post" asp-antiforgery="true">
-            <div class="form-group">
-                <label asp-for="Book">Libro:</label>
-                <input asp-for="Book" value="El mundo de The Witcher. Compendio del videojuego" />
-            </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
 
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
+
+            <h1>GetUserTest</h1>
+            <form asp-controller="Test" asp-action="GetUser" method="post" asp-antiforgery="true">
+                <div class="form-group">
+                    <label asp-for="UserName">Username</label>
+                    <input asp-for="UserName" value="" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" value="hardcoded" />
+                </div>
+
+                <button type="submit" class="btn btn-primary">GetUser</button>
+            </form>
     </div>
+
+        <div class="form-control">
+            <form asp-controller="Test" asp-action="GetBook" method="post" asp-antiforgery="true">
+                <div class="form-group">
+                    <label asp-for="Book">Libro:</label>
+                    <input asp-for="Book" value="El mundo de The Witcher. Compendio del videojuego" />
+                </div>
+
+                <button type="submit" class="btn btn-primary">GetBook</button>
+            </form>
+        </div>
+    </div>
+
+
 }
 else
 {
     <h1>Hola @user</h1>
     <h1> El libro es @book</h1>
+    <form asp-action="DeleteCache">
+        <button >Delete cache</button>
+    </form>
+
 }
 <div>
 

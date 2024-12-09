@@ -26,6 +26,7 @@ void ConfigureServices(IServiceCollection services, IConfiguration configuration
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<UserDAL>(); // Registra UserDAL en el sistema de DI // Asumiendo que UserDAL no depende de otros servicios
 builder.Services.AddScoped<BookDAL>();
+builder.Services.AddScoped<FollowDAL>();
 
     builder.Services.AddSession(options =>
 {
