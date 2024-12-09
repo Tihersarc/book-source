@@ -42,7 +42,7 @@ namespace BookSource.DAL
                         bool a = PasswordHelper.VerifyPasswordHash(password, passwordHash, passwordSalt);
                         if (PasswordHelper.VerifyPasswordHash(password, passwordHash, passwordSalt))
                         {
-                            // If the password is OK, return the full user info
+                            // If the password is OK, return the full newUser info
                             return new User
                             {
                                 IdUser = (int)reader["IdUser"],
@@ -126,6 +126,45 @@ namespace BookSource.DAL
                 }
             }
             return null;
+        }
+
+        [Obsolete]
+        public User UpdateUser(User newUser)
+        {
+            User oldUser = GetUserByUserName(newUser.UserName);
+
+            try
+            {
+                string query =
+                    "UPDATE User " +
+                    "SET " +
+                    "   BirthDate = @BirthDate, " +
+                    "   ProfileImageUrl = @ProfileImageUrl " +
+                    "WHERE IdUser = @IdUser";
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@IdUser", oldUser.IdUser);
+                        cmd.Parameters.AddWithValue("@BirthDate", newUser.BirthDate == null ? DBNull.Value : newUser.BirthDate);
+                        cmd.Parameters.AddWithValue("@ProfileImageUrl", newUser.ProfileImageUrl);
+
+                        connection.Open();
+                        cmd.ExecuteNonQuery();
+                        connection.Close();
+
+                        newUser.IdUser = oldUser.IdUser;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error on newUser UPDATE:\n" + ex.ToString());
+                throw;
+            }
+
+            return newUser;
         }
     }
 }
