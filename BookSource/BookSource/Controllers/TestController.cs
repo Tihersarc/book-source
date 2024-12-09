@@ -109,7 +109,7 @@ namespace BookSource.Controllers
 
         public IActionResult GetAllBooks()
         {
-            List<Book> libros = _bookDAL.GetAllBooks();
+            List<Book> libros = _bookDAL.GetTopTenBooks(); // Get All Books funciona
 
             TestViewModel model = new TestViewModel();
             model.Books = libros;

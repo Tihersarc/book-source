@@ -49,7 +49,44 @@ namespace BookSource.DAL
             //return null;
         }
 
-        // Se podria hacer un getBy generico 
+
+        public List<Book> GetTopTenBooks()
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                List<Book> books = new List<Book>();
+
+                string query = "SELECT TOP 10 * FROM Book ORDER BY Score DESC ;";
+
+                SqlCommand cmd = new SqlCommand(query, connection);
+                connection.Open();
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())   // El while Read lee por cada fila de el resultado de la query
+                    {
+                        // Por cada linea de la query se crea el objeto Libro y se añade a la lista
+                        Book book = new Book
+                        {
+                            IdBook = (int)reader["IdBook"],
+                            Title = (string)reader["Title"],
+                            Author = (string)reader["Author"],
+                            Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : (string)reader["Description"],
+                            ImageUrl = reader.IsDBNull(reader.GetOrdinal("ImageUrl")) ? null : (string)reader["ImageUrl"],
+                            Subtitle = reader.IsDBNull(reader.GetOrdinal("Subtitle")) ? null : (string)reader["Subtitle"],
+                            Editorial = reader.IsDBNull(reader.GetOrdinal("Editorial")) ? null : (string)reader["Editorial"],
+                            PageCount = reader.IsDBNull(reader.GetOrdinal("PageCount")) ? null : (int)reader["PageCount"],
+                            Score = reader.IsDBNull(reader.GetOrdinal("Score")) ? null : (double)reader["Score"]
+                        };
+                        books.Add(book);
+                    }
+                }
+                return books;
+            }
+            //return null;
+        }
+
+
         public Book GetBookByTitle(string bookTitle)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -109,5 +146,7 @@ namespace BookSource.DAL
                 return false;
             }
         }
+
+
     }
 }
