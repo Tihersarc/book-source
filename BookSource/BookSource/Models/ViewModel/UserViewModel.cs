@@ -24,5 +24,17 @@
                 ProfileImageUrl = user.ProfileImageUrl
             };
         }
+        public User MapperToUser(User user)
+        {
+            return new User
+            {
+                IdUser = user.IdUser,
+                UserName = user.UserName,
+                BirthDate = user.BirthDate,
+                Email = user.Email,
+                ProfileImageUrl = user.ProfileImageUrl
+            };
+        }
+
     }
 }
