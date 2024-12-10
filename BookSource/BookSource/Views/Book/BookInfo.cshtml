@@ -16,6 +16,7 @@
         $.ajax({
             url: '@Url.Action("GetUserListOfBooksPartialView", "ListOfBooks")', // Ruta de tu acción en el controlador
             type: 'GET',
+            data: { idBook : @Model.IdBook},
             success: function (data) {
                 document.getElementById('partialContainer').style.display = 'block';
                 $('#partialContainer').html(data);

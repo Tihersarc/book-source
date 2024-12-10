@@ -38,7 +38,7 @@ namespace BookSource.Controllers
             return userListOfBooksViewModel;
         }
         [HttpGet]
-        public ActionResult GetUserListOfBooksPartialView()
+        public ActionResult GetUserListOfBooksPartialView(int idBook)
         {
             string? sessionUsername = HttpContext.Session.GetString(Tools.Tools.UserNameSession);
             if (sessionUsername!=null)
@@ -47,6 +47,8 @@ namespace BookSource.Controllers
                 if (user!=null)
                 {
                     List<ListOfBooksViewModel> listOfBooks = ListOfBooksViewModel.MapperToViewModel(_listOfBooksDAL.GetListsOfByUserId(user.IdUser));
+                    foreach (ListOfBooksViewModel list in listOfBooks)
+                        list.Books = BookViewModel.ListBookMapper(_bookDAL.GetBooksByIdList(list.IdListOfBooks));
                     return PartialView("~/Views/ListOfBooks/_BookListOfBook.cshtml", listOfBooks);
                 }
             }
