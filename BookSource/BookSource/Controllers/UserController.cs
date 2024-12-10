@@ -83,7 +83,7 @@ namespace BookSource.Controllers
                     return View(user);
                 }
                 //TODO Update user
-                _userDAL.UpdateUser(user);
+                _userDAL.UpdateUser(user.MapperToUser());
                 if (HttpContext.Session.GetString(Tools.Tools.UserImgSession) != user.ProfileImageUrl)
                     HttpContext.Session.SetString("UserImg", user.ProfileImageUrl ?? string.Empty);
                 return RedirectToAction("Index", "User", new { username = user.UserName });
