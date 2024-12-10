@@ -4,53 +4,101 @@
 @model UserViewModel
 @{
     ViewData["Title"] = "User";
-    ListOfBooksViewModel? showList=null;
-    if (Model!=null&&Model.ListOfBooks!=null&&Model.IdSelectedListOfBooks!=null)
+    ListOfBooksViewModel? showList = null;
+    if (Model != null && Model.ListOfBooks != null && Model.IdSelectedListOfBooks != null)
     {
         showList = Model.ListOfBooks.Where(x => x.IdListOfBooks == Model.IdSelectedListOfBooks).FirstOrDefault();
     }
 }
 <style>
+    /* Estructura general */
     .userLayout {
-        width: 100%;
         display: grid;
-        grid: "sidebar body" 1fr / 30% auto;
-        gap: 8px;
+        grid-template-areas: "sidebar body";
+        grid-template-columns: 1fr 3fr;
+        gap: 16px;
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        background: rgba(237, 231, 224, 0.9);
+        border-radius: 15px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(2px);
+        border: 2px solid rgba(189, 152, 120, 0.8);
+    }
+
+    /* Sidebar y contenido principal */
+    .userSidebar, .userBody {
+        color: black;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border: 1px solid #d7ccc8;
     }
 
     .userSidebar {
-        grid-area: sidebar;
+        text-align: center;
     }
 
-    .userBody {
-        grid-area: body;
+    /* Elementos de texto */
+    h1, h2, p, ul li {
+        color: black;
+        font-family: Georgia, 'Times New Roman', Times, serif;
     }
-    .userImg
-    {
+
+    h1 {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        text-align: center;
+        border-bottom: 2px solid #d7ccc8;
+        display: inline-block;
+        padding-bottom: 10px;
+    }
+
+    h2 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 16px;
+        margin-bottom: 15px;
+        text-align: justify;
+    }
+
+    ul {
+        padding-left: 30px;
+        list-style-type: square;
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    /* Imágenes y botones */
+    .userImg, .square-container img {
         width: 100%;
-        height: 200px;
-        object-fit: contain;
+        object-fit: cover;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        border-radius: 70%;
     }
 
     .square-container {
         aspect-ratio: 1;
         overflow: hidden;
-        position: relative;
-    }
-
-    .square-container img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+        margin: 0 auto 20px;
     }
 
     .config-button {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        color: white;
+        font-size: 16px;
         cursor: pointer;
+        margin: 10px auto;
         transition: background-color 0.3s ease;
     }
 
@@ -58,19 +106,19 @@
             width: 24px;
             height: 24px;
         }
-
 </style>
-@if (Model!=null)
+
+@if (Model != null)
 {
-<div class="row pt-2">
-    <div class="col-11">Perfil de @Model.UserName</div>
+    <div class="row pt-2">
+        <div class="col-11">Perfil de @Model.UserName</div>
         @if (Model.UserName == ViewBag.UserName)
         {
             <a class="config-button col" asp-area="" asp-controller="User" asp-action="Configuration" asp-route-username=@Model.UserName>
                 <img src=@Tools.ConfigImg alt="Configuración">
             </a>
         }
-        else if(ViewBag.UserName != null)
+        else if (ViewBag.UserName != null)
         {
             if (Model.FollowerList != null && Model.FollowerList.Contains(ViewBag.IdSessionUser))
             {
@@ -86,8 +134,8 @@
             }
         }
 
-</div>
-<section class="userLayout">
+    </div>
+    <section class="userLayout">
         <div class="userSidebar">
             <div class="square-container border">
                 <img class="img-fluid" src=@(Model.ProfileImageUrl??Tools.DefaultUserImg) alt=@Tools.DefaultUserImg />
@@ -98,13 +146,16 @@
             <div>Nacimiento: @(Model.Birthdate.HasValue ? Model.Birthdate : "Sin establecer")</div>
             <div>Seguidos</div>
             <div>Seguidores</div>
-            <div>Listas de libros</div>
+            <div>
+                <a asp-controller="ListOfBooks" asp-action="Index" asp-route-username=@Model.UserName>Listas de libros</a>
+            </div>
         </div>
         <div class="userBody">
             <div class="row">
                 <div class="col">
                     <form method="post" asp-action="ChangeList" asp-controller="User" asp-route-username=@Model.UserName asp-route-selectedListId=@Model.IdSelectedListOfBooks>
                         <select asp-for="IdSelectedListOfBooks" name="IdSelectedListOfBooks" class="form-select" onchange="this.form.submit()">
+                            <option value="">-- Selecciona Lista --</option>
                             @if (Model.ListOfBooks != null)
                             {
                                 @foreach (ListOfBooksViewModel listBooks in Model.ListOfBooks)
@@ -132,7 +183,7 @@
                 await Html.RenderPartialAsync("_BookList", showList.Books);
             }
         </div>
-</section>
+    </section>
 }
 else
 {
