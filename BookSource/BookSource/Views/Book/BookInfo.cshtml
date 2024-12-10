@@ -7,6 +7,11 @@
 <link rel="stylesheet" href="~/css/layout.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/bookinfo.css" asp-append-version="true" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" />
+<script>
+    function showPartial() {
+        document.getElementById('partialContainer').style.display = 'block';
+    }
+</script>
 
 <div>
     <div class="row">
@@ -44,7 +49,12 @@
                     }
                 </ul>
             </div>
-            <button class="btn btn-primary mt-3">Agregar a Favoritos</button>
+            <button class="btn btn-primary mt-3" onclick="showPartial()">Agregar a Favoritos</button>
+            <div id="partialContainer" style="display:none; margin-top:20px;">
+                @await Html.PartialAsync("~/Views/ListOfBooks/_BookListOfBook.cshtml")
+                <div>HOK</div>
+            </div>
+
         </div>
     </div>
 </div>
