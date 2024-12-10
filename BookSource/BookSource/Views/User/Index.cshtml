@@ -12,45 +12,81 @@
 }
 <style>
     .userLayout {
-        width: 100%;
         display: grid;
-        grid: "sidebar body" 1fr / 30% auto;
-        gap: 8px;
+        grid-template-areas:
+            "sidebar body";
+        grid-template-columns: 1fr 3fr;
+        gap: 16px;
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        background: rgba(237, 231, 224, 0.6);
+        border-radius: 15px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(2px);
     }
 
     .userSidebar {
         grid-area: sidebar;
+        background-color: #ffffff;
+        backdrop-filter: blur(2px);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
     }
+
+        .userSidebar div {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #000; /* Cambia el color del texto a negro */
+        }
 
     .userBody {
         grid-area: body;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
-    .userImg
-    {
+
+    .userImg {
         width: 100%;
-        height: 200px;
-        object-fit: contain;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 15px;
+    }
+
+    .userSidebar div {
+        margin-bottom: 10px;
+        font-size: 16px;
     }
 
     .square-container {
         aspect-ratio: 1;
+        border-radius: 50%;
         overflow: hidden;
-        position: relative;
+        margin: 0 auto 20px auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     .square-container img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
     }
 
     .config-button {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        color: white;
+        font-size: 16px;
         cursor: pointer;
+        margin: 10px auto;
         transition: background-color 0.3s ease;
     }
 
@@ -60,6 +96,8 @@
         }
 
 </style>
+
+
 @if (Model!=null)
 {
 <div class="row pt-2">
