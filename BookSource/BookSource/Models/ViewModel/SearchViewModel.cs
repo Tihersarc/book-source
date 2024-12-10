@@ -8,7 +8,7 @@ namespace BookSource.Models.ViewModel
         public string? OrderType { get; set; }
 
         public string? Category { get; set; }
-        public BookListViewModel? BookListViewModel {get; set;}
+        public BookListViewModel BookListViewModel {get; set;}
 
         // En caso de que no se le pase nada se inicializa
         public SearchViewModel()
