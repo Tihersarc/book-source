@@ -1,0 +1,47 @@
+﻿.main-container{
+    display:flex;
+    justify-content: space-between;
+    width:100%;
+}
+.filters-container {
+    width: 20%;
+    height: 400px;
+    background-color:white;
+    opacity: 0.9;
+    border-radius:10px;
+    color:black;
+    text-align: center;
+}
+.filters-container form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 10px;
+}
+.filters-container h3{
+    margin-bottom: 0;
+}
+.filters-container input{
+    width: 70%;
+    height: 30px;
+}
+.filters-container select{
+    width: 70%;
+    height: 30px;
+}
+.filter-group{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+.filter-group label{
+}
+.books-container {
+    border: 1px solid blue;
+    width: 78%;
+    border-radius: 10px;
+    background-color: white;
+    opacity: 0.9;
+    color:black;
+}
