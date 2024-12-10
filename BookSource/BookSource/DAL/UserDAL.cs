@@ -136,7 +136,7 @@ namespace BookSource.DAL
             try
             {
                 string query =
-                    "UPDATE User " +
+                    "UPDATE [User] " +
                     "SET " +
                     "   BirthDate = @BirthDate, " +
                     "   ProfileImageUrl = @ProfileImageUrl " +
