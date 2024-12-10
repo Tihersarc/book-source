@@ -249,7 +249,7 @@ namespace BookSource.DAL
                                 {
                                     IdBook = reader.GetInt32(reader.GetOrdinal("IdBook")),
                                     Title = reader.GetString(reader.GetOrdinal("Title")),
-                                    Author = (string)reader["Author"],
+                                    Author = reader.GetString(reader.GetOrdinal("Author")),
                                     Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : (string)reader["Description"],
                                     ImageUrl = reader.IsDBNull(reader.GetOrdinal("ImageUrl")) ? null : (string)reader["ImageUrl"],
                                     Subtitle = reader.IsDBNull(reader.GetOrdinal("Subtitle")) ? null : (string)reader["Subtitle"],
