@@ -89,6 +89,14 @@
                 <input asp-for="ListOfBooks.ListName" value="" />
                 <button type="submit">Crear Lista</button>
             </form>
+            <h1>Add bookToList</h1>
+            <form asp-controller="Test" asp-action="AddBookToListBook" method="post" asp-antiforgery="true">
+                <label asp-for="UserName">Usuario:</label>
+                <input asp-for="UserName" value="" />
+                <label asp-for="Book">Nombre lista:</label>
+                <input asp-for="Book" value="Introducing The Witcher" />
+                <button type="submit">Añadir</button>
+            </form>
         </div>
     </div>
 

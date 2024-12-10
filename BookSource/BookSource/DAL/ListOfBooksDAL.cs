@@ -138,5 +138,28 @@ namespace BookSource.DAL
 
         }
 
+        public ListOfBooks AddBookToListBook(ListOfBooks listOfBooks, Book book)
+        {
+            using(SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "INSERT INTO ListOfBooks_Book(FkIdListOfBooks, FkIdBook) " +
+                    "VALUES(@FkIdListOfBooks, @FkIdBook)";
+                SqlCommand cmd = new SqlCommand(query,conn);
+
+                cmd.Parameters.AddWithValue("@FkIdListOfBooks", listOfBooks.IdListOfBooks);
+                cmd.Parameters.AddWithValue("@FkIdBook", book.IdBook);
+                conn.Open();
+
+                int affectedRows = 0;
+                affectedRows = cmd.ExecuteNonQuery();
+                if (affectedRows > 0)
+                {
+                    return listOfBooks;
+                }
+                return null;
+
+            }
+        }
+
     }
 }

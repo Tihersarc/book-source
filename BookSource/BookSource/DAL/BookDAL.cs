@@ -100,6 +100,7 @@ namespace BookSource.DAL
                 connection.Open();
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
+                    if(reader.Read())
                     {
                         return new Book
                         {
@@ -114,6 +115,7 @@ namespace BookSource.DAL
                             Score = reader.IsDBNull(reader.GetOrdinal("Score")) ? null : (float)reader["Score"]
                         };
                     }
+                    return null;
                 }
             }
         }
@@ -215,9 +217,6 @@ namespace BookSource.DAL
             }
         }
 
-
-
-        //TODO GetBooksByCategory & AddBookToListBook
 
         [Obsolete]
         public List<Book> GetBooksByCategory(string category)

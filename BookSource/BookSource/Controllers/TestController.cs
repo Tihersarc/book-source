@@ -148,7 +148,6 @@ namespace BookSource.Controllers
 
         }
 
-        // TODO Hacer test para Create Remove y Update ListOfBooks
         // TODO Ver si funcionan el categories
 
         public IActionResult CreateListOfBook(TestViewModel model)
@@ -167,5 +166,20 @@ namespace BookSource.Controllers
         // TODO Change Name to List of Book (Update)
 
         // TODO Add book to ListBook
+        public IActionResult AddBookToListBook(TestViewModel model)
+        {
+            // Recuperamos la informacion
+            Book book = _bookDAL.GetBookByTitle(model.Book);
+            User user = _userDAL.GetUserByUserName(model.UserName);
+
+            // Cogemos la primera ListOfBook de la lista que tiene el usuario
+
+            ListOfBooks listOfBooks = _listOfBooksDAL.GetListsOfByUserId(user.IdUser)[0];
+
+            if (user != null && listOfBooks != null) { }
+                _listOfBooksDAL.AddBookToListBook(listOfBooks, book);
+
+            return RedirectToAction("Login");
+        }
     }
 }
