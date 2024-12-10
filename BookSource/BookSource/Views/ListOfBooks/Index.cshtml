@@ -14,8 +14,8 @@
     <div class="row">
         <div class="col">Coleccion de libros de usuario @Model.UserName</div>
         <div class="col">
-                <form method="post" asp-action="ChangeList" asp-controller="ListOfBooks" asp-route-username=@Model.UserName asp-route-selectedListId=@Model.IdSelectedList>
-                    <select asp-for="IdSelectedList" name="IdSelectedListOfBooks" class="form-select" onchange="this.form.submit()">
+                <form method="post" asp-action="ChangeList" asp-controller="ListOfBooks" asp-route-username=@Model.UserName>
+                    <select asp-for="IdSelectedList" name="IdSelectedList" class="form-select" onchange="this.form.submit()">
                         @if (Model.UserListOfBooks != null)
                         {
                             <option value="">-- Selecciona Lista --</option>
@@ -44,7 +44,7 @@
             {
                 await Html.RenderPartialAsync("_BookList", showList.Books);
             }
-        </div>
+    </div>
     }
     else
     {
