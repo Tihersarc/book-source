@@ -269,7 +269,7 @@ namespace BookSource.DAL
                 throw;
             }
 
-            return GetBooksByCategory(query);
+            return bookList;
         }
     }
 }
