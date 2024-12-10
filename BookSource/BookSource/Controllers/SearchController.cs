@@ -26,19 +26,20 @@ namespace BookSource.Controllers
 
         public List<Book> GetBooksByFilter(SearchViewModel model)
         {
-            // Obtenemos todos los libros
-            List<Book> books = _bookDAL.GetAllBooks();
+            List<Book> books = new List<Book>();
+
+            // Obtenemos todos los libros o los de una categoria
+            if (model.Category != "" && model.Category != null)
+                books = _bookDAL.GetBooksByCategory(model.Category);
+            else
+                books = _bookDAL.GetAllBooks(); 
 
             // Si se ha intorducido algo en Title, filtramos por titulo
-            if (model.Title != "" || model.Title != null)
-            {
+            if (model.Title != "" && model.Title != null)
                 books = books.Where(book => book.Title.Contains(model.Title, StringComparison.OrdinalIgnoreCase)).ToList();
 
-            }
-            // TODO Si se ha introducido algo en Categoria filtrar cat
-
             // Ordenar los libros si se ha puesto algo
-            if (model.OrderType != null || model.OrderType != "")
+            if (model.OrderType != null && model.OrderType != "")
             {
                 switch (model.OrderType)
                 {
