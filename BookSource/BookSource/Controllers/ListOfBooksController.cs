@@ -37,7 +37,23 @@ namespace BookSource.Controllers
             }
             return userListOfBooksViewModel;
         }
-    [HttpPost]
+        [HttpGet]
+        public ActionResult GetUserListOfBooksPartialView()
+        {
+            string? sessionUsername = HttpContext.Session.GetString(Tools.Tools.UserNameSession);
+            if (sessionUsername!=null)
+            {
+                User? user = _userDAL.GetUserByUserName(sessionUsername);
+                if (user!=null)
+                {
+                    List<ListOfBooksViewModel> listOfBooks = ListOfBooksViewModel.MapperToViewModel(_listOfBooksDAL.GetListsOfByUserId(user.IdUser));
+                    return PartialView("~/Views/ListOfBooks/_BookListOfBook.cshtml", listOfBooks);
+                }
+            }
+            return BadRequest();
+        }
+
+        [HttpPost]
         public IActionResult ChangeList(string? username, UserListOfBooksViewModel userList)
         {
             return RedirectToAction("Index", "ListOfBooks", new { username = username, selectedListId = userList.IdSelectedList});
