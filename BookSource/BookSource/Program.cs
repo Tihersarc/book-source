@@ -31,6 +31,7 @@ builder.Services.AddScoped<ListOfBooksDAL>();
 builder.Services.AddScoped<CategoriesDAL>();
 
 
+    
     builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromDays(30);

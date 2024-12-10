@@ -1,4 +1,5 @@
 ﻿@using BookSource.Models.ViewModel
+@using BookSource.Tools
 @*
 This view show a list of books and redirect to them.
 *@
@@ -33,8 +34,8 @@ This view show a list of books and redirect to them.
         .book-card img {
             width: 100%;
             height: 200px;
-/*             object-fit: cover;
- */        }
+            object-fit: contain;
+      }
 
         .book-card .card-content {
             padding: 15px;
@@ -58,6 +59,9 @@ This view show a list of books and redirect to them.
             color: #555;
             margin-bottom: 10px;
             line-height: 1.5;
+            max-height: 8ch;
+            display: inline-block;
+            overflow: hidden;
         }
 
         .book-card .card-details {
@@ -116,7 +120,7 @@ This view show a list of books and redirect to them.
             @foreach (BookViewModel book in Model)
             {
                 <div class="book-card">
-                        <img src=@(book.ImageLink??"https://i.pinimg.com/originals/c8/05/66/c805665abddddfcc04692ff3c92cadfe.jpg") alt="Book Image">
+                        <img src=@(book.ImageLink??Tools.DefaultBookImg) alt="Book Image">
                     <div class="card-content">
                         <h3 class="card-title">@book.Title</h3>
                         @if (!string.IsNullOrEmpty(book.SubTitle))
@@ -126,9 +130,9 @@ This view show a list of books and redirect to them.
                         <p class="card-description">@(book.Description??"This book don't have description")</p>
                         <div class="card-details">
                             <span><strong>Editorial:</strong> @book.Editorial</span>
-                            <span><strong>Pages:</strong> @book.PageCount</span>
+                            <span><strong>Páginas:</strong> @book.PageCount</span>
                             <span><strong>Score:</strong> @book.Score</span>
-                            <span><strong>Author:</strong> @book.Author</span>
+                            <span><strong>Autor:</strong> @book.Author</span>
                         </div>
                     </div>
                     <div class="card-footer">
@@ -138,7 +142,9 @@ This view show a list of books and redirect to them.
                                     <span class="category">@category.Category</span>
                                 }
                         </div>
-                        <a href="#" class="btn">Read More</a>
+
+                        <a asp-controller="Book" asp-action="BookInfo" class="btn">Leer más</a>
+                       
                     </div>
                 </div>
             }

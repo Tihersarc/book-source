@@ -1,6 +1,140 @@
 ﻿@using BookSource.Models.ViewModel
+@using BookSource.Tools
 
 @model UserViewModel
 @{
     ViewData["Title"] = "User";
+    ListOfBooksViewModel? showList=null;
+    if (Model!=null&&Model.ListOfBooks!=null&&Model.IdSelectedListOfBooks!=null)
+    {
+        showList = Model.ListOfBooks.Where(x => x.IdListOfBooks == Model.IdSelectedListOfBooks).FirstOrDefault();
+    }
+}
+<style>
+    .userLayout {
+        width: 100%;
+        display: grid;
+        grid: "sidebar body" 1fr / 30% auto;
+        gap: 8px;
+    }
+
+    .userSidebar {
+        grid-area: sidebar;
+    }
+
+    .userBody {
+        grid-area: body;
+    }
+    .userImg
+    {
+        width: 100%;
+        height: 200px;
+        object-fit: contain;
+    }
+
+    .square-container {
+        aspect-ratio: 1;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .square-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .config-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .config-button img {
+            width: 24px;
+            height: 24px;
+        }
+
+</style>
+@if (Model!=null)
+{
+<div class="row pt-2">
+    <div class="col-11">Perfil de @Model.UserName</div>
+        @if (Model.UserName == ViewBag.UserName)
+        {
+            <a class="config-button col" asp-area="" asp-controller="User" asp-action="Configuration" asp-route-username=@Model.UserName>
+                <img src=@Tools.ConfigImg alt="Configuración">
+            </a>
+        }
+        else if(ViewBag.UserName != null)
+        {
+            if (Model.FollowerList != null && Model.FollowerList.Contains(ViewBag.IdSessionUser))
+            {
+                <a class="btn btn-primary col" asp-controller="User" asp-action="UnFollow" asp-route-username=@Model.UserName>
+                    UnFollow
+                </a>
+            }
+            else
+            {
+                <a class="btn btn-primary col" asp-controller="User" asp-action="Follow" asp-route-username=@Model.UserName>
+                    Follow
+                </a>
+            }
+        }
+
+</div>
+<section class="userLayout">
+        <div class="userSidebar">
+            <div class="square-container border">
+                <img class="img-fluid" src=@(Model.ProfileImageUrl??Tools.DefaultUserImg) alt=@Tools.DefaultUserImg />
+            </div>
+
+            <div>Usuario: @Model.UserName</div>
+            <div>Correo: @Model.Email</div>
+            <div>Nacimiento: @(Model.Birthdate.HasValue ? Model.Birthdate : "Sin establecer")</div>
+            <div>Seguidos</div>
+            <div>Seguidores</div>
+            <div>Listas de libros</div>
+        </div>
+        <div class="userBody">
+            <div class="row">
+                <div class="col">
+                    <form method="post" asp-action="ChangeList" asp-controller="User" asp-route-username=@Model.UserName asp-route-selectedListId=@Model.IdSelectedListOfBooks>
+                        <select asp-for="IdSelectedListOfBooks" name="IdSelectedListOfBooks" class="form-select" onchange="this.form.submit()">
+                            @if (Model.ListOfBooks != null)
+                            {
+                                @foreach (ListOfBooksViewModel listBooks in Model.ListOfBooks)
+                                {
+                                    if (Model.IdSelectedListOfBooks != null && listBooks.IdListOfBooks == Model.IdSelectedListOfBooks)
+                                    {
+                                        <option value="@listBooks.IdListOfBooks" selected>
+                                            @listBooks.ListName
+                                        </option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@listBooks.IdListOfBooks">
+                                            @listBooks.ListName
+                                        </option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </form>
+                </div>
+            </div>
+            @if (showList != null)
+            {
+                await Html.RenderPartialAsync("_BookList", showList.Books);
+            }
+        </div>
+</section>
+}
+else
+{
+    <div>Usuario no encontrado</div>
 }
