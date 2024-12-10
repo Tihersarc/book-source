@@ -1,0 +1,50 @@
+﻿@model BookSource.Models.ViewModel.BookViewModel
+
+@{
+    ViewData["Title"] = "Book Info";
+}
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/layout.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/bookinfo.css" asp-append-version="true" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" />
+
+<div>
+    <div class="row">
+        <div class="col-md-4">
+            <img src="@Model.ImageLink" alt="Book Image" class="img-fluid">
+        </div>
+        <div class="col-md-8">
+            <h1>@Model.Title</h1>
+            @if (!string.IsNullOrEmpty(Model.SubTitle))
+            {
+                <h2>@Model.SubTitle</h2>
+            }
+            <p>@Model.Description</p>
+            <div>
+                <strong>Editorial:</strong> @Model.Editorial
+            </div>
+            <div>
+                <strong>Páginas:</strong> @Model.PageCount
+            </div>
+            <div>
+                <strong>Puntuación:</strong> <span class="score-badge">@Model.Score</span>
+            </div>
+            <div>
+                <strong>Autor:</strong> @Model.Author
+            </div>
+            <div class="mt-3">
+                <strong>Categorías:</strong>
+                <ul>
+                    @if (Model.Categories != null)
+                    {
+                        @foreach (var category in Model.Categories)
+                        {
+                            <li>@category.Category</li>
+                        }
+                    }
+                </ul>
+            </div>
+            <button class="btn btn-primary mt-3">Agregar a Favoritos</button>
+        </div>
+    </div>
+</div>

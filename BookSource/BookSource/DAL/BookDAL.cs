@@ -22,6 +22,7 @@ namespace BookSource.DAL
                 string query = "SELECT * FROM Book;";
 
                 SqlCommand cmd = new SqlCommand(query, connection);
+                connection.Open();
 
                 using(SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -30,14 +31,15 @@ namespace BookSource.DAL
                         // Por cada linea de la query se crea el objeto Libro y se añade a la lista
                         Book book = new Book
                         {
+                            IdBook = (int)reader["IdBook"],
                             Title = (string)reader["Title"],
                             Author = (string)reader["Author"],
-                            Description = (string)reader["Description"],
+                            Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : (string)reader["Description"],
                             ImageUrl = reader.IsDBNull(reader.GetOrdinal("ImageUrl")) ? null : (string)reader["ImageUrl"],
                             Subtitle = reader.IsDBNull(reader.GetOrdinal("Subtitle")) ? null : (string)reader["Subtitle"],
                             Editorial = reader.IsDBNull(reader.GetOrdinal("Editorial")) ? null : (string)reader["Editorial"],
                             PageCount = reader.IsDBNull(reader.GetOrdinal("PageCount")) ? null : (int)reader["PageCount"],
-                            Score = reader.IsDBNull(reader.GetOrdinal("Score")) ? null : (float)reader["Score"]
+                            Score = reader.IsDBNull(reader.GetOrdinal("Score")) ? null : (double)reader["Score"]
                         };
                         books.Add(book);
                     }
@@ -47,7 +49,44 @@ namespace BookSource.DAL
             //return null;
         }
 
-        // Se podria hacer un getBy generico 
+
+        public List<Book> GetTopTenBooks()
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                List<Book> books = new List<Book>();
+
+                string query = "SELECT TOP 10 * FROM Book ORDER BY Score DESC ;";
+
+                SqlCommand cmd = new SqlCommand(query, connection);
+                connection.Open();
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())   // El while Read lee por cada fila de el resultado de la query
+                    {
+                        // Por cada linea de la query se crea el objeto Libro y se añade a la lista
+                        Book book = new Book
+                        {
+                            IdBook = (int)reader["IdBook"],
+                            Title = (string)reader["Title"],
+                            Author = (string)reader["Author"],
+                            Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : (string)reader["Description"],
+                            ImageUrl = reader.IsDBNull(reader.GetOrdinal("ImageUrl")) ? null : (string)reader["ImageUrl"],
+                            Subtitle = reader.IsDBNull(reader.GetOrdinal("Subtitle")) ? null : (string)reader["Subtitle"],
+                            Editorial = reader.IsDBNull(reader.GetOrdinal("Editorial")) ? null : (string)reader["Editorial"],
+                            PageCount = reader.IsDBNull(reader.GetOrdinal("PageCount")) ? null : (int)reader["PageCount"],
+                            Score = reader.IsDBNull(reader.GetOrdinal("Score")) ? null : (double)reader["Score"]
+                        };
+                        books.Add(book);
+                    }
+                }
+                return books;
+            }
+            //return null;
+        }
+
+
         public Book GetBookByTitle(string bookTitle)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -64,6 +103,38 @@ namespace BookSource.DAL
                     {
                         return new Book
                         {
+                            IdBook = (int)reader["IdBook"],
+                            Title = (string)reader["Title"],
+                            Author = (string)reader["Author"],
+                            Description = (string)reader["Description"],
+                            ImageUrl = reader.IsDBNull(reader.GetOrdinal("ImageUrl")) ? null : (string)reader["ImageUrl"],
+                            Subtitle = reader.IsDBNull(reader.GetOrdinal("Subtitle")) ? null : (string)reader["Subtitle"],
+                            Editorial = reader.IsDBNull(reader.GetOrdinal("Editorial")) ? null : (string)reader["Editorial"],
+                            PageCount = reader.IsDBNull(reader.GetOrdinal("PageCount")) ? null : (int)reader["PageCount"],
+                            Score = reader.IsDBNull(reader.GetOrdinal("Score")) ? null : (float)reader["Score"]
+                        };
+                    }
+                }
+            }
+        }
+
+        public Book GetBookById(int bookId)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+
+                string query = "SELECT * FROM Book WHERE IdBook = @IdBook; ";
+
+                SqlCommand cmd = new SqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@IdBook", bookId);
+
+                connection.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    {
+                        return new Book
+                        {
+                            IdBook = (int)reader["IdBook"],
                             Title = (string)reader["Title"],
                             Author = (string)reader["Author"],
                             Description = (string)reader["Description"],
@@ -107,5 +178,45 @@ namespace BookSource.DAL
                 return false;
             }
         }
+
+        public List<Book> GetBooksByIdList(int ListBookId)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM ListOfBooks_Book l INNER JOIN Book b " +
+                    "ON l.FkIdBook = b.IdBook WHERE l.FkIdListOfBooks = @FkIdListOfBooks;";
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                cmd.Parameters.AddWithValue("@FkIdListOfBooks", ListBookId);
+                conn.Open();
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    List<Book> list = new List<Book>();
+
+                    while (reader.Read())
+                    {
+                        Book book = new Book
+                        {
+                            IdBook = (int)reader["IdBook"],
+                            Title = (string)reader["Title"],
+                            Author = (string)reader["Author"],
+                            Description = (string)reader["Description"],
+                            ImageUrl = reader.IsDBNull(reader.GetOrdinal("ImageUrl")) ? null : (string)reader["ImageUrl"],
+                            Subtitle = reader.IsDBNull(reader.GetOrdinal("Subtitle")) ? null : (string)reader["Subtitle"],
+                            Editorial = reader.IsDBNull(reader.GetOrdinal("Editorial")) ? null : (string)reader["Editorial"],
+                            PageCount = reader.IsDBNull(reader.GetOrdinal("PageCount")) ? null : (int)reader["PageCount"],
+                            Score = reader.IsDBNull(reader.GetOrdinal("Score")) ? null : (float)reader["Score"]
+                        };
+                        list.Add(book);
+                    }
+                    return list;
+                }
+            }
+        }
+
+        
+
+        //TODO GetBooksByCategory & AddBookToListBook
     }
 }

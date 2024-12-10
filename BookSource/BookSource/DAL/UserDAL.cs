@@ -42,7 +42,7 @@ namespace BookSource.DAL
                         bool a = PasswordHelper.VerifyPasswordHash(password, passwordHash, passwordSalt);
                         if (PasswordHelper.VerifyPasswordHash(password, passwordHash, passwordSalt))
                         {
-                            // If the password is OK, return the full user info
+                            // If the password is OK, return the full newUser info
                             return new User
                             {
                                 IdUser = (int)reader["IdUser"],
@@ -126,6 +126,82 @@ namespace BookSource.DAL
                 }
             }
             return null;
+        }
+        public User GetUserById(int Id)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM [User] WHERE IdUser = @IdUser;";
+
+                SqlCommand cmd = new SqlCommand(query, connection);
+
+                cmd.Parameters.AddWithValue("@IsUser", Id);
+
+                connection.Open();
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new User()
+                        {
+                            IdUser = (int)reader["IdUser"],
+                            UserName = (string)reader["UserName"],
+                            Email = (string)reader["Email"],
+                            PasswordHash = (byte[])reader["PasswordHash"],  // No estoy seguro si se deberia dar esta info ya que se podria obtener de cualquier usuario....
+                            PasswordSalt = (byte[])reader["PasswordSalt"],
+                            BirthDate = reader.IsDBNull(reader.GetOrdinal("BirthDate")) ? null : (DateTime?)reader["BirthDate"],
+                            ProfileImageUrl = reader.IsDBNull(reader.GetOrdinal("ProfileImageUrl")) ? null : (string?)reader["ProfileImageUrl"]
+                        };
+                    }
+                }
+            }
+            return null;
+        }
+
+
+        // No modificar el IdUser, sino no funcionará
+        [Obsolete]
+        public User UpdateUser(User newUser)
+        {
+            User oldUser = GetUserByUserName(newUser.UserName);
+
+            try
+            {
+                string query =
+                    "UPDATE [User] " +
+                    "SET " +
+                    "   BirthDate = @BirthDate, " +
+                    "   ProfileImageUrl = @ProfileImageUrl " +
+                    "WHERE IdUser = @IdUser";
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@IdUser", oldUser.IdUser);
+                        cmd.Parameters.AddWithValue("@BirthDate", newUser.BirthDate == null ? DBNull.Value : newUser.BirthDate);
+                        cmd.Parameters.AddWithValue("@ProfileImageUrl", newUser.ProfileImageUrl);
+
+                        connection.Open();
+                        cmd.ExecuteNonQuery();
+                        connection.Close();
+
+                        // If all above works, assign the old UNIQUE values to the new object,
+                        // so when it's returned it has correct values
+                        newUser.IdUser = oldUser.IdUser;
+                        newUser.UserName = oldUser.UserName;
+                        newUser.Email = oldUser.Email;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error on newUser UPDATE:\n" + ex.ToString());
+                throw;
+            }
+
+            return newUser;
         }
     }
 }

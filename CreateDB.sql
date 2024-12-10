@@ -54,11 +54,13 @@ CREATE TABLE Book (
 );
 
 CREATE TABLE ListOfBooks_Book (
-	FkIdListOfBooks int,
-	FkIdBook int,
-	PRIMARY KEY (FkIdListOfBooks, FkIdBook),
-	FOREIGN KEY (FkIdListOfBooks) REFERENCES [ListOfBooks](IdListOfBooks),
-	FOREIGN KEY (FkIdBook) REFERENCES Book(IdBook)
+    FkIdListOfBooks int,
+    FkIdBook int,
+    PRIMARY KEY (FkIdListOfBooks, FkIdBook),
+    FOREIGN KEY (FkIdListOfBooks) REFERENCES [ListOfBooks](IdListOfBooks)
+        ON DELETE CASCADE,
+    FOREIGN KEY (FkIdBook) REFERENCES Book(IdBook)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE Review (
