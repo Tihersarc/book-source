@@ -215,8 +215,62 @@ namespace BookSource.DAL
             }
         }
 
-        
+
 
         //TODO GetBooksByCategory & AddBookToListBook
+
+        [Obsolete]
+        public List<Book> GetBooksByCategory(string category)
+        {
+            List<Book> bookList = new List<Book>();
+            string query = @$"
+            SELECT *
+            FROM Book
+            INNER JOIN Book_Category
+	            ON IdBook = FkIdBook
+            INNER JOIN Category c
+	            ON IdCategory = FkIdCategory
+            WHERE c.CategoryName LIKE @category";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@category", category);
+
+                        connection.Open();
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Book book = new Book
+                                {
+                                    IdBook = reader.GetInt32(reader.GetOrdinal("IdBook")),
+                                    Title = reader.GetString(reader.GetOrdinal("Title")),
+                                    Author = (string)reader["Author"],
+                                    Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : (string)reader["Description"],
+                                    ImageUrl = reader.IsDBNull(reader.GetOrdinal("ImageUrl")) ? null : (string)reader["ImageUrl"],
+                                    Subtitle = reader.IsDBNull(reader.GetOrdinal("Subtitle")) ? null : (string)reader["Subtitle"],
+                                    Editorial = reader.IsDBNull(reader.GetOrdinal("Editorial")) ? null : (string)reader["Editorial"],
+                                    PageCount = reader.IsDBNull(reader.GetOrdinal("PageCount")) ? null : (int)reader["PageCount"],
+                                    Score = reader.IsDBNull(reader.GetOrdinal("Score")) ? null : (double)reader["Score"]
+                                };
+                                bookList.Add(book);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("ERROR GetBooksByCategory.\n" + ex.ToString());
+                throw;
+            }
+
+            return GetBooksByCategory(query);
+        }
     }
 }
