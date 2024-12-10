@@ -12,7 +12,7 @@ namespace BookSource.Controllers
                 IdSelectedList=selectedListId,
 
             };
-            return View();
+            return View(userListOfBooksViewModel);
         }
         [HttpPost]
         public IActionResult ChangeList(string? username, UserListOfBooksViewModel userList)

@@ -8,17 +8,21 @@ namespace BookSource.Controllers
 {
     public class UserController : Controller
     {
-        UserDAL _userDAL;
-        FollowDAL _followDAL;
-        public UserController(UserDAL userDAL,FollowDAL followDAL)
+        private readonly UserDAL _userDAL;
+        private readonly FollowDAL _followDAL;
+        private readonly ListOfBooksDAL _listOfBooksDAL;
+        private readonly BookDAL _bookDAL;
+        public UserController(UserDAL userDAL, FollowDAL followDAL, ListOfBooksDAL listOfBooksDAL, BookDAL bookDAL)
         {
             _userDAL = userDAL;
             _followDAL = followDAL;
+            _listOfBooksDAL = listOfBooksDAL;
+            _bookDAL = bookDAL;
         }
         public IActionResult Index(string username,int? selectedListId)
         {
             InitializateBags();
-            UserViewModel? user = InitializeUserViewModel(username);
+            UserViewModel? user = InitializeUserViewModel(username,selectedListId);
 
                 if (user != null)
                 {
@@ -38,7 +42,7 @@ namespace BookSource.Controllers
                 ViewBag.IdSessionUser = user.IdUser;
             }
         }
-        private UserViewModel? InitializeUserViewModel(string username)
+        private UserViewModel? InitializeUserViewModel(string username,int? selectedListId)
         {
             User? user = _userDAL.GetUserByUserName(username);
             if (user==null)
@@ -48,6 +52,11 @@ namespace BookSource.Controllers
             UserViewModel profileUser = UserViewModel.UserMapper(_userDAL.GetUserByUserName(username));
             profileUser.FollowerList = _followDAL.GetFollowerList(profileUser.IdUser);
             profileUser.FollowedList = _followDAL.GetFollowedList(profileUser.IdUser);
+            profileUser.ListOfBooks = ListOfBooksViewModel.MapperToViewModel(_listOfBooksDAL.GetListsOfByUserId(profileUser.IdUser));
+            if (selectedListId!=null)
+            {
+                profileUser.ListOfBooks.Where(x => x.IdListOfBooks == selectedListId).First().Books =BookViewModel.ListBookMapper(_bookDAL.GetBooksByIdList((int)selectedListId));
+            }
 
             return profileUser;
         }

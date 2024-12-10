@@ -18,6 +18,7 @@
                     <select asp-for="IdSelectedList" name="IdSelectedListOfBooks" class="form-select" onchange="this.form.submit()">
                         @if (Model.UserListOfBooks != null)
                         {
+                            <option value="">-- Selecciona Lista --</option>
                             @foreach (ListOfBooksViewModel listBooks in Model.UserListOfBooks)
                             {
                                 if (Model.IdSelectedList != null && listBooks.IdListOfBooks == Model.IdSelectedList)
@@ -43,6 +44,10 @@
             {
                 await Html.RenderPartialAsync("_BookList", showList.Books);
             }
-    </div>
+        </div>
+    }
+    else
+    {
+        <h1>El modelo no se ha caragado correctamente</h1>
     }
 </div>

@@ -98,13 +98,16 @@
             <div>Nacimiento: @(Model.Birthdate.HasValue ? Model.Birthdate : "Sin establecer")</div>
             <div>Seguidos</div>
             <div>Seguidores</div>
-            <div>Listas de libros</div>
+            <div>
+                <a asp-controller="ListOfBooks" asp-action="Index" asp-route-username=@Model.UserName>Listas de libros</a>
+            </div>
         </div>
         <div class="userBody">
             <div class="row">
                 <div class="col">
                     <form method="post" asp-action="ChangeList" asp-controller="User" asp-route-username=@Model.UserName asp-route-selectedListId=@Model.IdSelectedListOfBooks>
                         <select asp-for="IdSelectedListOfBooks" name="IdSelectedListOfBooks" class="form-select" onchange="this.form.submit()">
+                            <option value="">-- Selecciona Lista --</option>
                             @if (Model.ListOfBooks != null)
                             {
                                 @foreach (ListOfBooksViewModel listBooks in Model.ListOfBooks)
