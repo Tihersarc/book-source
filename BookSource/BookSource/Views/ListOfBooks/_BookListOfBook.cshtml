@@ -104,7 +104,7 @@
             <div class="modal-body popup-body">
                 @foreach (ListOfBooksViewModel listOfBooks in Model.ListOfBooks)
                 {
-                    <input class="form-check-input" type="checkbox" onclick="ActionPartial(@listOfBooks.IdListOfBooks,this.checked)" value=@(Exist(listOfBooks)?"true":"false") id="defaultCheck">
+                    <input class="form-check-input" type="checkbox" onclick="ActionPartial(@listOfBooks.IdListOfBooks,this.checked)" checked=@(Exist(listOfBooks)?"true":"false") id="defaultCheck">
                     <label class="form-check-label" for="defaultCheck">
                         @listOfBooks.ListName
                     </label>

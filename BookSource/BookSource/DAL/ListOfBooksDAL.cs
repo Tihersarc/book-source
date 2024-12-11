@@ -165,8 +165,8 @@ namespace BookSource.DAL
                     $"WHERE FkIdBook=@IdBook AND FkIdListOfBooks=@IdListOfBooks";
                 SqlCommand cmd = new SqlCommand(query, conn);
 
-                cmd.Parameters.AddWithValue("@IdListOfBooks", idListOfBooks);
                 cmd.Parameters.AddWithValue("@IdBook", idBook);
+                cmd.Parameters.AddWithValue("@IdListOfBooks", idListOfBooks);
                 conn.Open();
 
                 int affectedRows = 0;
