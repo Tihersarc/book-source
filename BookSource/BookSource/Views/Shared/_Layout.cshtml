@@ -2,7 +2,8 @@
 
 @{
     string? userName = Context.Session.GetString(Tools.UserNameSession);
-    string? userImg = Context.Session.GetString(Tools.UserImgSession);
+    string? userImg = Context.Session.GetString("UserImg");
+
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -55,7 +56,7 @@
                             @if (userName != null)
                             {
                                 <a asp-controller="User" asp-action="Index" asp-route-username=@userName>
-                                    <img src=@(string.IsNullOrEmpty(userImg) ? Tools.DefaultUserImg : userImg) alt="Usuario" class="user-icon">
+                                    <img src=@(userImg) alt="Usuario" class="user-icon">
                                 </a>
                             }
                             else

@@ -43,7 +43,7 @@ namespace BookSource.Controllers
 
                 // Almacenar los datos del usuario en la sesión
                 HttpContext.Session.SetString("UserName", user.UserName);
-                HttpContext.Session.SetString("UserImg", user.ProfileImageUrl ?? string.Empty);
+                HttpContext.Session.SetString("UserImg", user.ProfileImageUrl != null ? user.ProfileImageUrl : string.Empty);
 
                 // Redirigir al home
                 return RedirectToAction("Index", "Home");
@@ -76,6 +76,8 @@ namespace BookSource.Controllers
                 {
                     UserName = model.Username,
                     Email = model.Email,
+                    BirthDate = model.BirthDate,
+                    ProfileImageUrl = model.ProfileImageUrl
                 };
 
                 // Si la creación es correcta, devolveremos la vista de nuevo
