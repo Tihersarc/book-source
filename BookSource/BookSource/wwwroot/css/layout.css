@@ -101,7 +101,7 @@ body {
 }
 
 /* Barra de búsqueda */
-.form-control {
+/*.form-control {
     border: none;
     padding: 10px;
     width: 60%;
@@ -109,7 +109,7 @@ body {
     color: #333;
     outline: none;
     background: none;
-}
+}*/
 
 /* Icono de búsqueda */
 .search-icon {

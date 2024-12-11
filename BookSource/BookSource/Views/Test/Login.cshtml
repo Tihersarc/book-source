@@ -97,6 +97,12 @@
                 <input asp-for="Book" value="Introducing The Witcher" />
                 <button type="submit">Añadir</button>
             </form>
+            <h1>GetBooksCategory</h1>
+            <form asp-controller="Test" asp-action="GetBooksCategory" method="post" asp-antiforgery="true">
+                <label asp-for="Genre">Nombre genero:</label>
+                <input asp-for="Genre" value="Fiction" />
+                <button type="submit">Buscar</button>
+            </form>
         </div>
     </div>
 

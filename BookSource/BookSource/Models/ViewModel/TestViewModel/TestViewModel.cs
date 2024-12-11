@@ -11,5 +11,7 @@
         //public List<ListOfBooks>? ListsOfBooks { get; set; }
         public List<Book>? Books { get; set; }
         public ListOfBooks? ListOfBooks { get; set; }
+
+        public string? Genre { get; set; }
     }
 }

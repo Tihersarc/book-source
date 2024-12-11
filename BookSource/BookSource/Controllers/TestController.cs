@@ -145,10 +145,7 @@ namespace BookSource.Controllers
             TestViewModel model = new TestViewModel();
             model.Books = libros;
             return View(model);
-
         }
-
-        // TODO Ver si funcionan el categories
 
         public IActionResult CreateListOfBook(TestViewModel model)
         {
@@ -180,6 +177,15 @@ namespace BookSource.Controllers
                 _listOfBooksDAL.AddBookToListBook(listOfBooks, book);
 
             return RedirectToAction("Login");
+        }
+
+        public IActionResult GetBooksCategory(TestViewModel m)
+        {
+            List<Book> libros = _bookDAL.GetBooksByCategory(m.Genre); // Working fine
+
+            TestViewModel model = new TestViewModel();
+            model.Books = libros;
+            return View(model);
         }
     }
 }

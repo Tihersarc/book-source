@@ -16,41 +16,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BookSource</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/auth.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" />
 </head>
 <body>
     <div class="content">
         <section class="py-5 gradient-custom">
-            <div class="container py-5">
+            <div class="container">
                 <div class="row d-flex justify-content-center align-items-center">
                     <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                         <div class="card glass-effect">
                             <div class="card-body p-5 text-center">
                                 @if (string.IsNullOrEmpty(user))
                                 {
-                                    <div class="mb-md-5 mt-md-4 pb-5">
-                                        <h2 class="fw-bold mb-2 text-uppercase">Iniciar Sesión</h2>
+                                    <div class="mt-md-3">
+                                        <h2 class="fw-bold text-uppercase">Iniciar Sesión</h2>
                                         <hr class="bg-light" />
-                                        <p class="text-white-50 mb-5">Por favor, introduce tus credenciales para acceder</p>
+                                        <p class="text-black-50 mb-2">Por favor, introduce tus credenciales para acceder</p>
                                         <form asp-controller="Authentication" asp-action="Login" method="post" asp-antiforgery="true">
-                                            <div class="form-outline form-white mb-4">
+                                            <div class="form-outline form-black mb-4">
                                                 <label asp-for="Username" class="form-label">Usuario</label>
                                                 <input asp-for="Username" class="form-control" placeholder="Introduce tu usuario" required />
                                             </div>
-                                            <div class="form-outline form-white mb-4">
+                                            <div class="form-outline form-black mb-4">
                                                 <label asp-for="Password" class="form-label">Contraseña</label>
                                                 <input asp-for="Password" class="form-control" placeholder="Introduce tu contraseña" type="password" required />
                                             </div>
-                                            <button type="submit" class="btn btn-outline-light btn-lg px-5">Iniciar Sesión</button>
+                                            <button type="submit" class="btn btn-primary btn-lg px-5">Iniciar Sesión</button>
                                         </form>
                                         <hr class="bg-light" />
-                                        <p class="small mb-5 pb-lg-2">
-                                            <a href="#" class="text-white-50">¿Has olvidado la contraseña?</a>
+                                        <p class="small mb-2 pb-lg-2">
+                                            <a href="#" class="text-black-50">¿Has olvidado la contraseña?</a>
                                         </p>
                                         <p class="mb-0">
                                             ¿No tienes cuenta?
-                                            <a href="@Url.Action("Register", "Authentication")" class="text-white-50 fw-bold">Regístrate</a>
+                                            <a href="@Url.Action("Register", "Authentication")" class="text-black-50 fw-bold">Regístrate</a>
                                         </p>
                                     </div>
                                 }
