@@ -8,8 +8,8 @@
        public required string Email { get; set; }
        public string? ProfileImageUrl { get; set; }
        public List<ListOfBooksViewModel>? ListOfBooks { get; set; }
-       public List<int>? FollowedList { get; set; }
-       public List<int>? FollowerList { get; set; }
+       public List<User>? FollowedList { get; set; }
+       public List<User>? FollowerList { get; set; }
 
         public int? IdSelectedListOfBooks {  get; set; }
 
