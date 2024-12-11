@@ -62,10 +62,10 @@ namespace BookSource.Controllers
         }
 
         // Seguidores usuario
-        public IActionResult Follower(string username)
+        public IActionResult Follower(string username, string followType)
         {
-        
-            var user = _userDAL.GetUserByUserName(username);
+            User user = _userDAL.GetUserByUserName(username);
+
             if (user == null)
             {
                 return NotFound("Usuario no encontrado.");
@@ -74,8 +74,15 @@ namespace BookSource.Controllers
             UserViewModel profileUser = UserViewModel.UserMapper(user);
 
             // Obtener la lista de seguidores
-            profileUser.FollowerList = _followDAL.GetFollowerList(profileUser.IdUser);
+            if (followType == "follower")
+            {
+                profileUser.FollowerList = _followDAL.GetFollowerList(profileUser.IdUser);
 
+            }
+            else if (followType == "followed")
+            {
+                profileUser.FollowerList = _followDAL.GetFollowedList(profileUser.IdUser);
+            }
             return View(profileUser);
         }
 
