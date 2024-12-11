@@ -1,6 +1,7 @@
 ﻿using BookSource.DAL;
 using BookSource.Models;
 using BookSource.Models.ViewModel;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookSource.Controllers
@@ -49,11 +50,24 @@ namespace BookSource.Controllers
                     List<ListOfBooksViewModel> listOfBooks = ListOfBooksViewModel.MapperToViewModel(_listOfBooksDAL.GetListsOfByUserId(user.IdUser));
                     foreach (ListOfBooksViewModel list in listOfBooks)
                         list.Books = BookViewModel.ListBookMapper(_bookDAL.GetBooksByIdList(list.IdListOfBooks));
-                    return PartialView("~/Views/ListOfBooks/_BookListOfBook.cshtml", listOfBooks);
+                    return PartialView("~/Views/ListOfBooks/_BookListOfBook.cshtml", (listOfBooks, idBook));
                 }
             }
             return BadRequest();
         }
+        [HttpPost]
+        public IActionResult AddBookToList(int idList, int idBook)
+        {
+            _listOfBooksDAL.AddBookToListOfBooks(idList, idBook);
+            return Ok();
+        }
+        [HttpPost]
+        public IActionResult DeleteBookToList(int idList, int idBook)
+        {
+            _listOfBooksDAL.DeleteBookToListOfBooks(idList, idBook);
+            return Ok();
+        }
+
 
         [HttpPost]
         public IActionResult ChangeList(string? username, UserListOfBooksViewModel userList)

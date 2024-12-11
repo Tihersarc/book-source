@@ -1,14 +1,111 @@
 ﻿@using BookSource.Models.ViewModel
-@model List<ListOfBooksViewModel>
+@model (List<ListOfBooksViewModel>ListOfBooks,int idBook)
 @{
-    List<ListOfBooksViewModel> lista = new List<ListOfBooksViewModel>();
-}
-@if(Model!=null)
-{
-    foreach (ListOfBooksViewModel listOfBooks in Model)
+    bool Exist(ListOfBooksViewModel list)
     {
-        <div>@listOfBooks.ListName</div>
+        if (list.Books == null)
+            return false;
+
+        if (list.Books.Where(x => x.IdBook==Model.idBook).Any())
+            return true;
+
+        return false;
     }
+}
+<style>
+    .popup {
+        display: flex;
+        position: fixed;
+        justify-content: center;
+        align-items: center;
+        color:black;
+    }
+
+    .popup-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        width: 300px;
+        text-align: center;
+    }
+
+    .popup-body{
+        text-align:left;
+    }
+    .popup-header {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 1em;
+        cursor: pointer;
+    }
+</style>
+<script>
+    function HidePartial() {
+        document.getElementById('partialContainer').style.display = 'none';
+    }
+    function ShowPartial(IdList,Selected) {
+        console.log(Selected);
+        if (Selected) {
+            $.ajax({
+                url: '@Url.Action("AddBookToList", "ListOfBooks")', // Ruta de tu acción en el controlador
+                type: 'POST',
+                data: {
+                    idList: IdList,
+                    idBook: @Model.idBook
+                },
+                success: function () {
+                },
+                error: function () {
+                    alert('Hubo un error al ejecutar la función.');
+                }
+            });
+        }
+        else 
+        {
+            $.ajax({
+                url: '@Url.Action("DeleteBookToList", "ListOfBooks")', // Ruta de tu acción en el controlador
+                type: 'POST',
+                data: {
+                    idList: IdList,
+                    idBook: @Model.idBook
+                    },
+                success: function () {
+                },
+                error: function () {
+                    alert('Hubo un error al ejecutar la función.');
+                }
+            });
+
+        }
+    }
+
+</script>
+@if(Model.ListOfBooks!=null)
+{
+    <div class="modal popup">
+        <div class="modal-content popup-content">
+            <div class="modal-header popup-header">
+                Añadir libro a lista:
+                <button class="btn-close close" onclick="HidePartial()"></button>
+            </div>
+            <div class="modal-body popup-body">
+                @foreach (ListOfBooksViewModel listOfBooks in Model.ListOfBooks)
+                {
+                    <input class="form-check-input" type="checkbox" onclick="ShowPartial(@listOfBooks.IdListOfBooks,this.checked)" value=@(Exist(listOfBooks)?"true":"false") id="defaultCheck">
+                    <label class="form-check-label" for="defaultCheck">
+                        @listOfBooks.ListName
+                    </label>
+                }
+
+            </div>
+        </div>
+    </div>
 }
 else
 {

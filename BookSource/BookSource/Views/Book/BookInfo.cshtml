@@ -12,13 +12,13 @@
 <link rel="stylesheet" href="~/css/bookinfo.css" asp-append-version="true" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" />
 <script>
-    function showPartial() {
+    function ShowPartial() {
         $.ajax({
             url: '@Url.Action("GetUserListOfBooksPartialView", "ListOfBooks")', // Ruta de tu acción en el controlador
             type: 'GET',
             data: { idBook : @Model.IdBook},
             success: function (data) {
-                document.getElementById('partialContainer').style.display = 'block';
+                document.getElementById('partialContainer').style.display = 'flex';
                 $('#partialContainer').html(data);
             },
             error: function () {
@@ -66,7 +66,7 @@
             </div>
             @if(userName!=null)
             {
-                <button class="btn btn-primary mt-3" onclick="showPartial()">Agregar a Favoritos</button>
+                <button class="btn btn-primary mt-3" onclick="ShowPartial()">Agregar a Favoritos</button>
             }
             <div id="partialContainer" style="display:none; margin-top:20px;">
             </div>
