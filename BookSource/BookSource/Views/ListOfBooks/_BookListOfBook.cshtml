@@ -50,7 +50,14 @@
         document.getElementById('partialContainer').style.display = 'none';
     }
     function ShowPartial(IdList,Selected) {
-        console.log(Selected);
+        console.log(IdList);
+        if (IdList == null) 
+        {
+            console.log("return");
+            return;
+        }
+        console.log("continue");
+
         if (Selected) {
             $.ajax({
                 url: '@Url.Action("AddBookToList", "ListOfBooks")', // Ruta de tu acción en el controlador

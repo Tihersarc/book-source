@@ -63,7 +63,7 @@ This view show a list of books and redirect to them.
                                 }
                         </div>
 
-                        <a asp-controller="Book" asp-action="BookInfo" class="btn">Leer más</a>
+                    <a asp-controller="Book" asp-action="BookInfo" asp-route-bookId=@book.IdBook class="btn">Leer más</a>
                        
                     </div>
                 </div>

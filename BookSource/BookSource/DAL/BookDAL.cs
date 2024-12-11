@@ -133,6 +133,7 @@ namespace BookSource.DAL
                 connection.Open();
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
+                    if (reader.Read())
                     {
                         return new Book
                         {
@@ -144,11 +145,12 @@ namespace BookSource.DAL
                             Subtitle = reader.IsDBNull(reader.GetOrdinal("Subtitle")) ? null : (string)reader["Subtitle"],
                             Editorial = reader.IsDBNull(reader.GetOrdinal("Editorial")) ? null : (string)reader["Editorial"],
                             PageCount = reader.IsDBNull(reader.GetOrdinal("PageCount")) ? null : (int)reader["PageCount"],
-                            Score = reader.IsDBNull(reader.GetOrdinal("Score")) ? null : (float)reader["Score"]
+                            Score = reader.IsDBNull(reader.GetOrdinal("Score")) ? null : (double)reader["Score"]
                         };
                     }
                 }
             }
+            return null;
         }
 
         public bool CreateBook(Book book)
@@ -208,7 +210,7 @@ namespace BookSource.DAL
                             Subtitle = reader.IsDBNull(reader.GetOrdinal("Subtitle")) ? null : (string)reader["Subtitle"],
                             Editorial = reader.IsDBNull(reader.GetOrdinal("Editorial")) ? null : (string)reader["Editorial"],
                             PageCount = reader.IsDBNull(reader.GetOrdinal("PageCount")) ? null : (int)reader["PageCount"],
-                            Score = reader.IsDBNull(reader.GetOrdinal("Score")) ? null : (float)reader["Score"]
+                            Score = reader.IsDBNull(reader.GetOrdinal("Score")) ? null : (double)reader["Score"]
                         };
                         list.Add(book);
                     }
