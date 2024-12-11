@@ -47,7 +47,7 @@ namespace BookSource.Controllers
             User? user = _userDAL.GetUserByUserName(username);
             if (user==null)
             {
-                return null;
+                return null; 
             }
             UserViewModel profileUser = UserViewModel.UserMapper(_userDAL.GetUserByUserName(username));
             profileUser.FollowerList = _followDAL.GetFollowerList(profileUser.IdUser);
