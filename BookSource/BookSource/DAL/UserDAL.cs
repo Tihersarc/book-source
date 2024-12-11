@@ -1,6 +1,7 @@
 ﻿using BookSource.Models;
 using BookSource.Tools;
 using Microsoft;
+using Microsoft.AspNetCore.Identity;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -162,36 +163,65 @@ namespace BookSource.DAL
 
         // No modificar el IdUser, sino no funcionará
         [Obsolete]
-        public User UpdateUser(User newUser)
+        public User UpdateUser(User user)
         {
-            User oldUser = GetUserByUserName(newUser.UserName);
+            byte[] PasswordHash = null;
+            byte[] PasswordSalt = null;
 
+            if (user.Password != null && user.Password != "")
+            {
+                PasswordHelper.CreatePasswordHash(user.Password, out  PasswordHash, out PasswordSalt);
+            }
+            if (PasswordSalt != null && PasswordHash != null)
+            {
+                user.PasswordSalt = PasswordSalt;
+                user.PasswordHash = PasswordHash;
+            }
             try
             {
-                string query =
-                    "UPDATE [User] " +
-                    "SET " +
-                    "   BirthDate = @BirthDate, " +
-                    "   ProfileImageUrl = @ProfileImageUrl " +
-                    "WHERE IdUser = @IdUser";
+                string query;
+                if (user.PasswordSalt != null && user.PasswordHash != null)
+                {
+                    query = "UPDATE [User] SET BirthDate = @BirthDate, "
+                        + "ProfileImageUrl = @ProfileImageUrl,"
+                        + "PasswordHash = @PasswordHash,"
+                        + "PasswordSalt = @PasswordSalt "
+                        + "WHERE IdUser = @IdUser";
+                }
+                else
+                {
+                    query = "UPDATE [User] SET BirthDate = @BirthDate, " 
+                        + "ProfileImageUrl = @ProfileImageUrl " 
+                        + "WHERE IdUser = @IdUser";
+                }
+
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
-                        cmd.Parameters.AddWithValue("@IdUser", oldUser.IdUser);
-                        cmd.Parameters.AddWithValue("@BirthDate", newUser.BirthDate == null ? DBNull.Value : newUser.BirthDate);
-                        cmd.Parameters.AddWithValue("@ProfileImageUrl", newUser.ProfileImageUrl);
-
+                        cmd.Parameters.AddWithValue("@IdUser", user.IdUser);
+                        cmd.Parameters.AddWithValue("@BirthDate", user.BirthDate == null ? DBNull.Value : user.BirthDate);
+                        cmd.Parameters.AddWithValue("@ProfileImageUrl", user.ProfileImageUrl);
+                        if (user.PasswordSalt != null && user.PasswordHash != null)
+                        {
+                            cmd.Parameters.AddWithValue("@PasswordHash", user.PasswordHash);
+                            cmd.Parameters.AddWithValue("@PasswordSalt", user.PasswordSalt);
+                        }
                         connection.Open();
-                        cmd.ExecuteNonQuery();
-                        connection.Close();
+                        int affectedRows = 0;
 
-                        // If all above works, assign the old UNIQUE values to the new object,
-                        // so when it's returned it has correct values
-                        newUser.IdUser = oldUser.IdUser;
-                        newUser.UserName = oldUser.UserName;
-                        newUser.Email = oldUser.Email;
+                        affectedRows = cmd.ExecuteNonQuery();
+                        if (affectedRows > 0)
+                        {
+                            return user;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+
+                        connection.Close();
                     }
                 }
             }
@@ -201,7 +231,7 @@ namespace BookSource.DAL
                 throw;
             }
 
-            return newUser;
+            return user;
         }
     }
 }

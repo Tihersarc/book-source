@@ -78,29 +78,33 @@ namespace BookSource.Controllers
         public IActionResult Configuration(string username)
         {
             User? profileUser = _userDAL.GetUserByUserName(username);
-            UserViewModel user = UserViewModel.UserMapper(profileUser);
-            return View(user);
+            return View(profileUser);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Configuration(UserViewModel user,int idUser)
+        public IActionResult Configuration(User user)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
+                    User updatedUser = _userDAL.UpdateUser(user);
+                    if (updatedUser != null)
+                    {
+                        HttpContext.Session.SetString("UserImg", user.ProfileImageUrl != null ? updatedUser.ProfileImageUrl:string.Empty);
+                        return RedirectToAction("Index", "User", new { username = user.UserName });
+                    }
+                }
+                else
+                {
                     return View(user);
                 }
-                //TODO Update user
-                _userDAL.UpdateUser(user.MapperToUser());
-                if (HttpContext.Session.GetString(Tools.Tools.UserImgSession) != user.ProfileImageUrl)
-                    HttpContext.Session.SetString("UserImg", user.ProfileImageUrl ?? string.Empty);
-                return RedirectToAction("Index", "User", new { username = user.UserName });
             }
             catch (Exception)
             {
                 return View(user);
             }
+            return View(user);
         }
 
         [HttpPost]
