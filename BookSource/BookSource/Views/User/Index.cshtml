@@ -144,8 +144,12 @@
             <div>Usuario: @Model.UserName</div>
             <div>Correo: @Model.Email</div>
             <div>Nacimiento: @(Model.Birthdate.HasValue ? Model.Birthdate : "Sin establecer")</div>
-            <div>Seguidos</div>
-            <div>Seguidores</div>
+            <div>
+                <a asp-controller="UserFollower" asp-action="Follow" asp-route-username=@Model.UserName>Seguidos</a>
+            </div>
+            <div>
+                <a asp-controller="UserFollower" asp-action="Follower" asp-route-username=@Model.UserName>Seguidores</a>
+            </div>
             <div>
                 <a asp-controller="ListOfBooks" asp-action="Index" asp-route-username=@Model.UserName>Listas de libros</a>
             </div>

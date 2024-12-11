@@ -60,6 +60,25 @@ namespace BookSource.Controllers
 
             return profileUser;
         }
+
+        // Seguidores usuario
+        public IActionResult Follower(string username)
+        {
+        
+            var user = _userDAL.GetUserByUserName(username);
+            if (user == null)
+            {
+                return NotFound("Usuario no encontrado.");
+            }
+
+            UserViewModel profileUser = UserViewModel.UserMapper(user);
+
+            // Obtener la lista de seguidores
+            profileUser.FollowerList = _followDAL.GetFollowerList(profileUser.IdUser);
+
+            return View(profileUser);
+        }
+
         public IActionResult Follow(string username)
         {
             UserViewModel profileUser = UserViewModel.UserMapper(_userDAL.GetUserByUserName(username));
