@@ -1,12 +1,32 @@
-﻿@model BookSource.Models.ViewModel.BookViewModel
+﻿@using BookSource.Models.ViewModel
+@using BookSource.Tools
+@model BookSource.Models.ViewModel.BookViewModel
 
 @{
     ViewData["Title"] = "Book Info";
+    string? userName = Context.Session.GetString(Tools.UserNameSession);
+    List<ListOfBooksViewModel> listOfBooksViewModels = ViewBag.ListOfBooks;
 }
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="~/css/layout.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/bookinfo.css" asp-append-version="true" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" />
+<script>
+    function ShowPartial() {
+        $.ajax({
+            url: '@Url.Action("GetUserListOfBooksPartialView", "ListOfBooks")', // Ruta de tu acción en el controlador
+            type: 'GET',
+            data: { idBook : @Model.IdBook},
+            success: function (data) {
+                document.getElementById('partialContainer').style.display = 'flex';
+                $('#partialContainer').html(data);
+            },
+            error: function () {
+                alert('Hubo un error al ejecutar la función.');
+            }
+        });
+    }
+</script>
 
 <div>
     <div class="row">
@@ -44,7 +64,13 @@
                     }
                 </ul>
             </div>
-            <button class="btn btn-primary mt-3">Agregar a Favoritos</button>
+            @if(userName!=null)
+            {
+                <button class="btn btn-primary mt-3" onclick="ShowPartial()">Agregar a Favoritos</button>
+            }
+            <div id="partialContainer" style="display:none; margin-top:20px;">
+            </div>
+
         </div>
     </div>
 </div>

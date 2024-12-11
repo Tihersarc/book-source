@@ -137,6 +137,47 @@ namespace BookSource.DAL
             }
 
         }
+        public bool AddBookToListOfBooks(int idListOfBooks,int idBook)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = $"INSERT INTO ListOfBooks_Book VALUES(@IdListOfBooks,@IdBook)";
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                cmd.Parameters.AddWithValue("@IdListOfBooks", idListOfBooks);
+                cmd.Parameters.AddWithValue("@IdBook", idBook);
+                conn.Open();
+
+                int affectedRows = 0;
+                affectedRows = cmd.ExecuteNonQuery();
+                if (affectedRows > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+        public bool DeleteBookToListOfBooks(int idListOfBooks, int idBook)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = $"DELETE FROM ListOfBooks_Book" +
+                    $"WHERE FkIdBook=@IdBook AND FkIdListOfBooks=@IdListOfBooks";
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                cmd.Parameters.AddWithValue("@IdListOfBooks", idListOfBooks);
+                cmd.Parameters.AddWithValue("@IdBook", idBook);
+                conn.Open();
+
+                int affectedRows = 0;
+                affectedRows = cmd.ExecuteNonQuery();
+                if (affectedRows > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
 
         public ListOfBooks AddBookToListBook(ListOfBooks listOfBooks, Book book)
         {
