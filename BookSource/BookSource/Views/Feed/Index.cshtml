@@ -1,0 +1,46 @@
+﻿@using BookSource.Models.ViewModel
+@model FeedViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<link rel="stylesheet" href="~/css/feed.css" asp-append-version="true" />
+
+<div class="main-container">
+    <div class="filters-container">
+        <form asp-controller="Search" asp-action="Index" method="get">
+            <h3>Buscador</h3>
+            <div class="filter-group">
+                <label>Buscar:</label>
+                <input asp-for="@Model.Content" value="@Model.Content" placeholder="Busca por contenido">
+            </div>
+
+            <div class="filter-group">
+                <label>Ordenar por</label>
+
+                <select asp-for="@Model.OrderType">
+                    <option value="" selected></option>
+                    <option value="MaxScore">Mas reciente</option>
+                    <option value="MinScore">Menos antiguo</option>
+                    <option value="MaxPage">Mas likes</option>
+                    <option value="MinPage">Menos likes</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Usuario</label>
+
+                <select asp-for="@Model.User">
+                </select>
+            </div>
+
+            <button class="btn btn-secondary" type="submit">Buscar</button>
+        </form>
+    </div>
+    <div class="books-container">
+        @{
+            await Html.RenderPartialAsync("_BookList", Model.Publications);
+        }
+    </div>
+</div>

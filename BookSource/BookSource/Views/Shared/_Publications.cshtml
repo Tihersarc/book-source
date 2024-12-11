@@ -1,0 +1,68 @@
+﻿@using BookSource.Models.ViewModel
+@using BookSource.Tools
+@*
+This view show a list of books and redirect to them.
+*@
+@{
+    @model List<Publication>
+
+}
+<link rel="stylesheet" href="~/css/bookList.css" asp-append-version="true" />
+
+@if (Model == null)
+{
+    <div class="col">No hay ninguna publicación</div>
+}
+else
+{
+    <div class="cards-container">
+        @foreach (Publication publication in Model)
+        {
+            <div class="book-card">
+                <img src=@(publication.PubImage??Tools.DefaultBookImg) alt="Book Image">
+                <div class="card-content">
+                    @if (publication.Title.Length > 20)
+                    {
+                        <h3 class="card-title">@publication.Title.Substring(0, 20)</h3>
+                    }
+                    else
+                    {
+                        <h3 class="card-title">@publication.Title</h3>
+
+                    }
+                    @if (!string.IsNullOrEmpty(publication.Title))
+                    {
+                        if (publication.Title.Length > 30)
+                        {
+                            <h4 class="card-subtitle">@publication.Title.Substring(0, 30)</h4>
+                        }
+                        else
+                        {
+                            <h4 class="card-subtitle">@publication.Title</h4>
+
+                        }
+                    }
+                    @*<p class="card-description">@(book.Description??"This book don't have description")</p>*@
+                    <div class="card-details">
+                        @*<span><strong>Editorial:</strong> @book.Editorial</span>
+                <span><strong>Páginas:</strong> @book.PageCount</span>
+                <span><strong>Score:</strong> @book.Score.ToString()</span>*@
+                        @if (publication.Content.Length > 20)
+                        {
+                            <span><strong>Autor:</strong> @publication.Content.Substring(0, 20)</span>
+                        }
+                        else
+                        {
+                            <span><strong>Autor:</strong> @publication.Content</span>
+                        }
+                    </div>
+                </div>
+                <div class="card-footer">
+
+                    <a asp-controller="Book" asp-action="BookInfo" class="btn">Leer más</a>
+
+                </div>
+            </div>
+        }
+    </div>
+}
