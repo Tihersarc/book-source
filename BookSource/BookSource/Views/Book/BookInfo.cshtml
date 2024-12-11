@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" />
 <script>
     function ShowPartial() {
+        console.log("entra");
         $.ajax({
             url: '@Url.Action("GetUserListOfBooksPartialView", "ListOfBooks")', // Ruta de tu acción en el controlador
             type: 'GET',
