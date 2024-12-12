@@ -36,10 +36,9 @@
 </style>
 <script>
     function HidePartial() {
-        document.getElementById('partialContainer').style.display = 'none';
+        document.getElementById('ViewPartial').style.display = 'none';
     }
     function AddNewList() {
-        console.log("Entra añadir lista");
       const listName =  document.getElementById('ListNameTextBox').value;
 
         if (listName == "") 
@@ -54,7 +53,6 @@
                 nameList : listName,
                     },
             success: function () {
-                console.log("Añadido correctamente");
                 HidePartial();
             },
             error: function () {
@@ -66,7 +64,7 @@
     }
 
 </script>
-<div class="modal popup">
+<div id="ViewPartial" class="modal popup">
     <div class="modal-content popup-content">
         <div class="modal-header popup-header">
             Nueva Lista
