@@ -55,6 +55,26 @@ namespace BookSource.Controllers
             }
             return BadRequest();
         }
+        [HttpGet]
+        public ActionResult GetAddUserListOfBooksPartialView()
+        {
+            string? sessionUsername = HttpContext.Session.GetString(Tools.Tools.UserNameSession);
+            if (sessionUsername != null)
+            {
+                User? user = _userDAL.GetUserByUserName(sessionUsername);
+                if (user != null)
+                {
+                    return PartialView("~/Views/ListOfBooks/_AddListOfBooks.cshtml");
+                }
+            }
+            return BadRequest();
+        }
+        [HttpPost]
+        public IActionResult AddListOfBooks(string nameList)
+        {
+            return Ok();
+        }
+
         [HttpPost]
         public IActionResult AddBookToList(int idList, int idBook)
         {

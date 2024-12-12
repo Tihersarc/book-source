@@ -46,17 +46,31 @@
     }
 </style>
 <script>
+    function AddNewListOfBooks() { 
+        console.log("Entra añadir");
+        $.ajax({
+            url: '@Url.Action("GetAddUserListOfBooksPartialView", "ListOfBooks")',
+            type: 'GET',
+            success: function (data) {
+                document.getElementById('partialContainer').style.display = 'flex';
+                $('#partialContainer').html(data);
+            },
+            error: function () {
+                alert('Hubo un error al ejecutar la función.');
+            }
+
+        })
+    }
     function HidePartial() {
+        console.log("Cierra");
         document.getElementById('partialContainer').style.display = 'none';
     }
     function ActionPartial(IdList,Selected) {
         console.log(IdList);
         if (IdList == null) 
         {
-            console.log("return");
             return;
         }
-        console.log("continue");
 
         if (Selected) {
             $.ajax({
@@ -90,7 +104,6 @@
                     alert('Hubo un error al ejecutar la función.');
                 }
             });
-
         }
     }
 
@@ -111,8 +124,8 @@
                         @listOfBooks.ListName
                     </label>
                 }
-
             </div>
+            <button class="btn btn-primary" onclick="AddNewListOfBooks()">Añadir lista</button>
         </div>
     </div>
 }

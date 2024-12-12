@@ -1,0 +1,80 @@
+﻿@{
+}
+<style>
+    .popup {
+        display: flex;
+        position: fixed;
+        justify-content: center;
+        align-items: center;
+        color: black;
+    }
+
+    .popup-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        width: 300px;
+        text-align: center;
+    }
+
+    .popup-body {
+        text-align: left;
+    }
+
+    .popup-header {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 1em;
+        cursor: pointer;
+    }
+</style>
+<script>
+    function HidePartial() {
+        document.getElementById('partialContainer').style.display = 'none';
+    }
+    function AddNewList() {
+        console.log("Entra añadir lista");
+      const listName =  document.getElementById('ListNameTextBox').value;
+
+        if (listName == "") 
+        { 
+            alert("Inserte algun nombre");
+            return;
+        }
+        $.ajax({
+            url: '@Url.Action("AddListOfBooks", "ListOfBooks")',
+            type: 'POST',
+            data: {
+                nameList : listName,
+                    },
+            success: function () {
+                console.log("Añadido correctamente");
+                HidePartial();
+            },
+            error: function () {
+                alert('Hubo un error al ejecutar la función.');
+            }
+
+        });
+
+    }
+
+</script>
+<div class="modal popup">
+    <div class="modal-content popup-content">
+        <div class="modal-header popup-header">
+            Nueva Lista
+            <button class="btn-close close" onclick="HidePartial()"></button>
+        </div>
+        <div class="modal-body popup-body">
+            <input id="ListNameTextBox" type="text" placeholder="Elige un nombre">
+        </div>
+        <button class="btn btn-primary align-content-center" onclick="AddNewList()">Crear</button>
+    </div>
+</div>
