@@ -161,14 +161,14 @@ namespace BookSource.DAL
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                string query = $"DELETE FROM ListOfBooks_Book" +
-                    $"WHERE FkIdBook=@IdBook AND FkIdListOfBooks=@IdListOfBooks";
+                string query = $"DELETE FROM ListOfBooks_Book " +
+                    $"WHERE FkIdBook = @IdBook AND FkIdListOfBooks = @IdListOfBooks";
                 SqlCommand cmd = new SqlCommand(query, conn);
 
                 cmd.Parameters.AddWithValue("@IdBook", idBook);
                 cmd.Parameters.AddWithValue("@IdListOfBooks", idListOfBooks);
                 conn.Open();
-
+                string queryDebug = DebugSqlCommand(cmd);
                 int affectedRows = 0;
                 affectedRows = cmd.ExecuteNonQuery();
                 if (affectedRows > 0)
@@ -177,6 +177,16 @@ namespace BookSource.DAL
                 }
                 return false;
             }
+        }
+        string DebugSqlCommand(SqlCommand command)
+        {
+            string debugQuery = command.CommandText;
+            foreach (SqlParameter param in command.Parameters)
+            {
+                string paramValue = param.Value == null ? "NULL" : param.Value.ToString();
+                debugQuery = debugQuery.Replace(param.ParameterName, $"'{paramValue}'");
+            }
+            return debugQuery;
         }
 
         public ListOfBooks AddBookToListBook(ListOfBooks listOfBooks, Book book)

@@ -69,6 +69,7 @@
                 success: function () {
                 },
                 error: function () {
+                    document.getElementById('checkboxList' + IdList).checked = false;
                     alert('Hubo un error al ejecutar la función.');
                 }
             });
@@ -85,6 +86,7 @@
                 success: function () {
                 },
                 error: function () {
+                    document.getElementById('checkboxList' + IdList).checked = true;
                     alert('Hubo un error al ejecutar la función.');
                 }
             });
@@ -104,8 +106,8 @@
             <div class="modal-body popup-body">
                 @foreach (ListOfBooksViewModel listOfBooks in Model.ListOfBooks)
                 {
-                    <input class="form-check-input" type="checkbox" onclick="ActionPartial(@listOfBooks.IdListOfBooks,this.checked)" checked=@(Exist(listOfBooks)?"true":"false") id="defaultCheck">
-                    <label class="form-check-label" for="defaultCheck">
+                    <input id="checkboxList@(listOfBooks.IdListOfBooks)" class="form-check-input" type="checkbox" onclick="ActionPartial(@listOfBooks.IdListOfBooks,this.checked)" @(Exist(listOfBooks)?"checked":null)>
+                    <label class="form-check-label">
                         @listOfBooks.ListName
                     </label>
                 }
