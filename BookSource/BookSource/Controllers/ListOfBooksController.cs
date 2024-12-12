@@ -72,7 +72,18 @@ namespace BookSource.Controllers
         [HttpPost]
         public IActionResult AddListOfBooks(string nameList)
         {
-            return Ok();
+            string? sessionUsername = HttpContext.Session.GetString(Tools.Tools.UserNameSession);
+            if (sessionUsername != null)
+            {
+                User? user = _userDAL.GetUserByUserName(sessionUsername);
+                if (user != null)
+                {
+                    _listOfBooksDAL.CreateListOfBooks(new ListOfBooks { ListName = nameList, RIdUser=user.IdUser});
+
+                    return Ok();
+                }
+            }
+            return BadRequest();
         }
 
         [HttpPost]
