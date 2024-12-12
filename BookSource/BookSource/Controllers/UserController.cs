@@ -101,6 +101,31 @@ namespace BookSource.Controllers
             return RedirectToAction("Index", "User", new { username = username }); ;
         }
 
+        public IActionResult Profile(string username)
+        {
+            if (string.IsNullOrEmpty(username))
+            {
+                return NotFound("Usuario no especificado.");
+            }
+
+            // Obtener el perfil del usuario
+            User? user = _userDAL.GetUserByUserName(username);
+            if (user == null)
+            {
+                return NotFound("Usuario no encontrado.");
+            }
+
+            // Crear el modelo de vista para el usuario
+            UserViewModel profileUser = InitializeUserViewModel(username, null);
+
+            if (profileUser == null)
+            {
+                return NotFound("No se pudo cargar el perfil del usuario.");
+            }
+
+            return View("Index", profileUser); // Reutiliza la vista `Index` para mostrar el perfil
+        }
+
         public IActionResult Configuration(string username)
         {
             User? profileUser = _userDAL.GetUserByUserName(username);

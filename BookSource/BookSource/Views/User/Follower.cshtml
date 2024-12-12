@@ -3,28 +3,56 @@
 
 @{
     ViewData["Title"] = "Follower";
-
-
-    // ListOfBooksViewModel? showList = null;
 }
 
 <style>
-    .userLayout {
-        display: grid;
-        grid-template-areas: "sidebar body";
-        grid-template-columns: 1fr 3fr;
-        gap: 16px;
-        padding: 20px;
-        max-width: 1200px;
-        margin: 0 auto;
-        background: rgba(237, 231, 224, 0.9);
-        border-radius: 15px;
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(2px);
-        border: 2px solid rgba(189, 152, 120, 0.8);
+    body {
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
     }
 
-    .userSidebar, .userBody {
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    .icon {
+        font-size: 24px;
+    }
+
+    .title {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .info {
+        text-align: right;
+    }
+
+    .section {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .sidebar, .body {
         color: black;
         padding: 20px;
         border-radius: 12px;
@@ -32,7 +60,7 @@
         border: 1px solid #d7ccc8;
     }
 
-    .userSidebar {
+    .sidebar {
         text-align: center;
     }
 
@@ -87,35 +115,60 @@
             margin-right: 15px;
         }
 
-        .follower-item .follower-name {
-            font-size: 16px;
-            font-weight: bold;
+    .follower-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .follower-name {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .follower-details {
+        display: flex;
+        gap: 10px;
+        font-size: 14px;
+    }
+
+    .follower-link {
+        font-size: 14px;
+        color: #007bff;
+        text-decoration: none;
+    }
+
+        .follower-link:hover {
+            text-decoration: underline;
         }
 </style>
 
-<div class="userLayout">
-    <div class="userSidebar">
-        <h1>Seguidores</h1>
-        @if (Model.FollowerList != null && Model.FollowerList.Any())
-        {
-            <ul>
-                @foreach (var follower in Model.FollowerList)
-                {
-                    <li class="follower-item">
-                        <img src="@follower.ProfileImageUrl" alt="@follower.UserName" />
-                        <div class="follower-name">@follower.UserName</div>
-                    </li>
-                }
-            </ul>
-        }
-        else
-        {
-            <p>Este usuario no tiene seguidores.</p>
-        }
-    </div>
-    <div class="userBody">
-        <h1>@Model.UserName</h1>
-        <h2>@Model.Email</h2>
-        <p>@(Model.Birthdate.HasValue ? Model.Birthdate.Value.ToString("dd/MM/yyyy") : "Fecha de nacimiento no establecida")</p>
+    <div class="layout">
+        <div class="sidebar">
+            @if (Model.FollowerList != null && Model.FollowerList.Any())
+            {
+                <ul>
+                    @foreach (var follower in Model.FollowerList)
+                    {
+                        <li class="follower-item">
+                            <img src="@follower.ProfileImageUrl" alt="@follower.UserName" />
+                            <div class="follower-info">
+                                <div class="follower-name">@follower.UserName</div>
+                                <div class="follower-details">
+                                    <span>Publicaciones</span>
+                                    <span>Listas</span>
+                                    <a asp-controller="User" asp-action="Profile" asp-route-username="@follower.UserName" class="follower-link">
+                                        Ver perfil
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>Este usuario no tiene seguidores.</p>
+            }
+        </div>
     </div>
 </div>
