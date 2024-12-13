@@ -11,15 +11,26 @@
 
 
 @foreach (ReviewViewModel review in Model.reviewList) {
-    <a class="row" asp-action="Index" asp-controller="User" asp-route-username=@review.UserName>
-        <div class="col">
-            <img src="@(review.UserImgUrl??Tools.DefaultUserImg)" alt="Alternate Text" />
-        </div>
-        <div class="col">@review.UserName</div>
-    </a>
-    <div class="row">
-        <div class="colspan-2">
-            @Html.DisplayFor(modelItem => review.Comment)
+        <div class="container mt-4 review-card">
+        <div class="row">
+            <div class="review-user-img col-4">
+                <img src="@(review.UserImgUrl??Tools.DefaultUserImg)" alt="Placeholder Image" class="img-fluid">
+            </div>
+            <div class="col-8">
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="user-text">@review.UserName</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="user-comment">
+                            @Html.DisplayFor(modelItem => review.Comment)
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
 }

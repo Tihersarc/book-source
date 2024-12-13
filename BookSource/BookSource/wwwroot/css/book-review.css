@@ -1,1 +1,25 @@
-﻿
+﻿.review-card {
+    background: white;
+    max-width: auto;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    border: none;
+    backdrop-filter: blur(2px);
+}
+.review-user-img
+{
+    max-width:80px;
+}
+.user-text {
+    background: #5d4037;
+    border-radius: 50px;
+    width: fit-content;
+    border: 1px solid #5d4037;
+    padding: inherit;
+}
+.user-comment {
+    color: black;
+    border-radius: 50px;
+}
