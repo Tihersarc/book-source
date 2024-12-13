@@ -72,7 +72,10 @@ ul {
     ul li {
         margin-bottom: 8px;
     }
-
+.link-search {
+    text-decoration: none;
+    color: inherit;
+}
 /* Botón interactivo */
 .btn-primary {
     background-color: #795548; 

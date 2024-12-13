@@ -60,7 +60,9 @@
                     {
                         @foreach (var category in Model.Categories)
                         {
-                            <li>@category.Category</li>
+                            <li>
+                                <a class="link-search" asp-action="Index" asp-controller="Search" asp-route-Category=@category.Category>@category.Category</a>
+                            </li>
                         }
                     }
                 </ul>

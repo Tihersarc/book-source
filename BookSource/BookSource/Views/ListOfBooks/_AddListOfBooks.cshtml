@@ -1,39 +1,7 @@
 ﻿@{
 }
-<style>
-    .popup {
-        display: flex;
-        position: fixed;
-        justify-content: center;
-        align-items: center;
-        color: black;
-    }
+<link rel="stylesheet" href="~/css/bookListModal.css" asp-append-version="true" />
 
-    .popup-content {
-        background-color: white;
-        padding: 20px;
-        border-radius: 5px;
-        width: 300px;
-        text-align: center;
-    }
-
-    .popup-body {
-        text-align: left;
-    }
-
-    .popup-header {
-        font-size: 1.5em;
-        margin-bottom: 10px;
-    }
-
-    .close {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        font-size: 1em;
-        cursor: pointer;
-    }
-</style>
 <script>
     function HidePartial() {
         document.getElementById('ViewPartial').style.display = 'none';
