@@ -40,5 +40,28 @@ namespace BookSource.DAL
                 }
             }
         }
+        public List<PublicationLikes> GetAllLikes()
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM PublicationLikes";
+                SqlCommand cmd = new SqlCommand(query, connection);
+                List<PublicationLikes> pub_likes = new List<PublicationLikes>();
+
+                connection.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        pub_likes.Add(new PublicationLikes()
+                        {
+                            RIdPublication = (int)reader["FkIdPublication"],
+                            RIdUser = (int)reader["FkIdUser"]
+                        });
+                    }
+                    return pub_likes;
+                }
+            }
+        }
     }
 }

@@ -23,9 +23,9 @@ namespace BookSource.Controllers
             return View(model);
         }
 
-        public List<Publication> GetBooksByFilter(FeedViewModel model)
+        public List<Models.Publication> GetBooksByFilter(FeedViewModel model)
         {
-            List<Publication> publications = new List<Publication>();
+            List<Models.Publication> publications = new List<Models.Publication>();
 
             // Obtenemos todos los publications o los de una categoria
             publications = _publicationDAL.GetAllPublications();

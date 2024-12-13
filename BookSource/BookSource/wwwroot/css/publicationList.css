@@ -18,7 +18,7 @@
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
-    width: 250px;
+    width: 45%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     display: flex;
@@ -78,23 +78,11 @@
         padding: 10px 15px;
         border-top: 1px solid #ddd;
         background-color: #f9f9f9;
-        text-align: right;
+        display: flex;
+        justify-content: space-between;
     }
 
-        .book-card .card-footer .categories {
-            margin-bottom: 5px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-        }
 
-    .book-card .category {
-        background-color: #3498db;
-        color: #fff;
-        font-size: 0.75rem;
-        padding: 3px 7px;
-        border-radius: 3px;
-    }
 
     .book-card .btn {
         padding: 8px 15px;
@@ -120,3 +108,4 @@ main {
     width: 100%;
     max-width: 1200px;
     padding: 20px;
+}
