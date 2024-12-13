@@ -32,6 +32,10 @@
                 <label>Usuario</label>
 
                 <select asp-for="@Model.User">
+                    @foreach(User user in Model.Users)
+                    {
+                        <option value="@user.IdUser">@user.UserName</option>
+                    }
                 </select>
             </div>
 
