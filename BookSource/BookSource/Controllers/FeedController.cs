@@ -9,59 +9,49 @@ namespace BookSource.Controllers
     public class FeedController : Controller
     {
         private UserDAL _userDAL;
-        public FeedController(UserDAL userDAL)
+        private PublicationDAL _publicationDAL;
+        public FeedController(UserDAL userDAL, PublicationDAL publicationDAL)
         {
             _userDAL = userDAL;
+            _publicationDAL = publicationDAL;
         }
 
         public IActionResult Index(FeedViewModel model)
         {
             model.Users = _userDAL.GetAllUsers();
-            //model.Publications = 
+            model.Publications = GetBooksByFilter(model);
             return View(model);
         }
 
-        //public List<Publications?> GetBooksByFilter(SearchViewModel model)
-        //{
-        //    List<Book> books = new List<Book>();
+        public List<Publication> GetBooksByFilter(FeedViewModel model)
+        {
+            List<Publication> publications = new List<Publication>();
 
-        //    // Obtenemos todos los libros o los de una categoria
-        //    if (model.Category != "" && model.Category != null)
-        //        books = _bookDAL.GetBooksByCategory(model.Category);
-        //    else
-        //        books = _bookDAL.GetAllBooks();
+            // Obtenemos todos los publications o los de una categoria
+            publications = _publicationDAL.GetAllPublications();
 
-        //    // Si se ha intorducido algo en Title, filtramos por titulo
-        //    if (model.Title != "" && model.Title != null)
-        //        books = books.Where(book => book.Title.Contains(model.Title, StringComparison.OrdinalIgnoreCase)).ToList();
+            // Si se ha intorducido algo en Title, filtramos por titulo
+            if (model.Title != "" && model.Title != null)
+                publications = publications.Where(publication => publication.Title.Contains(model.Title, StringComparison.OrdinalIgnoreCase)).ToList();
 
-        //    // Ordenar los libros si se ha puesto algo
-        //    if (model.OrderType != null && model.OrderType != "")
-        //    {
-        //        switch (model.OrderType)
-        //        {
-        //            case "MaxScore":
-        //                books = books.OrderByDescending(book => book.Score).ToList();
-        //                break;
-        //            case "MinScore":
-        //                books = books.OrderBy(book => book.Score).ToList();
-        //                break;
-        //            case "MaxPage":
-        //                books = books.OrderByDescending(book => book.PageCount).ToList();
-        //                break;
-        //            case "MinPage":
-        //                books = books.OrderBy(book => book.PageCount).ToList();
-        //                break;
-        //            case "ByAuthor":
-        //                books = books.OrderBy(book => book.Author).ToList();
-        //                break;
-        //            case "ByEditorial":
-        //                books = books.OrderBy(book => book.Editorial).ToList();
-        //                break;
-        //        }
-        //    }
-        //    return books;
+            // Ordenar los libros si se ha puesto algo
+            if (model.OrderType != null && model.OrderType != "")
+            {
+                switch (model.OrderType)
+                {
+                    case "Users":
+                        publications = publications.OrderBy(pub => pub.RIdUser).ToList();
 
-        //}
+                        break;
+                    case "MaxLikes": // TODO
+                        publications = publications.OrderByDescending(pub => pub.Content).ToList();
+                        break;
+                    case "MinLikes":
+                        publications = publications.OrderBy(pub => pub.Title).ToList();
+                        break;
+                }
+            }
+            return publications;
+        }
     }
 }

@@ -13,7 +13,7 @@
             <h3>Buscador</h3>
             <div class="filter-group">
                 <label>Buscar:</label>
-                <input asp-for="@Model.Content" value="@Model.Content" placeholder="Busca por contenido">
+                <input asp-for="@Model.Title" value="@Model.Title" placeholder="Busca por contenido">
             </div>
 
             <div class="filter-group">
@@ -21,10 +21,9 @@
 
                 <select asp-for="@Model.OrderType">
                     <option value="" selected></option>
-                    <option value="MaxScore">Mas reciente</option>
-                    <option value="MinScore">Menos antiguo</option>
-                    <option value="MaxPage">Mas likes</option>
-                    <option value="MinPage">Menos likes</option>
+                    <option value="Users">Por usuarios</option>
+                    <option value="MaxLikes">Mas likes</option>
+                    <option value="MinLikes">Menos likes</option>
                 </select>
             </div>
 
@@ -44,7 +43,7 @@
     </div>
     <div class="books-container">
         @{
-            await Html.RenderPartialAsync("_BookList", Model.Publications);
+            await Html.RenderPartialAsync("_Publications", Model.Publications);
         }
     </div>
 </div>
