@@ -31,6 +31,8 @@ builder.Services.AddScoped<ListOfBooksDAL>();
 builder.Services.AddScoped<CategoriesDAL>();
 builder.Services.AddScoped<PublicationDAL>();
 
+builder.Services.AddScoped<ReviewDAL>();
+    
 
 
     builder.Services.AddSession(options =>

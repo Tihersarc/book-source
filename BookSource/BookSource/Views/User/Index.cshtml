@@ -120,7 +120,7 @@
         }
         else if (ViewBag.UserName != null)
         {
-            if (Model.FollowerList != null && Model.FollowerList.Contains(ViewBag.IdSessionUser))
+            if (Model.FollowerList != null && Model.FollowerList.Where(x => x.IdUser == ViewBag.IdSessionUser).Any())
             {
                 <a class="btn btn-primary col" asp-controller="User" asp-action="UnFollow" asp-route-username=@Model.UserName>
                     UnFollow

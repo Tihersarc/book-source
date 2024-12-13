@@ -12,10 +12,31 @@
 <link rel="stylesheet" href="~/css/bookinfo.css" asp-append-version="true" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" />
 <script>
-    function ShowPartial() {
-        console.log("entra");
+    window.addEventListener("load", function () {
+        ShowReviewsPartial();
+    });
+
+    function ShowReviewsPartial() {
+        console.log("ShowReviewsPartial");
         $.ajax({
-            url: '@Url.Action("GetUserListOfBooksPartialView", "ListOfBooks")', // Ruta de tu acción en el controlador
+            url: '@Url.Action("GetReviewPartialView", "Review")',
+            type: 'GET',
+            data: { idBook : @Model.IdBook},
+            success: function(data)
+            {
+                $("#review-section").html(data);
+            },
+            error: function()
+            {
+                alert("No se han podido cargar las reviews");
+            }
+
+        })
+
+    }
+    function ShowPartial() {
+        $.ajax({
+            url: '@Url.Action("GetUserListOfBooksPartialView", "ListOfBooks")',
             type: 'GET',
             data: { idBook : @Model.IdBook},
             success: function (data) {
@@ -73,7 +94,7 @@
             }
             <div id="partialContainer" style="display:none; margin-top:20px;">
             </div>
-
         </div>
     </div>
+    <div id="review-section" style="margin-top:20px;"></div>
 </div>
