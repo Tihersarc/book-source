@@ -6,13 +6,10 @@
 }
 
 <style>
-    * {
+    .global-styles {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-    }
-
-    body {
         font-family: Georgia, 'Times New Roman', Times, serif;
         background-color: #f4f4f4;
     }
@@ -42,7 +39,7 @@
         border-radius: 8px;
         background: white;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        cursor: pointer; /* Cambiar el cursor para indicar que es clickeable */
+        cursor: pointer;
         transition: background-color 0.3s ease;
     }
 
@@ -100,37 +97,40 @@
     }
 </style>
 
-<div class="layout">
-    <div class="sidebar">
-        @if (Model.FollowerList != null && Model.FollowerList.Any())
-        {
-            <ul>
-                @foreach (var follower in Model.FollowerList)
-                {
-                    <!-- Verificamos si el seguidor tiene una imagen, si no, usamos la imagen por defecto -->
-                    var profileImage = string.IsNullOrEmpty(follower.ProfileImageUrl) ? "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg" : follower.ProfileImageUrl;
+<div class="global-styles">
+    <div class="layout">
+        <div class="sidebar">
+            @if (Model.FollowerList != null && Model.FollowerList.Any())
+            {
+                <ul>
+                    @foreach (var follower in Model.FollowerList)
+                    {
+                        <!-- Verificamos si el seguidor tiene una imagen, si no, usamos la imagen por defecto -->
+                        var profileImage = string.IsNullOrEmpty(follower.ProfileImageUrl) ? "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg" : follower.ProfileImageUrl;
 
-                    <!-- Envolvemos todo el li en un enlace que lleva al perfil del usuario -->
-                    <li class="follower-item">
-                        <a href="@Url.Action("Profile", "User", new { username = follower.UserName })" style="display: flex; text-decoration: none; width: 100%; color: inherit;">
-                            <img src="@profileImage" alt="@follower.UserName" />
-                            <div class="follower-info">
-                                <div class="follower-name">
-                                    <span>@follower.UserName</span>
+                        <!-- Envolvemos todo el li en un enlace que lleva al perfil del usuario -->
+                        <li class="follower-item">
+                            <a href="@Url.Action("Profile", "User", new { username = follower.UserName })" style="display: flex; text-decoration: none; width: 100%; color: inherit;">
+                                <img src="@profileImage" alt="@follower.UserName" />
+                                <div class="follower-info">
+                                    <div class="follower-name">
+                                        <span>@follower.UserName</span>
+                                    </div>
+                                    <div class="follower-details">
+                                        <span class="details-item">Publicaciones</span>
+                                        <span class="details-item">Listas</span>
+                                    </div>
                                 </div>
-                                <div class="follower-details">
-                                    <span class="details-item">Publicaciones</span>
-                                    <span class="details-item">Listas</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                }
-            </ul>
-        }
-        else
-        {
-            <p class="no-followers">Este usuario no tiene seguidores.</p>
-        }
+                            </a>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="no-followers">Este usuario no tiene seguidores.</p>
+            }
+        </div>
     </div>
 </div>
+

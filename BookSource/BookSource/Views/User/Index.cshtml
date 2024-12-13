@@ -11,8 +11,8 @@
     }
 }
 <style>
-    /* Estructura general */
-    .userLayout {
+    /* Estructura general para el layout del usuario */
+    .user-profile-layout {
         display: grid;
         grid-template-areas: "sidebar body";
         grid-template-columns: 1fr 3fr;
@@ -27,26 +27,26 @@
         border: 2px solid rgba(189, 152, 120, 0.8);
     }
 
-    /* Sidebar y contenido principal */
-    .userSidebar, .userBody {
+    /* Sidebar del perfil */
+    .user-profile-sidebar, .user-profile-body {
         color: black;
-        padding: 20px;
+        padding: 10px;
         border-radius: 12px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         border: 1px solid #d7ccc8;
     }
 
-    .userSidebar {
+    .user-profile-sidebar {
         text-align: center;
     }
 
     /* Elementos de texto */
-    h1, h2, p, ul li {
+    .user-profile-title, .user-profile-subtitle, .user-profile-info, .user-profile-list {
         color: black;
         font-family: Georgia, 'Times New Roman', Times, serif;
     }
 
-    h1 {
+    .user-profile-title {
         font-size: 28px;
         font-weight: bold;
         margin-bottom: 15px;
@@ -56,39 +56,40 @@
         padding-bottom: 10px;
     }
 
-    h2 {
+    .user-profile-subtitle {
         font-size: 20px;
         margin-bottom: 20px;
     }
 
-    p {
+    .user-profile-info {
         font-size: 16px;
         margin-bottom: 15px;
         text-align: justify;
     }
 
-    ul {
+    .user-profile-list {
         padding-left: 30px;
         list-style-type: square;
         font-size: 16px;
         margin-bottom: 15px;
     }
 
-    /* Imágenes y botones */
-    .userImg, .square-container img {
+    /* Estilo para la imagen del usuario */
+    .user-profile-img, .user-profile-img-container img {
         width: 100%;
         object-fit: cover;
         box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
         border-radius: 70%;
     }
 
-    .square-container {
+    .user-profile-img-container {
         aspect-ratio: 1;
         overflow: hidden;
         margin: 0 auto 20px;
     }
 
-    .config-button {
+    /* Estilo para los botones de configuración y seguir */
+    .config-button, .follow-button {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -102,9 +103,20 @@
         transition: background-color 0.3s ease;
     }
 
-        .config-button img {
+        .config-button img, .follow-button img {
             width: 24px;
             height: 24px;
+        }
+
+    /* Enlace de "Seguidos" y "Seguidores" */
+    .user-profile-link {
+        color: darkblue;
+        text-decoration: none;
+        margin: 0 5px;
+    }
+
+        .user-profile-link:hover {
+            text-decoration: underline;
         }
 </style>
 
@@ -122,39 +134,39 @@
         {
             if (Model.FollowerList != null && Model.FollowerList.Contains(ViewBag.IdSessionUser))
             {
-                <a class="btn btn-primary col" asp-controller="User" asp-action="UnFollow" asp-route-username=@Model.UserName>
+                <a class="follow-button col" asp-controller="User" asp-action="UnFollow" asp-route-username=@Model.UserName>
                     UnFollow
                 </a>
             }
             else
             {
-                <a class="btn btn-primary col" asp-controller="User" asp-action="Follow" asp-route-username=@Model.UserName>
+                <a class="follow-button col" asp-controller="User" asp-action="Follow" asp-route-username=@Model.UserName>
                     Follow
                 </a>
             }
         }
 
     </div>
-    <section class="userLayout">
-        <div class="userSidebar">
-            <div class="square-container border">
-                <img class="img-fluid" src=@(Model.ProfileImageUrl??Tools.DefaultUserImg) alt=@Tools.DefaultUserImg />
+    <section class="user-profile-layout">
+        <div class="user-profile-sidebar">
+            <div class="user-profile-img-container border">
+                <img class="img-fluid" src=@(Model.ProfileImageUrl??Tools.DefaultUserImg) alt="Imagen de perfil" />
             </div>
 
-            <div>Usuario: @Model.UserName</div>
-            <div>Correo: @Model.Email</div>
-            <div>Nacimiento: @(Model.Birthdate.HasValue ? Model.Birthdate : "Sin establecer")</div>
-            <div>
-                <a asp-controller="User" asp-action="Follower" asp-route-username=@Model.UserName asp-route-followType="followed">Seguidos</a>
+            <div class="user-profile-info">Usuario: @Model.UserName</div>
+            <div class="user-profile-info">Correo: @Model.Email</div>
+            <div class="user-profile-info">Nacimiento: @(Model.Birthdate.HasValue ? Model.Birthdate : "Sin establecer")</div>
+            <div class="user-profile-list">
+                <a class="user-profile-link" asp-controller="User" asp-action="Follower" asp-route-username=@Model.UserName asp-route-followType="followed">Seguidos</a>
             </div>
-            <div>
-                <a asp-controller="User" asp-action="Follower" asp-route-username=@Model.UserName asp-route-followType="follower">Seguidores</a>
+            <div class="user-profile-list">
+                <a class="user-profile-link" asp-controller="User" asp-action="Follower" asp-route-username=@Model.UserName asp-route-followType="follower">Seguidores</a>
             </div>
-            <div>
-                <a asp-controller="ListOfBooks" asp-action="Index" asp-route-username=@Model.UserName>Listas de libros</a>
+            <div class="user-profile-list">
+                <a class="user-profile-link" asp-controller="ListOfBooks" asp-action="Index" asp-route-username=@Model.UserName>Listas de libros</a>
             </div>
         </div>
-        <div class="userBody">
+        <div class="user-profile-body">
             <div class="row">
                 <div class="col">
                     <form method="post" asp-action="ChangeList" asp-controller="User" asp-route-username=@Model.UserName asp-route-selectedListId=@Model.IdSelectedListOfBooks>
