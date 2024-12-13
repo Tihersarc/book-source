@@ -20,6 +20,8 @@ namespace BookSource.Controllers
         {
             model.Users = _userDAL.GetAllUsers();
             model.Publications = GetBooksByFilter(model);
+            model.PublicationsLikes = _publicationDAL.GetAllLikes();
+
             return View(model);
         }
 

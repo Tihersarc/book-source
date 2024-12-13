@@ -63,5 +63,9 @@ namespace BookSource.DAL
                 }
             }
         }
+        //public int GetLikesByPublicationId(int publicationId)
+        //{
+
+        //}
     }
 }

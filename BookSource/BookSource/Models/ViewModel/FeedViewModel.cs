@@ -8,5 +8,7 @@
         public string? OrderType { get; set; }
         public User User { get; set; }      // El usuario seleccionado
         public List<User> Users { get; set; }   // Todos los users para el combobox
+        
+        public List<PublicationLikes>? PublicationsLikes { get; set; } // Todas las relaciones de likes con users para mapearlas
     }
 }
