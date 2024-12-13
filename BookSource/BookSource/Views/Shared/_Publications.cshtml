@@ -4,7 +4,7 @@
 This view show a list of books and redirect to them.
 *@
 @{
-    @model List<BookSource.Models.Publication>
+    @model List<BookSource.Models.ViewModel.PublicationViewModel>
 }
 <link rel="stylesheet" href="~/css/publicationList.css" asp-append-version="true" />
 
@@ -16,7 +16,7 @@ else
 {
 
     <div class="cards-container">
-        @foreach (BookSource.Models.Publication publication in Model)
+        @foreach (BookSource.Models.ViewModel.PublicationViewModel publication in Model)
         {
             <div class="book-card">
                 
@@ -44,19 +44,10 @@ else
 
                 <div class="card-footer">
                     <div>
-                        <p>User: @publication.RIdUser</p>
+                        <p>User: @publication.IdUser</p>
                     </div>
                     <div>
-                             @{ // Hay que hacer el publicationViewModel por huevos
-                                 int count = 0;
-                                 foreach(var likeList in Model.)
-                                 {
-                                     if (likeList.RIdPublication == publication.IdPublication)
-                                         count++;
-                                 }
-                                 <span>Likes: @count</span>
-                             }
-                        
+                        <span>Likes @publication.likes</span>
                         <button asp-controller="Book" asp-action="BookInfo" class="btn">Like</button>
                     </div>
 

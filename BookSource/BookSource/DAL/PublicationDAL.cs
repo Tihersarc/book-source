@@ -63,9 +63,24 @@ namespace BookSource.DAL
                 }
             }
         }
-        //public int GetLikesByPublicationId(int publicationId)
-        //{
+        public int GetLikesByPublicationId(int publicationId)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT COUNT(*) as likes FROM PublicationLikes WHERE FkIdPublication= @FkIdPublication; ";
+                SqlCommand cmd = new SqlCommand(query, connection);
 
-        //}
+                cmd.Parameters.AddWithValue("@FkIdPublication", publicationId);
+                connection.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return (int)reader["likes"];
+                    }
+                    return 0;
+                }
+            }
+        }
     }
 }

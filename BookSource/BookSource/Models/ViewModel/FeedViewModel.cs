@@ -3,7 +3,7 @@
     public class FeedViewModel
     {
         // To change to Publication View Model
-        public List<Models.Publication>? Publications { get; set; }
+        public List<Models.ViewModel.PublicationViewModel>? Publications { get; set; }
         public string? Title { get; set; }
         public string? OrderType { get; set; }
         public User User { get; set; }      // El usuario seleccionado

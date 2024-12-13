@@ -22,15 +22,22 @@ namespace BookSource.Controllers
             model.Publications = GetBooksByFilter(model);
             model.PublicationsLikes = _publicationDAL.GetAllLikes();
 
+
             return View(model);
         }
 
-        public List<Models.Publication> GetBooksByFilter(FeedViewModel model)
+        public List<Models.ViewModel.PublicationViewModel> GetBooksByFilter(FeedViewModel model)
         {
-            List<Models.Publication> publications = new List<Models.Publication>();
+            List<Models.ViewModel.PublicationViewModel> publications = new List<Models.ViewModel.PublicationViewModel>();
 
             // Obtenemos todos los publications o los de una categoria
-            publications = _publicationDAL.GetAllPublications();
+            publications = PublicationViewModel.ListPubMapper(_publicationDAL.GetAllPublications());
+
+            // Obtenemos los likes
+            foreach (PublicationViewModel item in publications)
+            {
+                item.likes = _publicationDAL.GetLikesByPublicationId(item.IdPublication);
+            }
 
             // Si se ha intorducido algo en Title, filtramos por titulo
             if (model.Title != "" && model.Title != null)
@@ -42,7 +49,7 @@ namespace BookSource.Controllers
                 switch (model.OrderType)
                 {
                     case "Users":
-                        publications = publications.OrderBy(pub => pub.RIdUser).ToList();
+                        publications = publications.OrderBy(pub => pub.IdUser).ToList();
 
                         break;
                     case "MaxLikes": // TODO
