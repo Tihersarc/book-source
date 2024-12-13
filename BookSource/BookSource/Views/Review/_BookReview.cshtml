@@ -1,0 +1,22 @@
+﻿@using BookSource.Models.ViewModel
+@using BookSource.Tools
+@model (IEnumerable<ReviewViewModel>reviewList,int idBook)
+
+@{
+    ViewData["Title"] = "BookReview";
+}
+
+<h1>Reviews</h1>
+
+
+@foreach (ReviewViewModel review in Model.reviewList) {
+    <div class=" row">
+        <div class="col">
+            <img src="@(review.UserImgUrl??Tools.DefaultUserImg)" alt="Alternate Text" />
+        </div>
+        <div class="col">@review.UserName</div>
+    </div>
+    <div>
+        @Html.DisplayFor(modelItem => review.Comment)
+    </div>
+}

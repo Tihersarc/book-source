@@ -29,9 +29,10 @@ builder.Services.AddScoped<BookDAL>();
 builder.Services.AddScoped<FollowDAL>();
 builder.Services.AddScoped<ListOfBooksDAL>();
 builder.Services.AddScoped<CategoriesDAL>();
-
-
+builder.Services.AddScoped<ReviewDAL>();
     
+
+
     builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromDays(30);
