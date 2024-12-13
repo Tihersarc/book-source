@@ -22,7 +22,26 @@ namespace BookSource.Controllers
             model.Publications = GetBooksByFilter(model);
             model.PublicationsLikes = _publicationDAL.GetAllLikes();
             string? sessionUsername = HttpContext.Session.GetString("UserName");
-            ViewBag.UserName = sessionUsername;
+
+            if (sessionUsername != null)
+            {
+                User sessionUser = _userDAL.GetUserByUserName(sessionUsername);
+                foreach (PublicationViewModel item in model.Publications)
+                {
+                    item.isLiked = false;
+
+                    foreach (var pubLikes in model.PublicationsLikes)
+                    {
+                        if (pubLikes.RIdPublication == item.IdPublication 
+                            && pubLikes.RIdUser == sessionUser.IdUser)
+                        {
+                            item.isLiked = true;
+
+                        }
+                    }
+                }
+                ViewBag.UserName = sessionUsername;
+            }
             return View(model);
         }
         public IActionResult AddLike(int IdPublication, int IdUser)
@@ -35,6 +54,17 @@ namespace BookSource.Controllers
              _publicationDAL.AddLikeToPublication(pubLikes);
 
             return RedirectToAction("Index","Feed");
+        }
+        public IActionResult RemoveLike(int IdPublication, int IdUser)
+        {
+            PublicationLikes pubLikes = new PublicationLikes
+            {
+                RIdPublication = IdPublication,
+                RIdUser = IdUser
+            };
+            _publicationDAL.DeleteLikeToPublication(pubLikes);
+
+            return RedirectToAction("Index", "Feed");
         }
 
         public List<Models.ViewModel.PublicationViewModel> GetBooksByFilter(FeedViewModel model)
