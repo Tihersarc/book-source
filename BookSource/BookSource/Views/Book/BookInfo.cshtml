@@ -24,7 +24,7 @@
             data: { idBook : @Model.IdBook},
             success: function(data)
             {
-                $("review-section").html(data);
+                $("#review-section").html(data);
             },
             error: function()
             {
@@ -36,7 +36,7 @@
     }
     function ShowPartial() {
         $.ajax({
-            url: '@Url.Action("GetUserListOfBooksPartialView", "ListOfBooks")', // Ruta de tu acción en el controlador
+            url: '@Url.Action("GetUserListOfBooksPartialView", "ListOfBooks")',
             type: 'GET',
             data: { idBook : @Model.IdBook},
             success: function (data) {

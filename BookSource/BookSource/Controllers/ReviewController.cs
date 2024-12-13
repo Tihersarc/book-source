@@ -15,7 +15,7 @@ namespace BookSource.Controllers
             _userDAL = userDAL;
         }
         [HttpGet]
-        public IActionResult GetReviewPartialView(int idBook)
+        public ActionResult GetReviewPartialView(int idBook)
         {
             List<Review> reviewList= _reviewDAL.GetReviewsByIdBook(idBook);
             List<ReviewViewModel> viewModelList= new List<ReviewViewModel>();
@@ -24,7 +24,7 @@ namespace BookSource.Controllers
                 User user= _userDAL.GetUserById(review.RIdUser);
                 viewModelList.Add(new ReviewViewModel {Comment=review.Comment, UserName=user.UserName,UserImgUrl=user.ProfileImageUrl});
             }
-            return PartialView("~/Views/Review/_BookReview", (viewModelList, idBook));
+            return PartialView("~/Views/Review/_BookReview.cshtml", (viewModelList, idBook));
         }
     }
 }

@@ -1,22 +1,25 @@
 ﻿@using BookSource.Models.ViewModel
 @using BookSource.Tools
-@model (IEnumerable<ReviewViewModel>reviewList,int idBook)
+@model (List<ReviewViewModel>reviewList,int idBook)
 
 @{
     ViewData["Title"] = "BookReview";
 }
+<link rel="stylesheet" href="~/css/book-review.css" asp-append-version="true" />
 
 <h1>Reviews</h1>
 
 
 @foreach (ReviewViewModel review in Model.reviewList) {
-    <div class=" row">
+    <a class="row" asp-action="Index" asp-controller="User" asp-route-username=@review.UserName>
         <div class="col">
             <img src="@(review.UserImgUrl??Tools.DefaultUserImg)" alt="Alternate Text" />
         </div>
         <div class="col">@review.UserName</div>
-    </div>
-    <div>
-        @Html.DisplayFor(modelItem => review.Comment)
+    </a>
+    <div class="row">
+        <div class="colspan-2">
+            @Html.DisplayFor(modelItem => review.Comment)
+        </div>
     </div>
 }
