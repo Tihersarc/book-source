@@ -82,5 +82,46 @@ namespace BookSource.DAL
                 }
             }
         }
+        public bool AddLikeToPublication(PublicationLikes publicationLike)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "INSERT INTO PublicationLikes(FkIdPublication, FkIdUser) VALUES(@FkIdPublication, @FkIdUser) ";
+                SqlCommand cmd = new SqlCommand(query, connection);
+
+                cmd.Parameters.AddWithValue("@FkIdPublication", publicationLike.RIdPublication);
+                cmd.Parameters.AddWithValue("@FkIdUser", publicationLike.RIdUser);
+
+                connection.Open();
+                int affectedRows = 0;
+                affectedRows = cmd.ExecuteNonQuery();
+                if (affectedRows > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+        public bool DeleteLikeToPublication(PublicationLikes publicationLike)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "DELETE FROM PublicationLikes WHERE FkIdPublication = @FkIdPublication AND FkIdUser = @FkIdUser ";
+                SqlCommand cmd = new SqlCommand(query, connection);
+
+                cmd.Parameters.AddWithValue("@FkIdPublication", publicationLike.RIdPublication);
+                cmd.Parameters.AddWithValue("@FkIdUser", publicationLike.RIdUser);
+
+                connection.Open();
+                int affectedRows = 0;
+                affectedRows = cmd.ExecuteNonQuery();
+                if (affectedRows > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
     }
 }

@@ -21,9 +21,20 @@ namespace BookSource.Controllers
             model.Users = _userDAL.GetAllUsers();
             model.Publications = GetBooksByFilter(model);
             model.PublicationsLikes = _publicationDAL.GetAllLikes();
-
-
+            string? sessionUsername = HttpContext.Session.GetString("UserName");
+            ViewBag.UserName = sessionUsername;
             return View(model);
+        }
+        public IActionResult AddLike(int IdPublication, int IdUser)
+        {
+            PublicationLikes pubLikes = new PublicationLikes
+            {
+                RIdPublication = IdPublication,
+                RIdUser = IdUser
+            };
+             _publicationDAL.AddLikeToPublication(pubLikes);
+
+            return RedirectToAction("Index","Feed");
         }
 
         public List<Models.ViewModel.PublicationViewModel> GetBooksByFilter(FeedViewModel model)
