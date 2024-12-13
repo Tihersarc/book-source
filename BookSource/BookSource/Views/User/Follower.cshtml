@@ -6,11 +6,15 @@
 }
 
 <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
     body {
         font-family: Georgia, 'Times New Roman', Times, serif;
         background-color: #f4f4f4;
-        margin: 0;
-        padding: 0;
     }
 
     .container {
@@ -20,81 +24,13 @@
         padding: 20px;
     }
 
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        margin-bottom: 20px;
-    }
-
-    .icon {
-        font-size: 24px;
-    }
-
-    .title {
-        font-size: 24px;
-        font-weight: bold;
-    }
-
-    .info {
-        text-align: right;
-    }
-
-    .section {
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        padding: 20px;
-        margin-bottom: 20px;
-    }
-
-    .sidebar, .body {
-        color: black;
+    .sidebar {
+        text-align: center;
         padding: 20px;
         border-radius: 12px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         border: 1px solid #d7ccc8;
-    }
-
-    .sidebar {
-        text-align: center;
-    }
-
-    h1, h2, p, ul li {
-        color: black;
-        font-family: Georgia, 'Times New Roman', Times, serif;
-    }
-
-    h1 {
-        font-size: 28px;
-        font-weight: bold;
-        margin-bottom: 15px;
-        text-align: center;
-        border-bottom: 2px solid #d7ccc8;
-        display: inline-block;
-        padding-bottom: 10px;
-    }
-
-    h2 {
-        font-size: 20px;
-        margin-bottom: 20px;
-    }
-
-    p {
-        font-size: 16px;
-        margin-bottom: 15px;
-        text-align: justify;
-    }
-
-    ul {
-        padding-left: 30px;
-        list-style-type: square;
-        font-size: 16px;
-        margin-bottom: 15px;
+        background: white;
     }
 
     .follower-item {
@@ -106,6 +42,8 @@
         border-radius: 8px;
         background: white;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        cursor: pointer; /* Cambiar el cursor para indicar que es clickeable */
+        transition: background-color 0.3s ease;
     }
 
         .follower-item img {
@@ -118,57 +56,81 @@
     .follower-info {
         display: flex;
         flex-direction: column;
+        width: 100%;
     }
 
     .follower-name {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: black;
         font-size: 16px;
         font-weight: bold;
     }
 
-    .follower-details {
-        display: flex;
-        gap: 10px;
-        font-size: 14px;
-    }
-
     .follower-link {
         font-size: 14px;
-        color: #007bff;
+        color: darkblue;
         text-decoration: none;
     }
 
         .follower-link:hover {
             text-decoration: underline;
         }
+
+    .follower-details {
+        display: flex;
+        gap: 20px;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+    .details-item {
+        color: #333;
+    }
+
+    .no-followers {
+        font-size: 16px;
+        color: #555;
+    }
+
+    /* Añadir hover para mejorar la interacción */
+    .follower-item:hover {
+        background-color: #f1f1f1;
+    }
 </style>
 
-    <div class="layout">
-        <div class="sidebar">
-            @if (Model.FollowerList != null && Model.FollowerList.Any())
-            {
-                <ul>
-                    @foreach (var follower in Model.FollowerList)
-                    {
-                        <li class="follower-item">
-                            <img src="@follower.ProfileImageUrl" alt="@follower.UserName" />
+<div class="layout">
+    <div class="sidebar">
+        @if (Model.FollowerList != null && Model.FollowerList.Any())
+        {
+            <ul>
+                @foreach (var follower in Model.FollowerList)
+                {
+                    <!-- Verificamos si el seguidor tiene una imagen, si no, usamos la imagen por defecto -->
+                    var profileImage = string.IsNullOrEmpty(follower.ProfileImageUrl) ? "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg" : follower.ProfileImageUrl;
+
+                    <!-- Envolvemos todo el li en un enlace que lleva al perfil del usuario -->
+                    <li class="follower-item">
+                        <a href="@Url.Action("Profile", "User", new { username = follower.UserName })" style="display: flex; text-decoration: none; width: 100%; color: inherit;">
+                            <img src="@profileImage" alt="@follower.UserName" />
                             <div class="follower-info">
-                                <div class="follower-name">@follower.UserName</div>
+                                <div class="follower-name">
+                                    <span>@follower.UserName</span>
+                                </div>
                                 <div class="follower-details">
-                                    <span>Publicaciones</span>
-                                    <span>Listas</span>
-                                    <a asp-controller="User" asp-action="Profile" asp-route-username="@follower.UserName" class="follower-link">
-                                        Ver perfil
-                                    </a>
+                                    <span class="details-item">Publicaciones</span>
+                                    <span class="details-item">Listas</span>
                                 </div>
                             </div>
-                        </li>
-                    }
-                </ul>
-            }
-            else
-            {
-                <p>Este usuario no tiene seguidores.</p>
-            }
-        </div>
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p class="no-followers">Este usuario no tiene seguidores.</p>
+        }
     </div>
 </div>
