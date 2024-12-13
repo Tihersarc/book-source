@@ -1,0 +1,58 @@
+﻿@using BookSource.Models.ViewModel
+@using BookSource.Tools
+@*
+This view show a list of books and redirect to them.
+*@
+@{
+    @model List<BookSource.Models.ViewModel.PublicationViewModel>
+}
+<link rel="stylesheet" href="~/css/publicationList.css" asp-append-version="true" />
+
+@if (Model == null)
+{
+    <div class="col">No hay ninguna publicación</div>
+}
+else
+{
+
+    <div class="cards-container">
+        @foreach (BookSource.Models.ViewModel.PublicationViewModel publication in Model)
+        {
+            <div class="book-card">
+                
+                <div class="card-content">
+                    @if (publication.Title.Length > 20)
+                    {
+                        <h3 class="card-title">@publication.Title.Substring(0, 20)</h3>
+                    }
+                    else
+                    {
+                        <h3 class="card-title">@publication.Title</h3>
+
+                    }
+
+                    @if (publication.Content.Length > 20)
+                    {
+                                        <span>@publication.Content.Substring(0, 20)</span>
+                    }
+                    else
+                    {
+                        <span><strong>Autor:</strong> @publication.Content</span>
+                    }
+                </div>
+                <img src=@(publication.PubImage?? Tools.DefaultBookImg) alt="Book Image">
+
+                <div class="card-footer">
+                    <div>
+                        <p>User: @publication.IdUser</p>
+                    </div>
+                    <div>
+                        <span>Likes @publication.likes</span>
+                        <button asp-controller="Book" asp-action="BookInfo" class="btn">Like</button>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+}

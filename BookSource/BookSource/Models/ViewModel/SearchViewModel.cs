@@ -9,11 +9,14 @@ namespace BookSource.Models.ViewModel
 
         public string? Category { get; set; }
         public BookListViewModel BookListViewModel {get; set;}
+        public List<User> Users { get; set; }
 
         // En caso de que no se le pase nada se inicializa
         public SearchViewModel()
         {
             BookListViewModel = new BookListViewModel();
         }
+
+
     }
 }
