@@ -14,6 +14,36 @@ namespace BookSource.DAL
             connectionString = _configuration.GetConnectionString("DefaultConnection");
         }
 
+        public Publication GetPublicationById(int id)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM Publication WHERE IdPublication = @IdPublication; ";
+                SqlCommand cmd = new SqlCommand(query, connection);
+
+                cmd.Parameters.AddWithValue("@IdPublication", id);
+
+
+                connection.Open();
+                using(SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new Publication
+                        {
+                            IdPublication =(int) reader["IdPublication"],
+                            Title = (string)reader["Title"],
+                            Content = (string)reader["Content"],
+                            PubImage = reader.IsDBNull(reader.GetOrdinal("PubImage")) ? null : (string?)reader["PubImage"],
+                            RIdUser = (int)reader["FkIdUser"]
+                        };
+                    }
+                    return null;
+                }
+
+            }
+
+        }
         public List<Publication> GetAllPublications()
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -61,6 +91,25 @@ namespace BookSource.DAL
                     }
                     return pub_likes;
                 }
+            }
+        }
+        public Publication CreatePublication(Publication publication)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "INSERT INTO Publication(Title, Content, PubImage, FkIdUser) " +
+                    "VALUES(@Title, @Content, @PubImage, @FkIdUser) ";
+                SqlCommand cmd = new SqlCommand(query, connection);
+
+                cmd.Parameters.AddWithValue("@Title", publication.Title);
+                cmd.Parameters.AddWithValue("@Content", publication.Content);
+                cmd.Parameters.AddWithValue("@PubImage", publication.PubImage);
+                cmd.Parameters.AddWithValue("@FkIdUser", publication.RIdUser);
+
+                connection.Open();
+                int idPublication;
+                idPublication = (int) cmd.ExecuteScalar();
+                return GetPublicationById(idPublication);
             }
         }
         public int GetLikesByPublicationId(int publicationId)

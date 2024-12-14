@@ -49,7 +49,7 @@ else
 
                 <div class="card-footer">
                     <div class="user-area">
-                        <img src="@publication.UserImage" />
+                        <a asp-controller="User" asp-action="Index" asp-route-username="@publication.UserName"><img src="@publication.UserImage" /></a>
                         <p>@publication.UserName</p>
                     </div>
                     <div class="like-area">
