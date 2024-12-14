@@ -4,12 +4,16 @@
 
 @{
     ViewData["Title"] = "BookReview";
+    string? userName = Context.Session.GetString(Tools.UserNameSession);
 }
 <link rel="stylesheet" href="~/css/book-review.css" asp-append-version="true" />
 
 <div class="review-title-container">
     <h1>Reviews</h1>
-    <a asp-controller="Review" asp-action="AddReview" asp-route-idBook="@Model.idBook" class="btn btn-success"><p class="button-add-review">+</p></a>
+    @if (userName!=null)
+    {
+        <a asp-controller="Review" asp-action="AddReview" asp-route-idBook="@Model.idBook" class="btn btn-success"><p class="button-add-review">+</p></a>
+    }
 </div>
 
 
