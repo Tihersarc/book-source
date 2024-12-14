@@ -26,5 +26,29 @@ namespace BookSource.Controllers
             }
             return PartialView("~/Views/Review/_BookReview.cshtml", (viewModelList, idBook));
         }
+        [HttpGet("book/addreview")]
+        public IActionResult AddReview(int IdBook)
+        {
+            // Me tiene que llegar el ID User y el Id Review
+            if (HttpContext.Session.GetString("UserName") != null)
+            {
+                ViewBag.IdUser = _userDAL.GetUserByUserName(HttpContext.Session.GetString("UserName")).IdUser;
+            }
+            ViewBag.IdBook = IdBook;
+            return View();
+        }
+
+        [HttpPost("book/addreview")]
+        public IActionResult AddReview(Review review)
+        {
+            if (ModelState.IsValid)
+            {
+                Review newRev = _reviewDAL.CreateReview(review);
+            }
+            else
+                return View(review);
+            return RedirectToAction("BookInfo", "Book", new { bookId = review.RIdBook });
+
+        }
     }
 }

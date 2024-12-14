@@ -49,5 +49,54 @@ namespace BookSource.DAL
             return reviews;
 
         }
+        public Review GetReviewById(int idReview)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "SELECT * FROM Review WHERE IdReview = @IdReview; ";
+                SqlCommand cmd = new SqlCommand(query, connection);
+
+                cmd.Parameters.AddWithValue("@IdReview", idReview);
+
+
+                connection.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new Review
+                        {
+                            IdReview = (int)reader["IdReview"],
+                            Comment = (string)reader["Comment"],
+                            RIdBook = (int)reader["FkIdBook"],
+                            RIdUser = (int)reader["FkIdUser"]
+                        };
+                    }
+                    return null;
+                }
+
+            }
+        }
+        public Review CreateReview(Review review)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "INSERT INTO Review(Comment, FkIdBook, FkIdUser) " +
+                        "VALUES(@Comment, @FkIdBook, @FkIdUser) " +
+                        "SELECT SCOPE_IDENTITY();";
+
+
+                SqlCommand cmd = new SqlCommand(query, connection);
+
+                cmd.Parameters.AddWithValue("@Comment", review.Comment);
+                cmd.Parameters.AddWithValue("@FkIdBook", review.RIdBook);
+                cmd.Parameters.AddWithValue("@FkIdUser", review.RIdUser);
+
+                connection.Open();
+                int idReview;
+                idReview = Convert.ToInt32(cmd.ExecuteScalar());
+                return GetReviewById(idReview);
+            }
+        }
     }
 }

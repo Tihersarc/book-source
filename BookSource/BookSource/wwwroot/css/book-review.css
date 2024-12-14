@@ -1,4 +1,19 @@
-﻿.review-card {
+﻿.review-title-container{
+    display: flex;
+}
+    .review-title-container a {
+        margin-left: 10px;
+        width: 50px;
+        height: 50px;
+        text-align:center;
+        border-radius: 10px;
+    }
+
+.button-add-review {
+    font-size: 1.5em;
+    text-align: center;
+}
+.review-card {
     background: white;
     max-width: auto;
     margin: 10px auto;
