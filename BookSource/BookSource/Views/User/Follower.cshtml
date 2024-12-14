@@ -1,0 +1,136 @@
+﻿@using BookSource.Models.ViewModel
+@model UserViewModel
+
+@{
+    ViewData["Title"] = "Follower";
+}
+
+<style>
+    .global-styles {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        background-color: #f4f4f4;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .sidebar {
+        text-align: center;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border: 1px solid #d7ccc8;
+        background: white;
+    }
+
+    .follower-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #d7ccc8;
+        border-radius: 8px;
+        background: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .follower-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+    .follower-info {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .follower-name {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: black;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .follower-link {
+        font-size: 14px;
+        color: darkblue;
+        text-decoration: none;
+    }
+
+        .follower-link:hover {
+            text-decoration: underline;
+        }
+
+    .follower-details {
+        display: flex;
+        gap: 20px;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+    .details-item {
+        color: #333;
+    }
+
+    .no-followers {
+        font-size: 16px;
+        color: #555;
+    }
+
+    /* Añadir hover para mejorar la interacción */
+    .follower-item:hover {
+        background-color: #f1f1f1;
+    }
+</style>
+
+<div class="global-styles">
+    <div class="layout">
+        <div class="sidebar">
+            @if (Model.FollowerList != null && Model.FollowerList.Any())
+            {
+                <ul>
+                    @foreach (var follower in Model.FollowerList)
+                    {
+                        <!-- Verificamos si el seguidor tiene una imagen, si no, usamos la imagen por defecto -->
+                        var profileImage = string.IsNullOrEmpty(follower.ProfileImageUrl) ? "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg" : follower.ProfileImageUrl;
+
+                        <!-- Envolvemos todo el li en un enlace que lleva al perfil del usuario -->
+                        <li class="follower-item">
+                            <a href="@Url.Action("Profile", "User", new { username = follower.UserName })" style="display: flex; text-decoration: none; width: 100%; color: inherit;">
+                                <img src="@profileImage" alt="@follower.UserName" />
+                                <div class="follower-info">
+                                    <div class="follower-name">
+                                        <span>@follower.UserName</span>
+                                    </div>
+                                    <div class="follower-details">
+                                        <span class="details-item">Publicaciones</span>
+                                        <span class="details-item">Listas</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="no-followers">Este usuario no tiene seguidores.</p>
+            }
+        </div>
+    </div>
+</div>
+

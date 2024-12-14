@@ -1,6 +1,103 @@
 ﻿@using BookSource.Models.ViewModel
+@using BookSource.Tools
 
 @model UserViewModel
 @{
     ViewData["Title"] = "User";
+    ListOfBooksViewModel? showList = null;
+    if (Model != null && Model.ListOfBooks != null && Model.IdSelectedListOfBooks != null)
+    {
+        showList = Model.ListOfBooks.Where(x => x.IdListOfBooks == Model.IdSelectedListOfBooks).FirstOrDefault();
+    }
+    string? user = ViewBag.UserName;
+}
+<link rel="stylesheet" href="~/css/user.css" asp-append-version="true" />
+
+
+@if (Model != null)
+{
+    <div class="row pt-2">
+        <!--<div class="col-11">Perfil de @*Model.UserName*@</div>-->
+        @if (Model.UserName == ViewBag.UserName)
+        {
+            <a class="config-button col" asp-area="" asp-controller="User" asp-action="Configuration" asp-route-username=@Model.UserName>
+                <img src=@Tools.ConfigImg alt="Configuración">
+            </a>
+        }
+        else if (ViewBag.UserName != null)
+        {
+            if (Model.FollowerList != null && Model.FollowerList.Where(x => x.IdUser == ViewBag.IdSessionUser).Any())
+            {
+                <a class="follow-button col" asp-controller="User" asp-action="UnFollow" asp-route-username=@Model.UserName>
+                    UnFollow
+                </a>
+            }
+            else
+            {
+                <a class="follow-button col" asp-controller="User" asp-action="Follow" asp-route-username=@Model.UserName>
+                    Follow
+                </a>
+            }
+        }
+
+    </div>
+    <section class="user-profile-layout">
+        <div class="user-profile-sidebar">
+            <div class="user-profile-img-container border">
+                <img class="img-fluid" src=@(Model.ProfileImageUrl??Tools.DefaultUserImg) alt="Imagen de perfil" />
+            </div>
+
+            <div class="user-profile-info">Usuario: @Model.UserName</div>
+            <div class="user-profile-info">Correo: @Model.Email</div>
+            <div class="user-profile-info">Nacimiento: @(Model.Birthdate.HasValue ? Model.Birthdate : "Sin establecer")</div>
+            <div class="user-profile-list">
+                <a class="user-profile-link" asp-controller="User" asp-action="Follower" asp-route-username=@Model.UserName asp-route-followType="followed">Seguidos</a>
+            </div>
+            <div class="user-profile-list">
+                <a class="user-profile-link" asp-controller="User" asp-action="Follower" asp-route-username=@Model.UserName asp-route-followType="follower">Seguidores</a>
+            </div>
+            @if (Model.UserName == user)
+            {
+                <a asp-controller="Feed" asp-action="AddPublication" class="btn btn-success"><span class="button-add-review">+ Publicacion</span></a>
+
+            }
+        </div>
+        <div class="user-profile-body">
+            <div class="row">
+                <div class="col">
+                    <form method="post" asp-action="ChangeList" asp-controller="User" asp-route-username=@Model.UserName asp-route-selectedListId=@Model.IdSelectedListOfBooks>
+                        <select asp-for="IdSelectedListOfBooks" name="IdSelectedListOfBooks" class="form-select" onchange="this.form.submit()">
+                            <option value="">-- Selecciona Lista --</option>
+                            @if (Model.ListOfBooks != null)
+                            {
+                                @foreach (ListOfBooksViewModel listBooks in Model.ListOfBooks)
+                                {
+                                    if (Model.IdSelectedListOfBooks != null && listBooks.IdListOfBooks == Model.IdSelectedListOfBooks)
+                                    {
+                                        <option value="@listBooks.IdListOfBooks" selected>
+                                            @listBooks.ListName
+                                        </option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@listBooks.IdListOfBooks">
+                                            @listBooks.ListName
+                                        </option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </form>
+                </div>
+            </div>
+            @if (showList != null)
+            {
+                await Html.RenderPartialAsync("_BookList", showList.Books);
+            }
+        </div>
+    </section>
+}
+else
+{
+    <div>Usuario no encontrado</div>
 }

@@ -1,4 +1,4 @@
-﻿@using BookSource.Models.ViewModel
+﻿@using BookSource.Models.ViewModel.TestViewModel
 @model TestViewModel
 
 @*
@@ -11,8 +11,8 @@
 
 @if (string.IsNullOrEmpty(user) && string.IsNullOrEmpty(book))
 {
-    <div style="display:flex;">
-        <div class="">
+    <div style="display:flex; justify-content:space-evenly;">
+        <div class="" style="border:solid 1px red">
             <h1>LOGIN TEST</h1>
             <form asp-controller="Test" asp-action="Login" method="post" asp-antiforgery="true">
                 <div class="form-group">
@@ -60,7 +60,7 @@
             </form>
     </div>
 
-        <div class="">
+        <div class="" style="border:solid 1px red">
             <h1>Get Book by Name</h1>
             <form asp-controller="Test" asp-action="GetBook" method="post" asp-antiforgery="true">
                 <div class="form-group">
@@ -73,6 +73,35 @@
             <h1>Get All Books</h1>
             <form asp-controller="Test" asp-action="GetAllBooks" method="post" asp-antiforgery="true">
                 <button type="submit">Ver todos los libros</button>
+            </form>
+
+            <h1>Get ListBooks+Books byUser</h1>
+            <form asp-controller="Test" asp-action="GetListBooksByUser" method="post" asp-antiforgery="true">
+                <label asp-for="UserName">Usuario:</label>
+                <input asp-for="UserName" value="" />
+                <button type="submit">Ver listas</button>
+            </form>
+            <h1>Create ListOfBook</h1>
+            <form asp-controller="Test" asp-action="CreateListOfBook" method="post" asp-antiforgery="true">
+                <label asp-for="UserName">Usuario:</label>
+                <input asp-for="UserName" value="" />
+                <label asp-for="ListOfBooks.ListName">Nombre lista:</label>
+                <input asp-for="ListOfBooks.ListName" value="" />
+                <button type="submit">Crear Lista</button>
+            </form>
+            <h1>Add bookToList</h1>
+            <form asp-controller="Test" asp-action="AddBookToListBook" method="post" asp-antiforgery="true">
+                <label asp-for="UserName">Usuario:</label>
+                <input asp-for="UserName" value="" />
+                <label asp-for="Book">Nombre lista:</label>
+                <input asp-for="Book" value="Introducing The Witcher" />
+                <button type="submit">Añadir</button>
+            </form>
+            <h1>GetBooksCategory</h1>
+            <form asp-controller="Test" asp-action="GetBooksCategory" method="post" asp-antiforgery="true">
+                <label asp-for="Genre">Nombre genero:</label>
+                <input asp-for="Genre" value="Fiction" />
+                <button type="submit">Buscar</button>
             </form>
         </div>
     </div>

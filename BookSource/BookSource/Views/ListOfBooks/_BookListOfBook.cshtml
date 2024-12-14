@@ -1,0 +1,191 @@
+﻿@using BookSource.Models.ViewModel
+@model (List<ListOfBooksViewModel>ListOfBooks,int idBook)
+@{
+    bool Exist(ListOfBooksViewModel list)
+    {
+        if (list.Books == null)
+            return false;
+
+        if (list.Books.Where(x => x.IdBook==Model.idBook).Any())
+            return true;
+
+        return false;
+    }
+}
+<style>
+    .popup {
+        display: flex;
+        position: fixed;
+        justify-content: center;
+        align-items: center;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        color: black;
+        z-index: 1000;
+        font-family: 'Georgia', serif;
+    }
+
+    .popup-content {
+        background-color: white;
+        padding: 25px;
+        border-radius: 20px;
+        width: 450px;
+        text-align: center;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        font-family: 'Georgia', serif;
+        line-height: 1.6;
+        letter-spacing: 0.5px;
+    }
+
+    .popup-header {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+        position: relative;
+        font-weight: bold;
+        color: #14171A;
+        border-bottom: 2px solid #F5F8FA;
+        padding-bottom: 10px;
+    }
+
+    .popup-body {
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        max-height: 320px;
+        overflow-y: auto;
+        font-size: 1em;
+        color: #444;
+    }
+
+        .popup-body label {
+            display: flex;
+            align-items: center;
+            padding: 12px 18px;
+            border-radius: 8px;
+            background: #F5F8FA;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            box-shadow: inset 0 -3px 0 #E1E8ED;
+        }
+
+            .popup-body label:hover {
+                background-color: #E8F5FD;
+                transform: translateX(4px);
+            }
+
+        .popup-body input[type="checkbox"] {
+            margin-right: 12px;
+            transform: scale(1.3);
+            accent-color: #1DA1F2;
+        }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 1.2em;
+        cursor: pointer;
+        color: #657786;
+        transition: color 0.3s ease;
+    }
+
+        .close:hover {
+            color: #1DA1F2;
+        }
+
+</style>
+<script>
+    function AddNewListOfBooks() { 
+        $.ajax({
+            url: '@Url.Action("GetAddUserListOfBooksPartialView", "ListOfBooks")',
+            type: 'GET',
+            success: function (data) {
+                document.getElementById('partialContainer').style.display = 'flex';
+                $('#partialContainer').html(data);
+            },
+            error: function () {
+                alert('Hubo un error al ejecutar la función.');
+            }
+
+        })
+    }
+    function HidePartial() {
+        document.getElementById('ViewPartial').style.display = 'none';
+    }
+    function ActionPartial(IdList,Selected) {
+        if (IdList == null) 
+        {
+            return;
+        }
+
+        if (Selected) {
+            $.ajax({
+                url: '@Url.Action("AddBookToList", "ListOfBooks")', // Ruta de tu acción en el controlador
+                type: 'POST',
+                data: {
+                    idList: IdList,
+                    idBook: @Model.idBook
+                },
+                success: function () {
+                },
+                error: function () {
+                    document.getElementById('checkboxList' + IdList).checked = false;
+                    alert('Hubo un error al ejecutar la función.');
+                }
+            });
+        }
+        else 
+        {
+            $.ajax({
+                url: '@Url.Action("DeleteBookToList", "ListOfBooks")', // Ruta de tu acción en el controlador
+                type: 'POST',
+                data: {
+                    idList: IdList,
+                    idBook: @Model.idBook
+                    },
+                success: function () {
+                },
+                error: function () {
+                    document.getElementById('checkboxList' + IdList).checked = true;
+                    alert('Hubo un error al ejecutar la función.');
+                }
+            });
+        }
+    }
+
+</script>
+<div id="ViewPartial">
+@if(Model.ListOfBooks!=null)
+{
+    <div class="modal popup">
+        <div class="modal-content popup-content">
+            <div class="modal-header popup-header">
+                Añadir libro a lista:
+                <button class="btn-close close" onclick="HidePartial()"></button>
+            </div>
+            <div class="modal-body popup-body">
+                @foreach (ListOfBooksViewModel listOfBooks in Model.ListOfBooks)
+                {
+                        <label class="form-check-label" for="checkboxList@(listOfBooks.IdListOfBooks)">
+                            <input id="checkboxList@(listOfBooks.IdListOfBooks)"
+                                   class="form-check-input"
+                                   type="checkbox"
+                                   onclick="ActionPartial(@listOfBooks.IdListOfBooks, this.checked)"
+                            @(Exist(listOfBooks) ? "checked" : null) />
+                            @listOfBooks.ListName
+                        </label>
+                }
+            </div>
+            <button class="btn btn-primary" onclick="AddNewListOfBooks()">Añadir lista</button>
+        </div>
+    </div>
+}
+else
+{
+    <div>Sin Modelo</div>
+}
+</div>

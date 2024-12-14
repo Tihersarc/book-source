@@ -1,0 +1,150 @@
+﻿body {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-image: url("https://images.unsplash.com/photo-1481627834876-b7833e8f5570?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmlibGlvdGVjYXxlbnwwfHwwfHx8MA%3D%3D");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    background: rgba(237, 231, 224, 0.95); /* Más opaco */
+    max-width: auto;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(189, 152, 120, 0.8); /* Borde más sólido */
+    backdrop-filter: blur(2px); /* Difuminado suave */
+}
+
+
+/* Diseño de imágenes */
+img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    margin-bottom: 15px;
+}
+
+/* Tipografía y encabezados */
+h1 {
+    font-size: 42px;
+    color: #5d4037; 
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+    border-bottom: 3px solid #d7ccc8;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+h2 {
+    font-size: 30px;
+    color: #795548;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 18px;
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+strong {
+    color: #5d4037;
+    font-weight: bold;
+}
+
+/* Listas */
+ul {
+    padding-left: 30px;
+    list-style-type: square;
+    font-size: 16px;
+    color: #6d4c41;
+}
+
+    ul li {
+        margin-bottom: 8px;
+    }
+.link-search {
+    text-decoration: none;
+    color: inherit;
+}
+/* Botón interactivo */
+.btn-primary {
+    background-color: #795548; 
+    border: none;
+    padding: 12px 25px;
+    font-size: 18px;
+    border-radius: 25px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    text-transform: uppercase;
+}
+
+    .btn-primary:hover {
+        background-color: #5d4037;
+        transform: translateY(-2px);
+    }
+
+/* Insignia de puntuación */
+.score-badge {
+    display: inline-block;
+    padding: 8px 15px;
+    font-size: 16px;
+    color: #fff;
+    background: #6d4c41;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilo para categorías */
+.mt-3 {
+    margin-top: 20px;
+}
+
+.category-list ul li {
+    display: inline-block;
+    background: #e8d9c4;
+    color: #5d4037;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin: 5px;
+    border: 1px solid #d7ccc8;
+}
+
+/* Tarjetas de libro */
+.card {
+    border: 1px solid #eae7dc;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+    .card:hover {
+        transform: scale(1.05);
+    }
+
+/* Animación general */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+

@@ -2,10 +2,10 @@
 {
     public class Review
     {
-        public required int IdReview { get; set; }
+        public int IdReview { get; set; }
         public required string Comment { get; set; }
         public required int RIdBook {  get; set; }
-        public required string RIdUser {  get; set; }
+        public required int RIdUser {  get; set; }
 
     }
 }

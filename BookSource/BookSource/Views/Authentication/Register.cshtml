@@ -1,0 +1,72 @@
+﻿@model BookSource.Models.User
+
+@{
+    ViewData["Title"] = "Registro";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/auth.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" />
+</head>
+
+<body>
+<div class="content">
+    <section class="py-5 gradient-custom">
+        <div class="container">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card glass-effect">
+                        <div class="card-body p-5 text-center">
+                                <div class="mt-md-3">
+                                    <h2 class="fw-bold text-uppercase">Registrarse</h2>
+                                    <hr class="bg-light" />
+                                    <p class="text-black-50 mb-2">Por favor, introduce tus datos para crear una cuenta</p>
+                                    <form asp-action="Register" method="post">
+                                        <div class="form-group">
+                                            <label asp-for="UserName">Nombre de Usuario* </label>
+                                            <input asp-for="UserName" class="form-control" placeholder="Escribe tu usuario" required />
+                                            <span asp-validation-for="UserName" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Email">Correo Electrónico* </label>
+                                            <input asp-for="Email" type="email" class="form-control" placeholder="Escribe tu email" required />
+                                            <span asp-validation-for="Email" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Password">Contraseña* </label>
+                                            <input type="password" name="password" class="form-control" placeholder="Escribe tu contraseña" required />
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="BirthDate">Fecha de Nacimiento</label>
+                                            <input asp-for="BirthDate" type="date" class="form-control" />
+                                            <span asp-validation-for="BirthDate" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="ProfileImageUrl">URL de la Imagen de Perfil (Opcional)</label>
+                                            <input asp-for="ProfileImageUrl" class="form-control" />
+                                            <span asp-validation-for="ProfileImageUrl" class="text-danger"></span>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mt-3">Registrarse</button>
+                                    </form>
+                                    <hr class="bg-light" />
+                                    <p class="small mb-2 pb-lg-2">
+                                        <a href="#" class="text-black-50">¿Has olvidado la contraseña?</a>
+                                    </p>
+                                    <p class="mb-0">
+                                        ¿Ya tienes cuenta?
+                                        <a href="@Url.Action("Login", "Authentication")" class="text-black-50 fw-bold">Regístrate</a>
+                                    </p>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>

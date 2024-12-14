@@ -1,0 +1,8 @@
+﻿@using BookSource.Models.ViewModel.TestViewModel
+@model TestViewModel
+
+<h1>Books by Category: @Model.Genre</h1>
+@foreach(var book in Model.Books)
+{
+    <p>Id: @book.IdBook Titulo: @book.Title</p>
+}

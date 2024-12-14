@@ -15,6 +15,7 @@
         public byte[] PasswordSalt { get; set; }
         public DateTime? BirthDate { get; set; }
         public string? ProfileImageUrl { get; set; }
+        public string? Password { get; set; }
 
     }
 }

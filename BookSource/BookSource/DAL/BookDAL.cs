@@ -100,6 +100,7 @@ namespace BookSource.DAL
                 connection.Open();
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
+                    if(reader.Read())
                     {
                         return new Book
                         {
@@ -114,6 +115,7 @@ namespace BookSource.DAL
                             Score = reader.IsDBNull(reader.GetOrdinal("Score")) ? null : (float)reader["Score"]
                         };
                     }
+                    return null;
                 }
             }
         }
@@ -131,22 +133,24 @@ namespace BookSource.DAL
                 connection.Open();
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
+                    if (reader.Read())
                     {
                         return new Book
                         {
                             IdBook = (int)reader["IdBook"],
                             Title = (string)reader["Title"],
                             Author = (string)reader["Author"],
-                            Description = (string)reader["Description"],
+                            Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : (string)reader["Description"],
                             ImageUrl = reader.IsDBNull(reader.GetOrdinal("ImageUrl")) ? null : (string)reader["ImageUrl"],
                             Subtitle = reader.IsDBNull(reader.GetOrdinal("Subtitle")) ? null : (string)reader["Subtitle"],
                             Editorial = reader.IsDBNull(reader.GetOrdinal("Editorial")) ? null : (string)reader["Editorial"],
                             PageCount = reader.IsDBNull(reader.GetOrdinal("PageCount")) ? null : (int)reader["PageCount"],
-                            Score = reader.IsDBNull(reader.GetOrdinal("Score")) ? null : (float)reader["Score"]
+                            Score = reader.IsDBNull(reader.GetOrdinal("Score")) ? null : (double)reader["Score"]
                         };
                     }
                 }
             }
+            return null;
         }
 
         public bool CreateBook(Book book)
@@ -179,6 +183,158 @@ namespace BookSource.DAL
             }
         }
 
+        public List<Book> GetBooksByIdList(int ListBookId)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "SELECT * FROM ListOfBooks_Book l INNER JOIN Book b " +
+                    "ON l.FkIdBook = b.IdBook WHERE l.FkIdListOfBooks = @FkIdListOfBooks;";
+                SqlCommand cmd = new SqlCommand(query, conn);
 
+                cmd.Parameters.AddWithValue("@FkIdListOfBooks", ListBookId);
+                conn.Open();
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    List<Book> list = new List<Book>();
+
+                    while (reader.Read())
+                    {
+                        Book book = new Book
+                        {
+                            IdBook = (int)reader["IdBook"],
+                            Title = (string)reader["Title"],
+                            Author = (string)reader["Author"],
+                            Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : (string)reader["Description"],
+                            ImageUrl = reader.IsDBNull(reader.GetOrdinal("ImageUrl")) ? null : (string)reader["ImageUrl"],
+                            Subtitle = reader.IsDBNull(reader.GetOrdinal("Subtitle")) ? null : (string)reader["Subtitle"],
+                            Editorial = reader.IsDBNull(reader.GetOrdinal("Editorial")) ? null : (string)reader["Editorial"],
+                            PageCount = reader.IsDBNull(reader.GetOrdinal("PageCount")) ? null : (int)reader["PageCount"],
+                            Score = reader.IsDBNull(reader.GetOrdinal("Score")) ? null : (double)reader["Score"]
+                        };
+                        list.Add(book);
+                    }
+                    return list;
+                }
+            }
+        }
+
+
+        [Obsolete]
+        public List<Book> GetBooksByCategory(string category)
+        {
+            List<Book> bookList = new List<Book>();
+            string query = @$"
+            SELECT *
+            FROM Book
+            INNER JOIN Book_Category
+	            ON IdBook = FkIdBook
+            INNER JOIN Category c
+	            ON IdCategory = FkIdCategory
+            WHERE c.CategoryName LIKE @category";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@category", category);
+
+                        connection.Open();
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Book book = new Book
+                                {
+                                    IdBook = reader.GetInt32(reader.GetOrdinal("IdBook")),
+                                    Title = reader.GetString(reader.GetOrdinal("Title")),
+                                    Author = reader.GetString(reader.GetOrdinal("Author")),
+                                    Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : (string)reader["Description"],
+                                    ImageUrl = reader.IsDBNull(reader.GetOrdinal("ImageUrl")) ? null : (string)reader["ImageUrl"],
+                                    Subtitle = reader.IsDBNull(reader.GetOrdinal("Subtitle")) ? null : (string)reader["Subtitle"],
+                                    Editorial = reader.IsDBNull(reader.GetOrdinal("Editorial")) ? null : (string)reader["Editorial"],
+                                    PageCount = reader.IsDBNull(reader.GetOrdinal("PageCount")) ? null : (int)reader["PageCount"],
+                                    Score = reader.IsDBNull(reader.GetOrdinal("Score")) ? null : (double)reader["Score"]
+                                };
+                                bookList.Add(book);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("ERROR GetBooksByCategory.\n" + ex.ToString());
+                throw;
+            }
+
+            return bookList;
+        }
+
+        [Obsolete] //-------------WIP--------------
+        public List<Book> GetBooksByFilter(string? author = null, string? editorial = null, List<Category>? categoryList = null)
+        {
+            List<Book> bookList = new List<Book>();
+            string query = @$"
+            SELECT *
+            FROM Book
+            LEFT JOIN Book_Category book_cat
+	            ON IdBook = FkIdBook
+            LEFT JOIN Category cat
+	            ON IdCategory = FkIdCategory
+            WHERE 1 = 1 ";
+
+            if (string.IsNullOrWhiteSpace(author))
+                query += $"AND Author LIKE '@author'";
+
+            if (string.IsNullOrWhiteSpace(editorial))
+                query += $"AND Editorial LIKE '@editorial'";
+
+            if (categoryList != null)
+                query += $"AND CategoryName LIKE '@category'";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
+                    {
+                        //cmd.Parameters.AddWithValue("@category", category);
+
+                        connection.Open();
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Book book = new Book
+                                {
+                                    IdBook = reader.GetInt32(reader.GetOrdinal("IdBook")),
+                                    Title = reader.GetString(reader.GetOrdinal("Title")),
+                                    Author = reader.GetString(reader.GetOrdinal("Author")),
+                                    Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : (string)reader["Description"],
+                                    ImageUrl = reader.IsDBNull(reader.GetOrdinal("ImageUrl")) ? null : (string)reader["ImageUrl"],
+                                    Subtitle = reader.IsDBNull(reader.GetOrdinal("Subtitle")) ? null : (string)reader["Subtitle"],
+                                    Editorial = reader.IsDBNull(reader.GetOrdinal("Editorial")) ? null : (string)reader["Editorial"],
+                                    PageCount = reader.IsDBNull(reader.GetOrdinal("PageCount")) ? null : (int)reader["PageCount"],
+                                    Score = reader.IsDBNull(reader.GetOrdinal("Score")) ? null : (double)reader["Score"]
+                                };
+                                bookList.Add(book);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("ERROR GetBooksByCategory.\n" + ex.ToString());
+                throw;
+            }
+
+            return bookList;
+        }
     }
 }

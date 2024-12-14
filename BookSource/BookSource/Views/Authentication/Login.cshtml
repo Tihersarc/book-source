@@ -1,7 +1,12 @@
-﻿@{
-    Layout = null;
+﻿@using BookSource.Models.ViewModel
+@model LoginViewModel
 
-    ViewData["Title"] = "SignIn";
+@{
+    var user = ViewBag.UserName as string; // Obtener el nombre de usuario desde ViewBag
+
+    Layout = null;
+    ViewData["Title"] = "Login";
+
 }
 
 <!DOCTYPE html>
@@ -11,62 +16,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BookSource</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/auth.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" />
 </head>
 <body>
-    <section class="vh-100 gradient-custom">
-        <div class="container py-5 h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                    <div class="card glass-effect text-white">
-                        <div class="card-body p-5 text-center">
-
-                            <div class="mb-md-5 mt-md-4 pb-5">
-                                <h2 class="fw-bold mb-2 text-uppercase">Iniciar Sesión</h2>
-
-                                <hr class="bg-white mb-5">
-                                <!-- Input para Usuario -->
-                                <div class="form-outline form-white mb-4">
-                                    <input type="email" id="typeEmailX" class="form-control form-control-lg" placeholder="Introduce tu usuario" required />
-                                    <label class="form-label" for="typeEmailX">Usuario</label>
-                                </div>
-
-                                <!-- Input para Contraseña -->
-                                <div class="form-outline form-white mb-4">
-                                    <input type="password" id="typePasswordX" class="form-control form-control-lg" placeholder="Introduce tu contraseña" required />
-                                    <label class="form-label" for="typePasswordX">Contraseña</label>
-                                </div>
-
-                                <!-- Enlace de Olvidar Contraseña -->
-                                <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">¿Has olvidado la contraseña?</a></p>
-
-                                <!-- Botón de inicio de sesión -->
-                                <button class="btn btn-outline-light btn-lg px-5" type="submit" onclick="login()">Iniciar Sesión</button>
-                            </div>
-
-                            <!-- Enlace para registro -->
-                            <div>
-                                <p class="mb-0">
-                                    ¿No tienes cuenta? <a href="#!" class="text-white-50 fw-bold">Regístrate</a>
-                                </p>
+    <div class="content">
+        <section class="py-5 gradient-custom">
+            <div class="container">
+                <div class="row d-flex justify-content-center align-items-center">
+                    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                        <div class="card glass-effect">
+                            <div class="card-body p-5 text-center">
+                                @if (string.IsNullOrEmpty(user))
+                                {
+                                    <div class="mt-md-3">
+                                        <h2 class="fw-bold text-uppercase">Iniciar Sesión</h2>
+                                        <hr class="bg-light" />
+                                        <p class="text-black-50 mb-2">Por favor, introduce tus credenciales para acceder</p>
+                                        <form asp-controller="Authentication" asp-action="Login" method="post" asp-antiforgery="true">
+                                            <div class="form-outline form-black mb-4">
+                                                <label asp-for="Username" class="form-label">Usuario</label>
+                                                <input asp-for="Username" class="form-control" placeholder="Introduce tu usuario" required />
+                                            </div>
+                                            <div class="form-outline form-black mb-4">
+                                                <label asp-for="Password" class="form-label">Contraseña</label>
+                                                <input asp-for="Password" class="form-control" placeholder="Introduce tu contraseña" type="password" required />
+                                            </div>
+                                            <button type="submit" class="btn btn-primary btn-lg px-5">Iniciar Sesión</button>
+                                        </form>
+                                        <hr class="bg-light" />
+                                        <p class="small mb-2 pb-lg-2">
+                                            <a href="#" class="text-black-50">¿Has olvidado la contraseña?</a>
+                                        </p>
+                                        <p class="mb-0">
+                                            ¿No tienes cuenta?
+                                            <a href="@Url.Action("Register", "Authentication")" class="text-black-50 fw-bold">Regístrate</a>
+                                        </p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <h1>Bienvenido/a @user</h1>
+                                    <div>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
+                                            @if (!string.IsNullOrEmpty(ViewBag.UserImg))
+                                            {
+                                                <img src="@ViewBag.UserImg" alt="Usuario" class="user-icon">
+                                            }
+                                            else
+                                            {
+                                                <img src="https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg" alt="Usuario" class="user-icon">
+                                            }
+                                        </a>
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Logout">Cerrar Sesión</a>
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
+    <footer class="text-center">
+        <p>&copy; 2023 BookSource. Todos los derechos reservados.</p>
+    </footer>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function login() {
-            // Simulación de autenticación
-            var user = "usuario"; // Simulamos un usuario devuelto
-            var password = "1234"; // Simulamos una contraseña devuelta
-            if (user && password) {
-                window.location.href = "/home";
-            }
-        }
-    </script>
 </body>
 </html>
+

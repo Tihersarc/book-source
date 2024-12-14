@@ -1,0 +1,74 @@
+﻿@using BookSource.Models.ViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+@model SearchViewModel
+
+<link rel="stylesheet" href="~/css/search.css" asp-append-version="true" />
+
+<div class="main-container">
+    <div class="filters-container">
+        <form asp-controller="Search" asp-action="Index" method="get">
+            <h3>Buscador</h3>
+            <div class="filter-group">
+                <label>Buscar:</label>
+                <input asp-for="@Model.Title" value="@Model.Title" placeholder="Busca un libro">
+            </div>
+
+            <div class="filter-group">
+                <label>Ordenar por</label>
+
+                <select asp-for="@Model.OrderType">
+                    <option value="" selected></option>
+                    <option value="MaxScore">Mas nota</option>
+                    <option value="MinScore">Menos nota</option>
+                    <option value="MaxPage">Mas paginas</option>
+                    <option value="MinPage">Menos paginas</option>
+                    <option value="ByAuthor">Por Autor</option>
+                    <option value="ByEditorial">Por editorial</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Categorias</label>
+
+                <select asp-for="@Model.Category">
+                    <option value="" selected></option>
+                    <option value="Architecture">Arquitectura</option>
+                    <option value="Automobile insurance">Coches</option>
+                    <option value="British Americans">Británico-Americanos</option>
+                    <option value="Building">Construcción</option>
+                    <option value="Business & Economics">Negocios y Economía</option>
+                    <option value="Comics & Graphic Novels">Novelas Gráficas</option>
+                    <option value="Computer games">Juegos de PC</option>
+                    <option value="Computers">Computadoras</option>
+                    <option value="Confederate States of America">América</option>
+                    <option value="Corporations">Corporaciones</option>
+                    <option value="Criminal law">Derecho Penal</option>
+                    <option value="Culture">Cultura</option>
+                    <option value="Documentary television programs">Documentales</option>
+                    <option value="Education">Educación</option>
+                    <option value="Employee fringe benefits">Empleo</option>
+                    <option value="Fiction">Ficción</option>
+                    <option value="Folklore">Folclore</option>
+                    <option value="Games & Activities">Juegos</option>
+                    <option value="Gas fields">Campos de Gas</option>
+                    <option value="Juvenile Fiction">Ficción Juvenil</option>
+                    <option value="Law reports, digests, etc">Leyes</option>
+                    <option value="Literary Criticism">Crítica Literaria</option>
+                    <option value="Nature">Naturaleza</option>
+                    <option value="Philosophy">Filosofía</option>
+                    <option value="Religion">Religión</option>
+                    <option value="Social Science">Ciencias Sociales</option>
+                </select>
+            </div>
+
+            <button class="btn btn-secondary" type="submit">Buscar</button>
+        </form>
+    </div>
+    <div class="books-container">
+        @{
+            await Html.RenderPartialAsync("_BookList", Model.BookListViewModel.Books);
+        }
+    </div>
+</div>

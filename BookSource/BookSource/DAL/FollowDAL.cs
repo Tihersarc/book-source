@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using BookSource.Models;
+using System.Data.SqlClient;
 
 namespace BookSource.DAL
 {
@@ -38,18 +39,17 @@ namespace BookSource.DAL
             }
         }
 
-        public List<int> GetFollowerList(int userId)
+        public List<User> GetFollowerList(int userId)
         {
-            List<int> followerList = new List<int>();
+            List<User> followerList = new List<User>();
 
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    string query =
-                        "SELECT FkIdFollower " +
-                        "FROM Follow " +
-                        "WHERE FkIdFollowed = @FkIdFollowed;";
+                    string query = "SELECT * FROM Follow f "
+                        + "INNER JOIN[User] u ON f.FkIdFollower = u.IdUser "
+                        + "WHERE FkIdFollowed = @FkIdFollowed; ";
 
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -61,7 +61,15 @@ namespace BookSource.DAL
                         {
                             while (reader.Read())
                             {
-                                followerList.Add(reader.GetInt32(reader.GetOrdinal("FkIdFollower")));
+                                User user = new User
+                                {
+                                    IdUser = (int)reader["IdUser"],
+                                    UserName = (string)reader["UserName"],
+                                    Email = (string)reader["Email"],
+                                    BirthDate = reader.IsDBNull(reader.GetOrdinal("BirthDate")) ? null : (DateTime?)reader["BirthDate"],
+                                    ProfileImageUrl = reader.IsDBNull(reader.GetOrdinal("ProfileImageUrl")) ? null : (string?)reader["ProfileImageUrl"]
+                                };
+                                followerList.Add(user);
                             }
                         }
                     }
@@ -69,24 +77,24 @@ namespace BookSource.DAL
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error Inserting Follower: " + ex.ToString());
+                Console.WriteLine("Error getting Follower: " + ex.ToString());
             }
 
             return followerList;
         }
 
-        public List<int> GetFollowedList(int userId)
+
+        public List<User> GetFollowedList(int userId)
         {
-            List<int> followedList = new List<int>();
+            List<User> followedList = new List<User>();
 
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    string query =
-                        "SELECT FkIdFollowed " +
-                        "FROM Follow " +
-                        "WHERE FkIdFollower = @FkIdFollower;";
+                    string query = "SELECT * FROM Follow f "
+                        + "INNER JOIN[User] u ON f.FkIdFollowed = u.IdUser "
+                        + "WHERE FkIdFollower = @FkIdFollower; ";
 
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
@@ -98,7 +106,15 @@ namespace BookSource.DAL
                         {
                             while (reader.Read())
                             {
-                                followedList.Add(reader.GetInt32(reader.GetOrdinal("FkIdFollowed")));
+                                User user = new User
+                                {
+                                    IdUser = (int)reader["IdUser"],
+                                    UserName = (string)reader["UserName"],
+                                    Email = (string)reader["Email"],
+                                    BirthDate = reader.IsDBNull(reader.GetOrdinal("BirthDate")) ? null : (DateTime?)reader["BirthDate"],
+                                    ProfileImageUrl = reader.IsDBNull(reader.GetOrdinal("ProfileImageUrl")) ? null : (string?)reader["ProfileImageUrl"]
+                                };
+                                followedList.Add(user);
                             }
                         }
                     }
@@ -106,7 +122,7 @@ namespace BookSource.DAL
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error Inserting Followed: " + ex.ToString());
+                Console.WriteLine("Error getting Followed: " + ex.ToString());
             }
 
             return followedList;

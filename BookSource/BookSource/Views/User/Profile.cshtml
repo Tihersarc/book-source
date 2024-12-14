@@ -1,0 +1,33 @@
+﻿@using BookSource.Models.ViewModel
+@model UserViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="profile-container">
+    <div class="profile-header">
+        <img src="@Model.ProfileImageUrl" alt="@Model.UserName" class="profile-image" />
+        <h1>@Model.UserName</h1>
+        <h2>@Model.Email</h2>
+        <p>@(Model.Birthdate.HasValue ? Model.Birthdate.Value.ToString("dd/MM/yyyy") : "Fecha de nacimiento no establecida")</p>
+    </div>
+    <div class="profile-body">
+        <h3>Seguidores</h3>
+        @if (Model.FollowerList != null && Model.FollowerList.Any())
+        {
+            <ul>
+                @foreach (var follower in Model.FollowerList)
+                {
+                    <li>@follower.UserName</li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>Este usuario no tiene seguidores.</p>
+        }
+    </div>
+</div>
+
+

@@ -1,0 +1,83 @@
+﻿@using BookSource.Models.ViewModel
+@using BookSource.Tools
+@*
+This view show a list of books and redirect to them.
+*@
+@{
+@model List<BookSource.Models.ViewModel.PublicationViewModel>
+    string user = ViewBag.UserName;
+}
+<link rel="stylesheet" href="~/css/publicationList.css" asp-append-version="true" />
+
+@if (Model == null)
+{
+    <div class="col">No hay ninguna publicación</div>
+}
+else
+{
+
+    <div class="cards-container">
+        @foreach (BookSource.Models.ViewModel.PublicationViewModel publication in Model)
+        {
+            <div class="book-card">
+                
+                <div class="card-content">
+                    @if (publication.Title.Length > 20)
+                    {
+                        <h3 class="card-title">@publication.Title.Substring(0, 20)</h3>
+                    }
+                    else
+                    {
+                        <h3 class="card-title">@publication.Title</h3>
+
+                    }
+
+                    @if (publication.Content.Length > 20)
+                    {
+                                        <span>@publication.Content.Substring(0, 20)</span>
+                    }
+                    else
+                    {
+                        <span><strong>Autor:</strong> @publication.Content</span>
+                    }
+                </div>
+                @if (publication.PubImage != null)
+                {
+                    <img src=@(publication.PubImage) alt="Book Image">
+
+                }
+
+                <div class="card-footer">
+                    <div class="user-area">
+                        <a asp-controller="User" asp-action="Index" asp-route-username="@publication.UserName"><img src="@publication.UserImage" /></a>
+                        <p>@publication.UserName</p>
+                    </div>
+                    <div class="like-area">
+                        <p>Likes @publication.likes</p>
+                        @if (user != null && publication.isLiked == false)
+                        {
+                            // Hay que ver si el usuario le ha dado like o no 
+                            //  ver a traves de 
+                            <form asp-controller="Feed" asp-action="AddLike" method="post">
+                                <input type="hidden" name="IdPublication" value="@publication.IdPublication" />
+                                <input type="hidden" name="IdUser" value="@publication.IdUser" /> 
+                                
+                                <button type="submit" class="btn">Like</button>
+                            </form>
+                        }
+                        else if (user != null && publication.isLiked == true)
+                        {
+                            <form asp-controller="Feed" asp-action="RemoveLike" method="post">
+                                <input type="hidden" name="IdPublication" value="@publication.IdPublication" />
+                                <input type="hidden" name="IdUser" value="@publication.IdUser" />
+
+                                <button type="submit" class="btn btn-danger boton-rojo">UnLike</button>
+                            </form>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+}

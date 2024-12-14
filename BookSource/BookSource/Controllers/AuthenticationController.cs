@@ -1,13 +1,56 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using BookSource.DAL;
+using BookSource.Models;
+using BookSource.Models.ViewModel;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BookSource.Controllers
 {
     public class AuthenticationController : Controller
     {
+        private readonly UserDAL _userDAL;
+
+        public AuthenticationController(UserDAL userDAL)
+        {
+            _userDAL = userDAL;
+        }
+
+        /// <summary>
+        /// Vista de login. Redirige al Home si el usuario ya está autenticado.
+        /// </summary>
+        /// <returns>Vista de Login o redirección al Home</returns>
         public IActionResult Login()
         {
             return View();
+        }
+
+        /// <summary>
+        /// Procesa el inicio de sesión
+        /// </summary>
+        /// <param name="model">Modelo con los datos de inicio de sesión</param>
+        /// <returns>Redirección o vista de error</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = _userDAL.GetUsuarioLogin(model.Username, model.Password);
+                if (user == null)
+                {
+                    model.ErrorMessage = "Usuario o contraseña incorrectos.";
+                    return View(model);
+                }
+
+                // Almacenar los datos del usuario en la sesión
+                HttpContext.Session.SetString("UserName", user.UserName);
+                HttpContext.Session.SetString("UserImg", user.ProfileImageUrl != null ? user.ProfileImageUrl : string.Empty);
+
+                // Redirigir al home
+                return RedirectToAction("Index", "Home");
+            }
+
+            model.ErrorMessage = "No pueden estar los campos vacíos.";
+            return View(model);
         }
 
         public IActionResult Register()
@@ -15,26 +58,37 @@ namespace BookSource.Controllers
             return View();
         }
 
-        [HttpPost]
+
+        /// <summary>
+        /// Vista de registro
+        /// </summary>
+        /// <returns>Vista de registro o redirección al Home</returns>
+        /// 
         [ValidateAntiForgeryToken]
-        public IActionResult Login(string username, string password)
+        [HttpPost]
+        public IActionResult Register(RegisterViewModel model)
         {
-
-            if (username.Length!=0 || password.Length!=0)
+            if (ModelState.IsValid)
             {
-                View();
+
+                // Harcodeamos un poco el user
+                User user = new User()
+                {
+                    UserName = model.Username,
+                    Email = model.Email,
+                    BirthDate = model.BirthDate,
+                    ProfileImageUrl = model.ProfileImageUrl
+                };
+
+                // Si la creación es correcta, devolveremos la vista de nuevo
+                if (_userDAL.CreateUser(user, model.Password))
+                    return RedirectToAction("Login");
+                else
+                    Console.WriteLine("Error creando el usuario");
+
             }
-                //var user = "usuario"; // Simulamos un usuario devuelto
-                // password = "1234"; // Simulamos una contraseña devuelta
-                //if (user && password)
-                //{
-                //    window.location.href = "/home";
-                //}   
-                
-            return RedirectToAction("Login", "Authentication");
+            return View();
         }
-
-
-
     }
 }
+

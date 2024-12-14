@@ -1,0 +1,32 @@
+﻿@using BookSource.Models
+@model Review
+
+@{
+    ViewData["Title"] = "Home Page";
+    int IdUser = 0;
+    if (ViewBag.IdUser != null)
+        IdUser = ViewBag.IdUser;
+    int IdBook = ViewBag.IdBook;
+}
+
+<link rel="stylesheet" href="~/css/addPub&Rev.css" asp-append-version="true" />
+@if (IdUser != 0)
+{
+    <div class="add-container">
+        <form asp-controller="Review" asp-action="AddReview" method="post">
+
+            <div class="form-outline form-black mb-4 formulario-group">
+                <label asp-for="Comment" class="form-label">Añade tu review</label>
+                <textarea asp-for="Comment" class="form-control" placeholder="Introduce tu contenido" required rows="4"></textarea>
+                <input type="hidden" asp-for="RIdUser" value="@IdUser" />
+                <input type="hidden" asp-for="RIdBook" value="@IdBook" />
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg px-5">Crear Review</button>
+        </form>
+    </div>
+}
+else
+{
+    <p>Tienes que estar iniciado para poner una review.</p>
+}

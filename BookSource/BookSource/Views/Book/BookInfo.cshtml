@@ -1,0 +1,100 @@
+﻿@using BookSource.Models.ViewModel
+@using BookSource.Tools
+@model BookSource.Models.ViewModel.BookViewModel
+
+@{
+    ViewData["Title"] = "Book Info";
+    string? userName = Context.Session.GetString(Tools.UserNameSession);
+    List<ListOfBooksViewModel> listOfBooksViewModels = ViewBag.ListOfBooks;
+}
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/layout.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/bookinfo.css" asp-append-version="true" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" />
+<script>
+    window.addEventListener("load", function () {
+        ShowReviewsPartial();
+    });
+
+    function ShowReviewsPartial() {
+        console.log("ShowReviewsPartial");
+        $.ajax({
+            url: '@Url.Action("GetReviewPartialView", "Review")',
+            type: 'GET',
+            data: { idBook : @Model.IdBook},
+            success: function(data)
+            {
+                $("#review-section").html(data);
+            },
+            error: function()
+            {
+                alert("No se han podido cargar las reviews");
+            }
+
+        })
+
+    }
+    function ShowPartial() {
+        $.ajax({
+            url: '@Url.Action("GetUserListOfBooksPartialView", "ListOfBooks")',
+            type: 'GET',
+            data: { idBook : @Model.IdBook},
+            success: function (data) {
+                document.getElementById('partialContainer').style.display = 'flex';
+                $('#partialContainer').html(data);
+            },
+            error: function () {
+                alert('Hubo un error al ejecutar la función.');
+            }
+        });
+    }
+</script>
+
+<div>
+    <div class="row">
+        <div class="col-md-4">
+            <img src="@Model.ImageLink" alt="Book Image" class="img-fluid">
+        </div>
+        <div class="col-md-8">
+            <h1>@Model.Title</h1>
+            @if (!string.IsNullOrEmpty(Model.SubTitle))
+            {
+                <h2>@Model.SubTitle</h2>
+            }
+            <p>@Model.Description</p>
+            <div>
+                <strong>Editorial:</strong> @Model.Editorial
+            </div>
+            <div>
+                <strong>Páginas:</strong> @Model.PageCount
+            </div>
+            <div>
+                <strong>Puntuación:</strong> <span class="score-badge">@Model.Score</span>
+            </div>
+            <div>
+                <strong>Autor:</strong> @Model.Author
+            </div>
+            <div class="mt-3">
+                <strong>Categorías:</strong>
+                <ul>
+                    @if (Model.Categories != null)
+                    {
+                        @foreach (var category in Model.Categories)
+                        {
+                            <li>
+                                <a class="link-search" asp-action="Index" asp-controller="Search" asp-route-Category=@category.Category>@category.Category</a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+            @if(userName!=null)
+            {
+                <button class="btn btn-primary mt-3" onclick="ShowPartial()">Agregar a Favoritos</button>
+            }
+            <div id="partialContainer" style="display:none; margin-top:20px;">
+            </div>
+        </div>
+    </div>
+    <div id="review-section" style="margin-top:20px;"></div>
+</div>
