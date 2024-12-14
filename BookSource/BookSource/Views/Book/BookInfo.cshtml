@@ -63,16 +63,47 @@
             }
             <p>@Model.Description</p>
             <div>
-                <strong>Editorial:</strong> @Model.Editorial
+                <strong>Editorial:</strong>
+                @if (!string.IsNullOrEmpty(Model.Editorial))
+                {
+                    <span>@Model.Editorial</span>
+                }
+                else{
+                    <span>N/A</span>
+                }
             </div>
             <div>
-                <strong>Páginas:</strong> @Model.PageCount
+                <strong>Páginas:</strong> 
+                @if (@Model.PageCount > 0)
+                {
+                    <span>@Model.PageCount</span>
+                }
+                else
+                {
+                    <span>N/A</span>
+                }
             </div>
             <div>
-                <strong>Puntuación:</strong> <span class="score-badge">@Model.Score</span>
+                <strong>Puntuación:</strong> 
+                @if (@Model.Score > 0)
+                {
+                    <span class="score-badge">@Model.Score / 5</span>
+                }
+                else
+                {
+                    <span class="score-badge">N/A</span>
+                }
             </div>
             <div>
-                <strong>Autor:</strong> @Model.Author
+                <strong>Autor:</strong> 
+                @if (!string.IsNullOrEmpty(Model.Editorial))
+                {
+                    <span>@Model.Author</span>
+                }
+                else
+                {
+                    <span>N/A</span>
+                }
             </div>
             <div class="mt-3">
                 <strong>Categorías:</strong>
