@@ -136,7 +136,7 @@ namespace BookSource.DAL
 
                 SqlCommand cmd = new SqlCommand(query, connection);
 
-                cmd.Parameters.AddWithValue("@IsUser", Id);
+                cmd.Parameters.AddWithValue("@IdUser", Id);
 
                 connection.Open();
 

@@ -41,14 +41,19 @@ else
                         <span><strong>Autor:</strong> @publication.Content</span>
                     }
                 </div>
-                <img src=@(publication.PubImage?? Tools.DefaultBookImg) alt="Book Image">
+                @if (publication.PubImage != null)
+                {
+                    <img src=@(publication.PubImage) alt="Book Image">
+
+                }
 
                 <div class="card-footer">
-                    <div>
-                        <p>User: @publication.IdUser</p>
+                    <div class="user-area">
+                        <img src="@publication.UserImage" />
+                        <p>@publication.UserName</p>
                     </div>
-                    <div>
-                        <span>Likes @publication.likes</span>
+                    <div class="like-area">
+                        <p>Likes @publication.likes</p>
                         @if (user != null && publication.isLiked == false)
                         {
                             // Hay que ver si el usuario le ha dado like o no 

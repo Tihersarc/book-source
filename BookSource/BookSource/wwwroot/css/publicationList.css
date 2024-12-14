@@ -23,6 +23,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    min-width: 350px;
 }
 
     .book-card img {
@@ -80,9 +81,12 @@
         background-color: #f9f9f9;
         display: flex;
         justify-content: space-between;
+        align-items: center;
     }
 
-
+    .card-footer p{
+        margin-bottom: 0px;
+    }
 
     .book-card .btn {
         padding: 8px 15px;
@@ -108,6 +112,22 @@ main {
     width: 100%;
     max-width: 1200px;
     padding: 20px;
+}
+.like-area{
+    display: flex;
+    align-items:center;
+}
+.like-area p{
+    margin-right:4px;
+}
+.user-area{
+    display: flex;
+    align-items: center;
+}
+.user-area img{
+    border-radius: 100%;
+    height: 20px;
+    margin-right: 5px;
 }
 .boton-rojo{
     background-color: red !important;

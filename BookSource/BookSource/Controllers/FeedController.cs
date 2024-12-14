@@ -1,6 +1,7 @@
 ﻿using BookSource.DAL;
 using BookSource.Models;
 using BookSource.Models.ViewModel;
+using BookSource.Tools;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
 
@@ -74,10 +75,15 @@ namespace BookSource.Controllers
             // Obtenemos todos los publications o los de una categoria
             publications = PublicationViewModel.ListPubMapper(_publicationDAL.GetAllPublications());
 
-            // Obtenemos los likes
             foreach (PublicationViewModel item in publications)
             {
+                // Obtenemos los likes
                 item.likes = _publicationDAL.GetLikesByPublicationId(item.IdPublication);
+
+                // Obtenemos la foto y nombre del usuario
+                User user = _userDAL.GetUserById(item.IdUser);
+                item.UserName = user.UserName;
+                item.UserImage = user.ProfileImageUrl != null ? user.ProfileImageUrl : Tools.Tools.DefaultUserImg;
             }
 
             // Si se ha intorducido algo en Title, filtramos por titulo
@@ -93,11 +99,11 @@ namespace BookSource.Controllers
                         publications = publications.OrderBy(pub => pub.IdUser).ToList();
 
                         break;
-                    case "MaxLikes": // TODO
-                        publications = publications.OrderByDescending(pub => pub.Content).ToList();
+                    case "MaxLikes":
+                        publications = publications.OrderByDescending(pub => pub.likes).ToList();
                         break;
                     case "MinLikes":
-                        publications = publications.OrderBy(pub => pub.Title).ToList();
+                        publications = publications.OrderBy(pub => pub.likes).ToList();
                         break;
                 }
             }

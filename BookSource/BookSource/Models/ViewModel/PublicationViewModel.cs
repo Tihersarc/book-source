@@ -10,6 +10,8 @@ namespace BookSource.Models.ViewModel
         public required string Content { get; set; }
         public string? PubImage { get; set; }
         public required int IdUser { get; set; }
+        public string? UserName { get; set; }
+        public string? UserImage { get; set; }
         public int likes { get; set; }
         public bool? isLiked { get; set; }
         public static PublicationViewModel PublicationMapper(Publication publication)
