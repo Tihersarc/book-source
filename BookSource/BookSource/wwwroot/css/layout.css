@@ -75,7 +75,9 @@ body {
             width: 100%;
             left: 0;
         }
-
+.inicio{
+    padding: 6px 0;
+}
 /* Imagen de usuario */
 .navbar img {
     border-radius: 50%;

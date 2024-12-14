@@ -23,7 +23,7 @@ namespace BookSource.Controllers
         {
             InitializateBags();
             UserViewModel? user = InitializeUserViewModel(username,selectedListId);
-
+            ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 if (user != null)
                 {
                     user.IdSelectedListOfBooks = selectedListId;

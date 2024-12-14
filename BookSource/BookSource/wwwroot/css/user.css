@@ -1,0 +1,120 @@
+﻿/* Estructura general para el layout del usuario */
+.review-title-container {
+    display: flex;
+}
+
+    .review-title-container a {
+        margin-left: 10px;
+        width: 50px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+.button-add-review {
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.user-profile-layout {
+    display: grid;
+    grid-template-areas: "sidebar body";
+    grid-template-columns: 1fr 3fr;
+    gap: 16px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    /*background: rgba(237, 231, 224, 0.9);
+        border-radius: 15px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(2px);
+        border: 2px solid rgba(189, 152, 120, 0.8);*/
+}
+
+/* Sidebar del perfil */
+.user-profile-sidebar, .user-profile-body {
+    color: black;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #d7ccc8;
+    background-color: white;
+}
+
+.user-profile-sidebar {
+    text-align: center;
+}
+
+/* Elementos de texto */
+.user-profile-title, .user-profile-subtitle, .user-profile-info, .user-profile-list {
+    color: black;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.user-profile-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+.user-profile-subtitle {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.user-profile-info {
+    font-size: 16px;
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.user-profile-list {
+    list-style-type: square;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+/* Estilo para la imagen del usuario */
+.user-profile-img, .user-profile-img-container img {
+    object-fit: cover;
+    /*border-radius: 100%;*/
+}
+
+.user-profile-img-container {
+    aspect-ratio: 1;
+    overflow: hidden;
+    margin: 0 auto 20px;
+}
+
+/* Estilo para los botones de configuración y seguir */
+.config-button, .follow-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px auto;
+    transition: background-color 0.3s ease;
+}
+
+    .config-button img, .follow-button img {
+        width: 24px;
+        height: 24px;
+    }
+
+/* Enlace de "Seguidos" y "Seguidores" */
+.user-profile-link {
+    color: darkblue;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+    .user-profile-link:hover {
+        text-decoration: underline;
+    }

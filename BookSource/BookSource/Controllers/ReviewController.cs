@@ -48,7 +48,6 @@ namespace BookSource.Controllers
             else
                 return View(review);
             return RedirectToAction("BookInfo", "Book", new { bookId = review.RIdBook });
-
         }
     }
 }

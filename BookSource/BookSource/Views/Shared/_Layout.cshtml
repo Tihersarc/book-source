@@ -52,7 +52,7 @@
                             <a class=" nav-link " asp-area="" asp-controller="Home" asp-action="About">Sobre Nosotros</a>
                         </li>
                         <!-- Inicio de sesión de Usuario -->
-                        <li class="nav-item">
+                        <li class="nav-item inicio">
                             @if (userName != null)
                             {
                                 <a asp-controller="User" asp-action="Index" asp-route-username=@userName>
