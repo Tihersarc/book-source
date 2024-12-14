@@ -3,70 +3,31 @@
 
 @{
     ViewData["Title"] = "Follower";
-
-
-    // ListOfBooksViewModel? showList = null;
 }
 
 <style>
-    .userLayout {
-        display: grid;
-        grid-template-areas: "sidebar body";
-        grid-template-columns: 1fr 3fr;
-        gap: 16px;
-        padding: 20px;
-        max-width: 1200px;
-        margin: 0 auto;
-        background: rgba(237, 231, 224, 0.9);
-        border-radius: 15px;
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(2px);
-        border: 2px solid rgba(189, 152, 120, 0.8);
+    .global-styles {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        background-color: #f4f4f4;
     }
 
-    .userSidebar, .userBody {
-        color: black;
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .sidebar {
+        text-align: center;
         padding: 20px;
         border-radius: 12px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         border: 1px solid #d7ccc8;
-    }
-
-    .userSidebar {
-        text-align: center;
-    }
-
-    h1, h2, p, ul li {
-        color: black;
-        font-family: Georgia, 'Times New Roman', Times, serif;
-    }
-
-    h1 {
-        font-size: 28px;
-        font-weight: bold;
-        margin-bottom: 15px;
-        text-align: center;
-        border-bottom: 2px solid #d7ccc8;
-        display: inline-block;
-        padding-bottom: 10px;
-    }
-
-    h2 {
-        font-size: 20px;
-        margin-bottom: 20px;
-    }
-
-    p {
-        font-size: 16px;
-        margin-bottom: 15px;
-        text-align: justify;
-    }
-
-    ul {
-        padding-left: 30px;
-        list-style-type: square;
-        font-size: 16px;
-        margin-bottom: 15px;
+        background: white;
     }
 
     .follower-item {
@@ -78,6 +39,8 @@
         border-radius: 8px;
         background: white;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: background-color 0.3s ease;
     }
 
         .follower-item img {
@@ -87,35 +50,87 @@
             margin-right: 15px;
         }
 
-        .follower-item .follower-name {
-            font-size: 16px;
-            font-weight: bold;
+    .follower-info {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .follower-name {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: black;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .follower-link {
+        font-size: 14px;
+        color: darkblue;
+        text-decoration: none;
+    }
+
+        .follower-link:hover {
+            text-decoration: underline;
         }
+
+    .follower-details {
+        display: flex;
+        gap: 20px;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+    .details-item {
+        color: #333;
+    }
+
+    .no-followers {
+        font-size: 16px;
+        color: #555;
+    }
+
+    /* Añadir hover para mejorar la interacción */
+    .follower-item:hover {
+        background-color: #f1f1f1;
+    }
 </style>
 
-<div class="userLayout">
-    <div class="userSidebar">
-        <h1>Seguidores</h1>
-        @if (Model.FollowerList != null && Model.FollowerList.Any())
-        {
-            <ul>
-                @foreach (var follower in Model.FollowerList)
-                {
-                    <li class="follower-item">
-                        <img src="@follower.ProfileImageUrl" alt="@follower.UserName" />
-                        <div class="follower-name">@follower.UserName</div>
-                    </li>
-                }
-            </ul>
-        }
-        else
-        {
-            <p>Este usuario no tiene seguidores.</p>
-        }
-    </div>
-    <div class="userBody">
-        <h1>@Model.UserName</h1>
-        <h2>@Model.Email</h2>
-        <p>@(Model.Birthdate.HasValue ? Model.Birthdate.Value.ToString("dd/MM/yyyy") : "Fecha de nacimiento no establecida")</p>
+<div class="global-styles">
+    <div class="layout">
+        <div class="sidebar">
+            @if (Model.FollowerList != null && Model.FollowerList.Any())
+            {
+                <ul>
+                    @foreach (var follower in Model.FollowerList)
+                    {
+                        <!-- Verificamos si el seguidor tiene una imagen, si no, usamos la imagen por defecto -->
+                        var profileImage = string.IsNullOrEmpty(follower.ProfileImageUrl) ? "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg" : follower.ProfileImageUrl;
+
+                        <!-- Envolvemos todo el li en un enlace que lleva al perfil del usuario -->
+                        <li class="follower-item">
+                            <a href="@Url.Action("Profile", "User", new { username = follower.UserName })" style="display: flex; text-decoration: none; width: 100%; color: inherit;">
+                                <img src="@profileImage" alt="@follower.UserName" />
+                                <div class="follower-info">
+                                    <div class="follower-name">
+                                        <span>@follower.UserName</span>
+                                    </div>
+                                    <div class="follower-details">
+                                        <span class="details-item">Publicaciones</span>
+                                        <span class="details-item">Listas</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="no-followers">Este usuario no tiene seguidores.</p>
+            }
+        </div>
     </div>
 </div>
+
