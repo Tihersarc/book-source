@@ -97,18 +97,30 @@ namespace BookSource.DAL
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "INSERT INTO Publication(Title, Content, PubImage, FkIdUser) " +
-                    "VALUES(@Title, @Content, @PubImage, @FkIdUser) ";
+                string query;
+                if (publication.PubImage != null)
+                {
+                    query = "INSERT INTO Publication(Title, Content, PubImage, FkIdUser) " +
+                        "VALUES(@Title, @Content, @PubImage, @FkIdUser) " +
+                        "SELECT SCOPE_IDENTITY();";
+                }
+                else
+                {
+                    query = "INSERT INTO Publication(Title, Content, FkIdUser) " +
+                        "VALUES(@Title, @Content, @FkIdUser) " +
+                        "SELECT SCOPE_IDENTITY();";
+                }
                 SqlCommand cmd = new SqlCommand(query, connection);
 
                 cmd.Parameters.AddWithValue("@Title", publication.Title);
                 cmd.Parameters.AddWithValue("@Content", publication.Content);
-                cmd.Parameters.AddWithValue("@PubImage", publication.PubImage);
+                if (publication.PubImage != null)
+                    cmd.Parameters.AddWithValue("@PubImage", publication.PubImage);
                 cmd.Parameters.AddWithValue("@FkIdUser", publication.RIdUser);
 
                 connection.Open();
                 int idPublication;
-                idPublication = (int) cmd.ExecuteScalar();
+                idPublication = Convert.ToInt32(cmd.ExecuteScalar());
                 return GetPublicationById(idPublication);
             }
         }

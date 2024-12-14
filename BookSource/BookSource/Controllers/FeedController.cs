@@ -3,6 +3,7 @@ using BookSource.Models;
 using BookSource.Models.ViewModel;
 using BookSource.Tools;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Reflection;
 
 namespace BookSource.Controllers
@@ -108,6 +109,29 @@ namespace BookSource.Controllers
                 }
             }
             return publications;
+        }
+
+        [HttpGet("feed/addpublication")]
+        public IActionResult AddPublication()
+        {
+            // Se coge el Id del usuario de session y se le pasa a la vista pata que se añada al modelo
+            if (HttpContext.Session.GetString("UserName") != null)
+            {
+                ViewBag.IdUser = _userDAL.GetUserByUserName(HttpContext.Session.GetString("UserName")).IdUser;
+            }
+            return View();
+        }
+
+        [HttpPost("feed/addpublication")]
+        public IActionResult AddPublication(Publication publication)
+        {
+            if (ModelState.IsValid)
+            {
+                Publication newPub = _publicationDAL.CreatePublication(publication);
+            }
+            else
+                return View(publication);
+            return RedirectToAction("Index");
         }
     }
 }

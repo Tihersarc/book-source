@@ -1,0 +1,29 @@
+﻿@using BookSource.Models
+@model Publication
+
+@{
+    ViewData["Title"] = "Home Page";
+    int IdUser = ViewBag.IdUser;
+}
+
+<link rel="stylesheet" href="~/css/addPub&Rev.css" asp-append-version="true" />
+
+<div class="add-container">
+    <form asp-controller="Feed" asp-action="AddPublication" method="post">
+        <div class="form-outline form-black mb-4 formulario-group">
+            <label asp-for="Title" class="form-label">Titulo</label>
+            <input asp-for="Title" class="form-control" placeholder="Introduce el título" required />
+            <input type="hidden" asp-for="RIdUser" value="@IdUser" />
+        </div>
+        <div class="form-outline form-black mb-4 formulario-group">
+            <label asp-for="Content" class="form-label">Contenido</label>
+            <textarea asp-for="Content" class="form-control" placeholder="Introduce tu contenido" required rows="4"></textarea>
+        </div>
+        <div class="form-outline form-black mb-4 formulario-group">
+            <label asp-for="PubImage" class="form-label">Url Imagen</label>
+            <input asp-for="PubImage" class="form-control" placeholder="Introduce el link a la imagen"  />
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg px-5">Crear Publicación</button>
+    </form>
+</div>
