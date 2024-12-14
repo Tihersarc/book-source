@@ -5,7 +5,7 @@ namespace BookSource.Tools
 {
     public static class Tools
     {
-        public static string DefaultBookImg = "https://i.pinimg.com/originals/c8/05/66/c805665abddddfcc04692ff3c92cadfe.jpg";
+        public static string DefaultBookImg = "https://static-01.daraz.pk/p/9c4bbb21ac32475a2f3d8c55d2b7337d.jpg";
         public static string DefaultUserImg = "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg";
         public static string ConfigImg = "https://cdn-icons-png.flaticon.com/512/3524/3524659.png";
         public static string UserNameSession = "UserName";
