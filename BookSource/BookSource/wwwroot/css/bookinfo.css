@@ -8,10 +8,11 @@
     height: 100vh;
     margin: 0;
     padding: 0;
+    color: black;
 }
 
 .container {
-    background: rgba(237, 231, 224, 0.95); /* Más opaco */
+    background: #fff; /* Más opaco */
     max-width: auto;
     margin: 10px auto;
     padding: 10px;
@@ -35,7 +36,7 @@ img {
 /* Tipografía y encabezados */
 h1 {
     font-size: 42px;
-    color: #5d4037; 
+    color: black; 
     font-weight: bold;
     margin-bottom: 15px;
     text-align: center;
@@ -69,13 +70,15 @@ ul {
     color: #6d4c41;
 }
 
-    ul li {
-        margin-bottom: 8px;
-    }
+ul li {
+    margin-bottom: 8px;
+}
+
 .link-search {
     text-decoration: none;
     color: inherit;
 }
+
 /* Botón interactivo */
 .btn-primary {
     background-color: #795548; 
@@ -91,10 +94,10 @@ ul {
     text-transform: uppercase;
 }
 
-    .btn-primary:hover {
-        background-color: #5d4037;
-        transform: translateY(-2px);
-    }
+.btn-primary:hover {
+    background-color: #5d4037;
+    transform: translateY(-2px);
+}
 
 /* Insignia de puntuación */
 .score-badge {
@@ -134,9 +137,9 @@ ul {
     transition: transform 0.3s ease;
 }
 
-    .card:hover {
-        transform: scale(1.05);
-    }
+.card:hover {
+    transform: scale(1.05);
+}
 
 /* Animación general */
 @keyframes fadeIn {
