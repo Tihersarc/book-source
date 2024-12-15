@@ -4,40 +4,67 @@
 @{
     ViewData["Title"] = "About";
 }
-<div class="container my-5">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <div class="card shadow-lg border-0">
-                    <div class="card-body">
-                        <h1 class="card-title text-center mb-4">About Us</h1>
-                        <p class="text-muted text-center mb-4">
-                            Welcome to <strong>BookSource</strong>, your ultimate destination for discovering books that inspire, educate, and entertain.
-                        </p>
-                        <p>
-                            Our mission is to connect readers with the perfect book, whether you're a casual reader, a passionate bibliophile, or a student searching for academic resources.
-                        </p>
-                        <p>
-                            At <strong>BookSource</strong>, we believe that every book has the power to change perspectives and ignite curiosity. That’s why we’ve created a platform where you can easily explore a vast library of titles across all genres, from timeless classics to the latest bestsellers.
-                        </p>
-                        <h3 class="mt-4 mb-3">Why Choose Us?</h3>
-                        <ul class="list-group list-group-flush mb-4">
-                            <li class="list-group-item"><strong>Extensive Catalog:</strong> Access a diverse collection of books, including fiction, non-fiction, academic, and more.</li>
-                            <li class="list-group-item"><strong>Smart Search:</strong> Use our intuitive search filters to find books by title, author, genre, rating, or category.</li>
-                            <li class="list-group-item"><strong>Tailored Recommendations:</strong> Get personalized book suggestions based on your interests and reading habits.</li>
-                            <li class="list-group-item"><strong>Community Reviews:</strong> Read reviews and ratings from other readers to help you make the best choice.</li>
-                        </ul>
-                        <p>
-                            Our platform isn’t just about finding books; it’s about fostering a love for reading and building a community of readers. Whether you're looking for a page-turning thriller, an insightful biography, or a guide to learning a new skill, <strong>BookSource</strong> is here to help you every step of the way.
-                        </p>
-                        <h3 class="mt-4 mb-3">Our Vision</h3>
-                        <p>
-                            To become the go-to platform for book lovers worldwide, making reading accessible, enjoyable, and enriching for everyone.
-                        </p>
-                        <p class="text-center mt-4">
-                            <strong>Thank you for choosing BookSource.</strong> Let’s embark on this journey of discovery together—one book at a time.
-                        </p>
+<div class="container my-3">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card shadow-lg border-0" style="padding: 30px; margin: 10px;">
+                <div class="card-body" style="padding: 30px;">
+                    <h1 class="card-title text-center mb-4" style="color: black;">Sobre Nosotros</h1>
+                    <p class="text-muted text-center mb-3" style="color: black; text-align: justify; line-height: 1.8;">
+                        Bienvenido a <strong>BookSource</strong>, una plataforma social diseñada para conectar a lectores de todo el mundo y ayudar a descubrir libros que inspiran, educan y entretienen.
+                    </p>
+                    <p style="color: black; text-align: justify; line-height: 1.8;">
+                        Somos un equipo apasionado de desarrolladores y amantes de los libros que creemos que la lectura tiene más significado cuando se comparte. Por eso hemos creado <strong>BookSource</strong>, un lugar donde las personas pueden conectarse con otras personas, compartir reseñas y explorar nuevas aventuras literarias.
+                    </p>
+
+                    <h3 class="mt-5 mb-4 text-center" style="color: black;">Conoce al equipo</h3>
+                    <div class="row text-center">
+                        <!-- Member 1 -->
+                        <div class="col-md-6 mb-5">
+                            <img src="~/images/alex.jpg" alt="Team Member 1"
+                                 style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; margin-bottom: 15px;" />
+                            <h5 class="mt-3" style="color: black;">Alex Fernández</h5>
+                            <p class="text-muted" style="color: black;">Frontend Developer</p>
+                            <p style="color: black; text-align: justify; line-height: 1.8;">Mi misión desarrollar las funcionalidades del front-end para garantizar una experiencia de usuario óptima y agradable.</p>
+                        </div>
+
+                        <!-- Member 2 -->
+                        <div class="col-md-6 mb-5">
+                            <img src="~/images/miren.jpg" alt="Team Member 2"
+                                 style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; margin-bottom: 15px;" />
+                            <h5 class="mt-3" style="color: black;">Miren Pérez</h5>
+                            <p class="text-muted" style="color: black;">Frontend Developer</p>
+                            <p style="color: black; text-align: justify; line-height: 1.8;">Diseñé la interfaz para sumergir al usuario en un mundo literario.</p>
+                        </div>
+
+                        <!-- Member 3 -->
+                        <div class="col-md-6 mb-5">
+                            <img src="~/images/dani.jpg" alt="Team Member 3"
+                                 style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; margin-bottom: 15px;" />
+                            <h5 class="mt-3" style="color: black;">Dani Álvarez</h5>
+                            <p class="text-muted" style="color: black;">Backend Developer</p>
+                            <p style="color: black; text-align: justify; line-height: 1.8;">Me encargaba de las funciones del backend y la gestión de la base de datos, asegurando la integridad y eficiencia de los datos.</p>
+                        </div>
+
+                        <!-- Member 4 -->
+                        <div class="col-md-6 mb-5">
+                            <img src="~/images/pol.jpg" alt="Team Member 4"
+                                 style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; margin-bottom: 15px;" />
+                            <h5 class="mt-3" style="color: black;">Pol Rodríguez</h5>
+                            <p class="text-muted" style="color: black;">Backend Developer</p>
+                            <p style="color: black; text-align: justify; line-height: 1.8;">Me encargaba de crear la base de datos y el correcto funcionamiento de la aplicación.</p>
+                        </div>
                     </div>
+
+                    <h3 class="mt-5 mb-4 text-center" style="color: black;">Nuestra misión</h3>
+                    <p style="color: black; text-align: justify; line-height: 1.8;">
+                        Crear una comunidad vibrante donde los lectores puedan descubrir nuevos libros, conectarse con personas de ideas afines y compartir sus experiencias literarias.
+                    </p>
+                    <p class="text-center mt-4" style="color: black;">
+                        <strong>Gracias por formar parte de BookSource.</strong> ¡Exploremos juntos el mundo de los libros!
+                    </p>
                 </div>
             </div>
         </div>
     </div>
+</div>
