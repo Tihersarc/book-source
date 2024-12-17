@@ -4,6 +4,7 @@ using BookSource.Models.ViewModel;
 using BookSource.Tools;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Reflection;
 
 namespace BookSource.Controllers
@@ -68,7 +69,7 @@ namespace BookSource.Controllers
 
             return RedirectToAction("Index", "Feed");
         }
-
+        [HttpGet]
         public List<Models.ViewModel.PublicationViewModel> GetBooksByFilter(FeedViewModel model)
         {
             List<Models.ViewModel.PublicationViewModel> publications = new List<Models.ViewModel.PublicationViewModel>();
@@ -90,6 +91,11 @@ namespace BookSource.Controllers
             // Si se ha intorducido algo en Title, filtramos por titulo
             if (model.Title != "" && model.Title != null)
                 publications = publications.Where(publication => publication.Title.Contains(model.Title, StringComparison.OrdinalIgnoreCase)).ToList();
+
+            // Si se ha intorducido algo en User, filtramos por User
+            if (model.IdUser != null && model.IdUser != -1)
+                publications = publications.Where(publication => publication.IdUser == model.IdUser).ToList();
+            
 
             // Ordenar los libros si se ha puesto algo
             if (model.OrderType != null && model.OrderType != "")
