@@ -110,7 +110,7 @@
 
                         <!-- Envolvemos todo el li en un enlace que lleva al perfil del usuario -->
                         <li class="follower-item">
-                            <a href="@Url.Action("Profile", "User", new { username = follower.UserName })" style="display: flex; text-decoration: none; width: 100%; color: inherit;">
+                            <a href="@Url.Action("Index", "User", new { username = follower.UserName })" style="display: flex; text-decoration: none; width: 100%; color: inherit;">
                                 <img src="@profileImage" alt="@follower.UserName" />
                                 <div class="follower-info">
                                     <div class="follower-name">
