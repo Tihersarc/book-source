@@ -97,6 +97,44 @@
             color: #1DA1F2;
         }
 
+    .btn-primary {
+        background-color: #198754;
+        border: none;
+        padding: 12px 25px;
+        font-size: 18px;
+        border-radius: 25px;
+        color: #fff;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-block;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        text-transform: uppercase;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+
+        .btn-primary:hover::before {
+            transform: scaleX(1);
+        }
+
+        .btn-primary:hover {
+            background-color: #145a32;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
 </style>
 <script>
     function AddNewListOfBooks() { 

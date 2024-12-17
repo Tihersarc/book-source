@@ -49,31 +49,31 @@
         });
     }
 </script>
-
-<div>
+<div class="book-info-card-container">
     <div class="row">
         <div class="col-md-4">
-            <img src=@(Model.ImageLink??Tools.DefaultBookImg) alt="Book Image" class="img-fluid">
+            <img src="@Model.ImageLink ?? Tools.DefaultBookImg" alt="Book Image" class="book-info-img img-fluid">
         </div>
         <div class="col-md-8">
-            <h1>@Model.Title</h1>
+            <h1 class="book-info-h1">@Model.Title</h1>
             @if (!string.IsNullOrEmpty(Model.SubTitle))
             {
-                <h2>@Model.SubTitle</h2>
+                <h2 class="book-info-h2">@Model.SubTitle</h2>
             }
-            <p>@Model.Description</p>
+            <p class="book-info-p">@Model.Description</p>
             <div>
-                <strong>Editorial:</strong>
+                <strong class="book-info-strong">Editorial:</strong>
                 @if (!string.IsNullOrEmpty(Model.Editorial))
                 {
                     <span>@Model.Editorial</span>
                 }
-                else{
+                else
+                {
                     <span>N/A</span>
                 }
             </div>
             <div>
-                <strong>Páginas:</strong> 
+                <strong class="book-info-strong">Páginas:</strong>
                 @if (@Model.PageCount > 0)
                 {
                     <span>@Model.PageCount</span>
@@ -84,19 +84,19 @@
                 }
             </div>
             <div>
-                <strong>Puntuación:</strong> 
+                <strong class="book-info-strong">Puntuación:</strong>
                 @if (@Model.Score > 0)
                 {
-                    <span class="score-badge">@Model.Score / 5</span>
+                    <span class="book-info-score-badge">@Model.Score / 5</span>
                 }
                 else
                 {
-                    <span class="score-badge">N/A</span>
+                    <span class="book-info-score-badge">N/A</span>
                 }
             </div>
             <div>
-                <strong>Autor:</strong> 
-                @if (!string.IsNullOrEmpty(Model.Editorial))
+                <strong class="book-info-strong">Autor:</strong>
+                @if (!string.IsNullOrEmpty(Model.Author))
                 {
                     <span>@Model.Author</span>
                 }
@@ -105,27 +105,27 @@
                     <span>N/A</span>
                 }
             </div>
-            <div class="mt-3">
-                <strong>Categorías:</strong>
-                <ul>
+            <div class="book-info-mt-3">
+                <strong class="book-info-strong">Categorías:</strong>
+                <ul class="book-info-ul">
                     @if (Model.Categories != null)
                     {
                         @foreach (var category in Model.Categories)
                         {
                             <li>
-                                <a class="link-search" asp-action="Index" asp-controller="Search" asp-route-Category=@category.Category>@category.Category</a>
+                                <a class="book-info-link-search" asp-action="Index" asp-controller="Search" asp-route-Category=@category.Category>@category.Category</a>
                             </li>
                         }
                     }
                 </ul>
             </div>
-            @if(userName!=null)
+            @if (userName != null)
             {
-                <button class="btn btn-primary mt-3" onclick="ShowPartial()">Agregar a Favoritos</button>
+                <button class="book-info-btn-primary book-info-mt-3" onclick="ShowPartial()">Agregar a Favoritos</button>
             }
-            <div id="partialContainer" style="display:none; margin-top:20px;">
-            </div>
+            <div id="partialContainer" style="display:none; margin-top:20px;"></div>
         </div>
     </div>
-    <div id="review-section" style="margin-top:20px;"></div>
+    <div id="review-section"  style="margin-top:20px;"></div>
 </div>
+
