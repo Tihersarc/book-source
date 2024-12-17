@@ -30,11 +30,14 @@
             <div class="filter-group">
                 <label>Usuario</label>
 
-                <select asp-for="@Model.User">
+                <select asp-for="IdUser">
+                    <option value="-1">All</option>
+
                     @foreach(User user in Model.Users)
                     {
-                        <option value="@user.IdUser">@user.UserName</option>
+                        <option value=@user.IdUser>@user.UserName</option>
                     }
+
                 </select>
             </div>
 
