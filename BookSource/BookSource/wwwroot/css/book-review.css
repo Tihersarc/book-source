@@ -1,5 +1,6 @@
-﻿.review-title-container{
+﻿.review-title-container {
     display: flex;
+    color: black; 
 }
     .review-title-container a {
         margin-left: 10px;
@@ -28,13 +29,11 @@
     max-width:80px;
 }
 .user-text {
-    background: #5d4037;
-    border-radius: 50px;
+   border-radius: 50px;
     width: fit-content;
-    border: 1px solid #5d4037;
-    padding-left: 5px;
+   padding-left: 5px;
     padding-right: 5px;
-    color: white;
+    color: black;
 }
 .user-comment {
     color: black;
