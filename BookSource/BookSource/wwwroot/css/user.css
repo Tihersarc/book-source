@@ -14,21 +14,29 @@
     font-size: 1.5em;
     text-align: center;
 }
-
-.user-profile-layout {
-    display: grid;
-    grid-template-areas: "sidebar body";
-    grid-template-columns: 1fr 3fr;
-    gap: 16px;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    /*background: rgba(237, 231, 224, 0.9);
+.button-userprofile
+{
+    display:flex;
+    justify-content:flex-end;
+}
+.button-userprofile a{
+    margin:0px;
+    margin-right:7%;
+}
+    .user-profile-layout {
+        display: grid;
+        grid-template-areas: "sidebar body";
+        grid-template-columns: 1fr 3fr;
+        gap: 16px;
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        /*background: rgba(237, 231, 224, 0.9);
         border-radius: 15px;
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
         backdrop-filter: blur(2px);
         border: 2px solid rgba(189, 152, 120, 0.8);*/
-}
+    }
 
 /* Sidebar del perfil */
 .user-profile-sidebar, .user-profile-body {
@@ -89,7 +97,7 @@
 }
 
 /* Estilo para los botones de configuración y seguir */
-.config-button, .follow-button {
+.config-button {
     display: flex;
     align-items: center;
     justify-content: center;
