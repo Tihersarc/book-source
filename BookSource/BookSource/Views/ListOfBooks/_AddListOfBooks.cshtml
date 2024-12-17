@@ -2,7 +2,6 @@
 }
 <style>
     .popup {
-        
         display: flex;
         position: fixed;
         justify-content: center;
@@ -13,24 +12,24 @@
         height: 100%;
         background-color: rgba(0, 0, 0, 0.6);
         z-index: 1000;
-        font-family: 'Georgia', serif; 
+        font-family: 'Georgia', serif;
     }
 
     .popup-content {
         position: relative;
-        background-color: #fff; 
+        background-color: #fff;
         padding: 30px;
         border-radius: 16px;
         width: 400px;
         text-align: center;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); 
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     }
 
     .popup-header {
         font-size: 1.8em;
         font-weight: bold;
         margin-bottom: 20px;
-        color: #4B3832; 
+        color: #4B3832;
         border-bottom: 1px solid #ddd;
         padding-bottom: 10px;
     }
@@ -51,7 +50,7 @@
             margin: 0;
             width: 20px;
             height: 20px;
-            border: 2px solid #A68D82; 
+            border: 2px solid #A68D82;
             border-radius: 4px;
             outline: none;
             cursor: pointer;
@@ -68,13 +67,13 @@
             align-items: center;
             padding: 10px 15px;
             border-radius: 20px;
-            background-color: #F5F5F5; 
+            background-color: #F5F5F5;
             transition: all 0.3s ease;
             cursor: pointer;
         }
 
             .popup-body label:hover {
-                background-color: #ECE2D0; 
+                background-color: #ECE2D0;
                 transform: translateX(4px);
             }
 
@@ -90,6 +89,45 @@
 
         .close:hover {
             color: #4B3832;
+        }
+
+    .btn-primary {
+        background-color: #198754;
+        border: none;
+        padding: 12px 25px;
+        font-size: 18px;
+        border-radius: 25px;
+        color: #fff;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-block;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        text-transform: uppercase;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+
+        .btn-primary:hover::before {
+            transform: scaleX(1);
+        }
+
+        .btn-primary:hover {
+            background-color: #145a32;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 </style>
 
