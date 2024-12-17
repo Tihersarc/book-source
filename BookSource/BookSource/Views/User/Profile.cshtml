@@ -1,4 +1,5 @@
 ﻿@using BookSource.Models.ViewModel
+
 @model UserViewModel
 
 @{
@@ -17,7 +18,7 @@
         @if (Model.FollowerList != null && Model.FollowerList.Any())
         {
             <ul>
-                @foreach (var follower in Model.FollowerList)
+                @foreach (User? follower in Model.FollowerList)
                 {
                     <li>@follower.UserName</li>
                 }

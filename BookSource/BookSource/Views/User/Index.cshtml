@@ -18,9 +18,10 @@
 {
     <div class="row pt-2">
         <!--<div class="col-11">Perfil de @*Model.UserName*@</div>-->
+        <div class="button-userprofile">
         @if (Model.UserName == ViewBag.UserName)
         {
-            <a class="config-button col" asp-area="" asp-controller="User" asp-action="Configuration" asp-route-username=@Model.UserName>
+            <a class="config-button" asp-area="" asp-controller="User" asp-action="Configuration" asp-route-username=@Model.UserName>
                 <img src=@Tools.ConfigImg alt="Configuración">
             </a>
         }
@@ -28,17 +29,19 @@
         {
             if (Model.FollowerList != null && Model.FollowerList.Where(x => x.IdUser == ViewBag.IdSessionUser).Any())
             {
-                <a class="follow-button col" asp-controller="User" asp-action="UnFollow" asp-route-username=@Model.UserName>
+                <a class="btn btn-primary" asp-controller="User" asp-action="UnFollow" asp-route-username=@Model.UserName>
                     UnFollow
                 </a>
             }
             else
             {
-                <a class="follow-button col" asp-controller="User" asp-action="Follow" asp-route-username=@Model.UserName>
+                <a class="btn btn-danger" asp-controller="User" asp-action="Follow" asp-route-username=@Model.UserName>
                     Follow
                 </a>
             }
         }
+
+        </div>
 
     </div>
     <section class="user-profile-layout">
