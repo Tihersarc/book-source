@@ -1,36 +1,26 @@
-# Libros S.A.
+# BookSource
 
-## Miembros:
+---
 
-- Dani/Miren
-- Alex/Pol
+La **BookSource** es una plataforma web diseñada para guardar los libros que te interesan, hayas leido o quieras leer en tus listas personales para no olvidarte. Tambien funciona como pequeña red social literaria en la que puedes recomendar los mismos que te gusten o puntuarlos.
 
 ## Tecnologías
 
 - C# ASP.NET
 
-[**TRELLO**](https://trello.com/b/5spJJPa4/agile-board-template-trello)
+## 📚 Dashboard Principal de Busqueda
 
-- **Webs Front Colores/estilos**
-    
-     https://www.fontpair.co/
-    
-    https://brandcolors.net/
-    
-    https://htmlcolorcodes.com/es/
-    
-    https://www.happyhues.co/
-    
-    https://color.adobe.com/es/create/color-wheel
-    
-    https://colorhunt.co/
-    
+![BookSource Dashboard](https://www.danipoal.com/assets/bookSource.PNG)
 
-## ¿En que consiste la aplicación?
+Esta imagen muestra la vista del buscador de **BookSource**, una de las muchas interfaces que presenta la aplicación, en ella los usuarios pueden explorar, buscar y filtrar libros de manera eficiente, accediendo a información relevante de cada título.
 
----
+🚀 **Características del Buscador:**
+- 🔍 Búsqueda avanzada de libros.
+- 📖 Visualización optimizada para explorar títulos.
+- ⚡ Interfaz intuitiva y fácil de usar.
 
-La **aplicación** será una plataforma web diseñada para guardar los libros que te interesan, hayas leido o quieras leer en tus listas personales para no olvidarte. Tambien funciona como pequeña red social literaria en la que puedes recomendar los mismos que te gusten o puntuarlos.
+Los datos (Libros), han sido extraidos de la Google Book Api, de manera que el contenido de la BD de la aplicación se encuentra actualizado con los libros del momento en función de fechas, relevancia y calificaciones. 
+
 
 ## Features
 
