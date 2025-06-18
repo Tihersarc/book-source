@@ -1,0 +1,30 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+
+    container_name: sqlserver
+    environment:
+      SA_PASSWORD: "12345678aA!"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "14333:1433"
+    volumes:
+      - ./init.sql:/init.sql
+    # healthcheck:
+    #   test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "12345678aA!", "-Q", "SELECT 1"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 5
+
+  dotnetapp:
+    build:
+      context: ./BookSource
+      dockerfile: Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    ports:
+      - "5000:8080"
+    depends_on:
+      - sqlserver
+      # sqlserver:
+      #   condition: service_healthy
