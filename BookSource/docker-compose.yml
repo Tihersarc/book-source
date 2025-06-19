@@ -1,20 +1,17 @@
 services:
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2022-latest
 
+  sqlserver:
+    build:
+      context: ./sqlserver
+      dockerfile: Dockerfile
     container_name: sqlserver
     environment:
       SA_PASSWORD: "12345678aA!"
       ACCEPT_EULA: "Y"
     ports:
       - "14333:1433"
-    volumes:
-      - ./init.sql:/init.sql
-    # healthcheck:
-    #   test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "12345678aA!", "-Q", "SELECT 1"]
-    #   interval: 10s
-    #   timeout: 5s
-    #   retries: 5
+    # NO volumes para init.sql ni start.sh, porque los copias en la imagen
+
 
   dotnetapp:
     build:
