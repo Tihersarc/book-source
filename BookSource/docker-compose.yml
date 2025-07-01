@@ -1,0 +1,28 @@
+services:
+
+  #  sqlserver:
+  # build:
+  #   context: ./sqlserver
+  #   dockerfile: Dockerfile
+  # container_name: sqlserver
+  # environment:
+  #   SA_PASSWORD: "12345678aA!"
+  #   ACCEPT_EULA: "Y"
+  # ports:
+  #  - "14333:1433"
+    # NO volumes para init.sql ni start.sh, porque los copias en la imagen
+
+
+  dotnetapp:
+    build:
+      context: ./BookSource
+      dockerfile: Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://0.0.0.0:8081
+    ports:
+      - "5000:8081"
+        #    depends_on:
+        #      - sqlserver
+      # sqlserver:
+      #   condition: service_healthy

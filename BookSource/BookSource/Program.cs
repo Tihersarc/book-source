@@ -2,12 +2,12 @@ using BookSource.DAL;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Simulando el método ConfigureServices
+// Simulando el mï¿½todo ConfigureServices
 ConfigureServices(builder.Services, builder.Configuration);
 
 var app = builder.Build();
 
-// Simulando el método Configure
+// Simulando el mï¿½todo Configure
 Configure(app, app.Environment);
 
 app.Run();
@@ -17,7 +17,7 @@ void ConfigureServices(IServiceCollection services, IConfiguration configuration
     // Add services to the container.
     services.AddControllersWithViews();
 
-    // Aquí puedes agregar más configuraciones de servicios, como:
+    // Aquï¿½ puedes agregar mï¿½s configuraciones de servicios, como:
     var connectionString = configuration.GetConnectionString("DefaultConnection");
 
     //services.AddDbContext<MyDbContext>(options =>
@@ -42,7 +42,7 @@ builder.Services.AddScoped<ReviewDAL>();
     options.Cookie.IsEssential = true;
 });
 
-    // Agregar servicios de autenticación, etc.
+    // Agregar servicios de autenticaciï¿½n, etc.
     // services.AddAuthentication();
 }
 
@@ -56,7 +56,7 @@ void Configure(WebApplication app, IWebHostEnvironment env)
     }
 
 app.UseSession();
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseStaticFiles();
 
     app.UseRouting();
